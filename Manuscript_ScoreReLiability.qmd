@@ -1,10 +1,31 @@
 ---
-title: "Manuscript"
+title: "Score ReLiability? Exploring the role of score reliability for effect size heterogeneity"
 format: html
 editor: visual
 ---
 
+```{r, include = FALSE}
+# library loading and installing as necessary
 
+
+# relevant libraries required for this script
+packages <- c("ggplot2", "here", "metafor", "gridExtra", "knitr", "magrittr", "dplyr")
+
+# check, whether library already installed or not - install and load as needed:
+apply(as.matrix(packages), MARGIN = 1, FUN = function(x) {
+  
+  pkg_avail <- nzchar(system.file(package = x))   # check if library is installed on system
+  
+  if(pkg_avail){
+    require(x, character.only = TRUE)             # load the library, if already installed
+    
+  }else{
+    install.packages(x)                           # install the library, if missing
+    require(x, character.only = TRUE)             # load after installation
+  }
+})
+
+```
 
 In light of discussions surrounding the replicability of psychological results, meta-analytic heterogeneity is understood as a crucial parameter that may inform some aspects of (non-)replicability. Heterogeneity in itself helps understand why some replications of a single phenomenon may be successful, while other are not. If heterogeneity grows, meaning the phenomenon’s effect size varies more strongly for unexplained reasons, the probability of observing an effect size around zero or even in the negative space grows larger as well. If we know the true size and heterogeneity of a phenomenon’s effect size, we would theoretically be able to establish a baseline of expected replication rate (reference).
 
@@ -26,7 +47,6 @@ $$\rho_{XX’} = \frac{\sigma^2_T}{\sigma^2_X}$$
 
 In this equation $\sigma^2_T$ refers to the true variance in the sense of CTT, meaning the actual variance of the variable, undistorted by measurement error. In the same sense, $\sigma^2_X$ refers to the total variance of scores, including both the true variance and the random error variance. Lower score reliability in a data-set leads to a smaller ES, opposed to a similar data-set with higher score reliability (references). In the meta-analytic context, as score reliability is an aspect of a measuring instrument applied to a population, score reliability may not be identical across replications. If score reliability varies across replications, meaning it also carries heterogeneity, it clearly should affect heterogeneity in observed ES as well.
 
-
 Previous discussions of heterogeneity in score reliability have exclusively discussed it as a parameter that inflates heterogeneity in observed ES, implying that, if score reliability was perfect across all replications, the actual heterogeneity would have been lower. In their discussion, Wiernik and Dahlke claim that „*Measurement error variance will impact the results of meta-analyses in three ways: by (a) biasing the mean effect size toward zero, (b) inflating effect-size heterogeneity and confounding moderator effects, and (c) confounding publication-bias and sensitivity analyses*” (p. 3, 2020). Additionally, more clearly, they state that “*If the studies included in a meta-analysis differ in their measures’ reliabilities, heterogeneity estimates will be artifactually inflated, erroneously suggesting larger potential moderator effects*” (p. 4, Wiernik & Dahlke, 2020). They base their claims largely on he work done by Hunter and Schmidt (2014), who claim that “*Variation in reliability across studies causes variation in the observed effect sizes above and beyond that produced by sampling error.*” (p. 302). Overall, both references imply that differences in score (un)reliability inevitably lead to an inflated heterogeneity in ES.
 
 However, if information concerning score reliability is available, it is possible to correct the individual ES for its unreliability. This process is also known as attenuation correction and, while not without its criticisms (reference), is a widespread practice in Psychology (reference). If the claims above, made by Wiernik and Dahlke or Hunter and Schmidt, were to be true, it would imply that corrections of individual observed ESs for their unreliability, any subsequently performed meta-analysis should generate lower estimates of heterogeneity. Hunter & Schmidt even claim to have derived an equation which demonstrates how heterogeneity in score reliability inflates heterogeneity in ESs. “*If the level of reliability is independent of the true effect size across studies, then, to a close approximation*:” (p. 309)
@@ -35,6 +55,8 @@ $$Var(\delta_0) = [E(a)]^2 Var(\delta) + [E(\delta)]^2 Var(a)$$
 
 Here, $\delta_0$ refers to the “true” ES, undistorted by sampling error but not corrected for measuring error, $\delta$ refers to the “true” ES, undistorted by sampling error and measurement error and $a$ refers to score reliability in Schmidt and Hunter's notation.
 
+## Analytical Arguments
+
 However, we propose that this understanding of how differences in score reliability affect the heterogeneity of observed ESs is incomplete. Hunter and Schmidt’s implication, that heterogeneity in score reliability inflates ES heterogeneity does not follow from equation 1. If equation 1 were to be true, it would imply that heterogeneity in $\delta_0$ is essentially a function where heterogeneity and mean value of $\delta$ are weighted by mean score reliability $a$ and its heterogeneity. In this scenario, it is easy to construct cases where heterogeneity in $\delta_0$ is inflated or deflated by heterogeneity in $a$. In table 1, two such cases are demonstrated. All else is held equal, only the mean score reliability $E[a]$ is changed from .7 to .8. True heterogeneity $Var[a]$ is .2, at $E[a] = .7$ this leads to a smaller $Var[\delta_0]$, while at $E[a] = .7$ this leads to a larger $Var[\delta_0]$.
 
 
@@ -42,17 +64,18 @@ Parameter combinations of ES and score reliability, according to Hunter & Schmid
 
 ```{r, echo = FALSE}
 
-m <- matrix(c(1,	.2,	.7,	.1,	.198,
-              1,	.2,	.8,	.1,	.228),
-            nrow = 2)
+m <- matrix(c(1,	.2,	.7,	.1,
+              1,	.2,	.8,	.1),
+            nrow = 2, byrow = T)
 
 df <- as.data.frame(m)
 
 names(df) <- c("$E[\\delta]$",
                "$Var[\\delta]$",
                "$E[a]$",
-               "$Var[a]$",
-               "$Var[\\delta\\_0]$")
+               "$Var[a]$")
+
+df$'$Var[\\delta\\_0]$' <- (df[,3]^2) * df[,2] + (df[,1]^2) * df[,4]
 
 knitr::kable(df)
 
@@ -60,798 +83,369 @@ knitr::kable(df)
 
 As Hunter & Schmidt point out, equation 1 is only valid “*If the level of reliability is independent of the true effect size across studies \[…\]”* (2014, p. 309).
 
-However, both parameters, ES and score reliability in their notation, can not be independent parameters by definition. ES is the “true” standardized mean difference, unaffected by sampling or measurement error. The ES is standardized using the total standard deviation, which is inflated by measurement error. Equation 1, demonstrating how Cohen’s d is computed demonstrates how the mean difference is standardized in this case. The ES on the other hand is standardized using the true standard deviation in the sense of CTT.
+However, both parameters, ES $\delta$ and score reliability $a$ in original notation can not be independent parameters by definition. ES $\delta$ is the “true” standardized mean difference, unaffected by sampling or measurement error. The ES $\delta_0$ is standardized using the total standard deviation, which is inflated by measurement error. Equation 1, demonstrating how Cohen’s d is computed demonstrates how the mean difference is standardized in this case. The ES $\delta$ on the other hand is standardized using the true standard deviation in the sense of CTT.
 
-*\$\$* *= \\frac{MD}{\\sigma_T}\$\$*
+$$\delta = \frac{\Delta}{\sigma_T}$$
 
-In equation 4, is the true standard deviation, the square root of the true score variance found in equation 2. The fact that the true standard deviation parameter is found both in equation 4 and equation 2 demonstrates that ES and score reliability can not be independent variables. Therefore, the basic premise of equation 3 is not fulfilled, as the assumption of variable independence could not be fulfilled.
+In equation 4, $\sigma_T$ is the true standard deviation, the square root of the true score variance found in equation 2. The fact that the true standard deviation parameter $\sigma_T$ is found both in equation 4 and equation 2 demonstrates that ES $\delta$ and score reliability $a$ can not be independent variables. Therefore, the basic premise of equation 3 is not fulfilled, as the assumption of variable independence could not be fulfilled.
 
-~~Hunter & Schmidt’s discussion of how score reliability affects heterogeneity in ESs is fatally flawed \[issues with the assumption underlying the equation\].~~
+Alternatively, assuming that both the mean differences and pooled standard deviations are no constant values across replications, meaning both carry non-zero heterogeneity, we can describe observed ESs as a random variable following a ratio distribution. Such a ratio distribution is the probability distribution, constructed by dividing one random variable by a second variable: $Z = \frac{X}{Y}$ (reference). If the distribution of the components is known, first order taylor approximation may be used to generate estimates of mean and variance of the ratio variable (reference). Using some additional assumptions, we use the Taylor-estimator of the ratio’s variance to demonstrate how differences in score reliability may affect heterogeneity in ES.
 
-Alternatively, assuming that both the mean differences and pooled standard deviations are no constant values across replications, meaning both carry non-zero heterogeneity, we can describe observed ESs as a random variable following a ratio distribution. Such a ratio distribution is the probability distribution, constructed by dividing one random variable by a second variable: \$Z = \\frac{X}{Y}\$ (reference). If the distribution of the components is known, first order taylor approximation may be used to generate estimates of mean and variance of the ratio variable (reference). Using some additional assumptions, we use the Taylor-estimator of the ratio’s variance to demonstrate how differences in score reliability may affect heterogeneity in ES.
-
-\$\$var\[Z\] \\approx \\frac{var\[X\]}{E\[Y\]\^2} - \\frac{2E\[X\]}{E\[Y\]\^3} cov\[X,Y\] + \\frac{E\[X\]\^2}{E\[Y\]\^4} var\[Y\]\$\$
+$$var[Z] \approx \frac{var[X]}{E[Y]^2} - \frac{2E[X]}{E[Y]^3} cov[X,Y] + \frac{E[X]^2}{E[Y]^4} var[Y]$$
 
 Assuming that the random variable are uncorrelated, simplifies the equation to
 
-\$\$var\[Z\] \\approx \\frac{var\[X\]}{E\[Y\]\^2} + \\frac{E\[X\]\^2}{E\[Y\]\^4} var\[Y\]\$\$
+$$var[Z] \approx \frac{var[X]}{E[Y]^2} + \frac{E[X]^2}{E[Y]^4} var[Y]$$
 
 Substituting for ES, unstandardized mean difference MD and pooled standard deviation SD leads to
 
-\$\$var\[ES\] \\approx \\frac{var\[MD\]}{E\[SD\]\^2} + \\frac{E\[MD\]\^2}{E\[SD\]\^4} var\[SD\]\$\$
+$$var[ES] \approx \frac{var[MD]}{E[SD]^2} + \frac{E[MD]^2}{E[SD]^4} var[SD]$$
 
-Correcting ES for score reliability is technically done by correcting the pooled standard deviation: \$SD_c = \\sqrt{a V}\$ . Since is always between zero and one, in the case of imperfect score reliability, SD_c will always be smaller than total SD. Additionally, if the variance in SD was introduced by differences in score reliability, these would be removed by the attenuation correction. However, there are two parameters that may introduce variance in SD across replications.
+Correcting ES for score reliability is technically done by correcting the pooled standard deviation: $SD_c = \sqrt{a V}$ . Since $a$ is always between zero and one, in the case of imperfect score reliability, $SD_c$ will always be smaller than total $SD$. Additionally, if the variance in $SD$ was introduced by differences in score reliability, these would be removed by the attenuation correction. However, there are two parameters that may introduce variance in $SD$ across replications.
 
-Firstly, as discussed, differences in score reliability may introduce variation to SD. Secondly however, the underlying latent variable we attempted to measure may have been not identically distributed across replications. If the populations where the replications are collected from are differently spread out in terms of the variable of interest, true differences in SD would remain. Re-analyses of the ManyLabs and Registered Replication Reports have shown that such differences in true variance across replications are the norm, not the exception. In that case, some variance in SD_c would remain, albeit smaller than the variance in SD. We reformulate equation X in terms of SD_c
+Firstly, as discussed, differences in score reliability may introduce variation to SD. Secondly however, the underlying latent variable we attempted to measure may have been not identically distributed across replications. If the populations where the replications are collected from are differently spread out in terms of the variable of interest, true differences in $SD$ would remain. Re-analyses of the ManyLabs and Registered Replication Reports have shown that such differences in true variance across replications are the norm, not the exception. In that case, some variance in $SD_c$ would remain, albeit smaller than the variance in $SD$. We reformulate equation X in terms of $SD_c$
 
-\$\$var\[ES_c\] \\approx \\frac{var\[MD\]}{E\[SD_c\]\^2} + \\frac{E\[MD\]\^2}{E\[SD_c\]\^4} var\[SD_c\]\$\$
+$$var[ES_c] \approx \frac{var[MD]}{E[SD_c]^2} + \frac{E[MD]^2}{E[SD_c]^4} var[SD_c]$$
 
-The implication of this equation is, again, not straightforward. The expected value of SD_c is guaranteed to be smaller than the expected value of uncorrected SD. Similarly, the variance in SD_c is guaranteed to be smaller than the uncorrected variance in SD. The expected value is always placed in the denominator of the function, while the variance is placed in the numerator of the second term in equation X+1. This implies that the variance in uncorrected ES can only be larger than the variance in ES_c, if the reduction in mean SD_c due to the attenuation correction increases the total equation result faster than the reduction in variance of SD_c decreases the total equation result. To illustrate this point, we consider some parameter combinations in table 2.
+The implication of this equation is, again, not straightforward. The expected value of $SD_c$ is guaranteed to be smaller than the expected value of uncorrected $SD$. Similarly, the variance in $SD_c$ is guaranteed to be smaller than the uncorrected variance in $SD$. The expected value is always placed in the denominator of the function, while the variance is placed in the numerator of the second term in equation X+1. This implies that the variance in uncorrected ES can only be larger than the variance in $ES_c$, if the reduction in mean $SD_c$ due to the attenuation correction increases the total equation result faster than the reduction in variance of $SD_c$ decreases the total equation result. To illustrate this point, we consider some parameter combinations in table 2.
 
 *Table 2*
 
 Parameter combinations, leading to varying degrees of heterogeneity in ES_c, based on the Taylor approximation to the variance of a ratio distribution
 
-<table>
-<tbody>
-<tr class="odd">
-<td><p>  </p></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><p>   </p></td>
-<td><p>   </p>
-<p>E[MD]</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>Var[MD}</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>E[SD]</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>Var[SD]</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>E[SD_c]</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>Var[SD_c]</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>Var[ES]</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>Var[ES_c]</p>
-<p>   </p></td>
-<td><p>  </p></td>
-</tr>
-<tr class="odd">
-<td><p>  </p></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><p>   </p></td>
-<td><p>   </p>
-<p>1</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.2^2</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>1</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.2^2</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.8</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.1^2</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.08</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.087</p>
-<p>   </p></td>
-<td><p>  </p></td>
-</tr>
-<tr class="odd">
-<td><p>  </p></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><p>   </p></td>
-<td><p>   </p>
-<p>1</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.2^2</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>1</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.2^2</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.8</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.05^2</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.08</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.069</p>
-<p>   </p></td>
-<td><p>  </p></td>
-</tr>
-<tr class="odd">
-<td><p>  </p></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><p>   </p></td>
-<td><p>   </p>
-<p>1</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.2^2</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>1</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.2^2</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.8</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>0</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.08</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.063</p>
-<p>   </p></td>
-<td><p>  </p></td>
-</tr>
-<tr class="odd">
-<td><p>  </p></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><p>   </p></td>
-<td><p>   </p>
-<p>1</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.2^2</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>1</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.2^2</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.9</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.1^2</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.08</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.064</p>
-<p>   </p></td>
-<td><p>  </p></td>
-</tr>
-<tr class="odd">
-<td><p>  </p></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><p>   </p></td>
-<td><p>   </p>
-<p>1</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.2^2</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>1</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.2^2</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.7</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.1^2</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.08</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.124</p>
-<p>   </p></td>
-<td><p>  </p></td>
-</tr>
-<tr class="odd">
-<td><p>  </p></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><p>   </p></td>
-<td><p>   </p>
-<p>1</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.2^2</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>1</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.2^2</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.5</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.1^2</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.08</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.32</p>
-<p>   </p></td>
-<td><p>  </p></td>
-</tr>
-<tr class="odd">
-<td><p> </p></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
+```{r, echo = FALSE}
 
-               Table 2 demonstrates that in scenarios, where either score reliability was very high to begin with (.9 in this case), leading to very little change in E\[SD\] to E\[SD_c\] (row 5), or where the remaining variance in SD_c was comparably low (rows 3 and 4), the attenuation correction led to a reduction in ES heterogeneity. In most other scenarios, where score reliability was lower (.7 and .5 in rows 6 and 7) or remaining variance in SD_c sufficiently large (row 2), the attenuation correction actually increased the heterogeneity in ES. Note that in the table, we did not manipulate expected value or variance of MD or SD.
+m2 <- matrix(c(1,	".2^2",	1,	".2^2",	.8,	".1^2",
+               1,	".2^2",	1,	".2^2",	.8,	".05^2",
+               1,	".2^2",	1,	".2^2",	.8,	0,
+               1,	".2^2",	1,	".2^2",	.9,	".1^2",
+               1,	".2^2",	1,	".2^2",	.7,	".1^2",
+               1,	".2^2",	1,	".2^2",	.5,	".1^2"),
+            nrow = 6, byrow = T)
 
- \[implications of this distribution concerning Var\[ES\] and how that relates to Var\[rel\]\]
+m_num <- matrix(c(1,	.2^2,	1,	.2^2,	.8,	.1^2,
+                  1,	.2^2,	1,	.2^2,	.8,	.05^2,
+                  1,	.2^2,	1,	.2^2,	.8,	0,
+                  1,	.2^2,	1,	.2^2,	.9,	.1^2,
+                  1,	.2^2,	1,	.2^2,	.7,	.1^2,
+                  1,	.2^2,	1,	.2^2,	.5,	.1^2),
+                nrow = 6, byrow = T)
+
+df2 <- as.data.frame(m2)
+
+names(df2) <- c("$E[\\Delta]$",
+                "$Var[\\Delta]$",
+                "$E[SD]$",
+                "$Var[SD]$",
+                "$E[SD_c]$",
+                "$Var[SD_c]$")
+
+
+
+df2$'$Var[\\delta_0]$' <- ((m_num[,2]) / (m_num[,3]^2)) + (((m_num[,1]^2) / (m_num[,3]^4) )* m_num[,4])
+df2$'$Var[\\delta]$' <- ((m_num[,2]) / (m_num[,5]^2)) + (((m_num[,1]^2) / (m_num[,5]^4) )* m_num[,6])
+
+
+knitr::kable(df2, digits = 3)
+
+```
+
+Table 2 demonstrates that in scenarios, where either score reliability was very high to begin with ($E[a] = .9$ in this case), leading to very little change in $E[SD]$ to $E[SD_c]$ (row 5), or where the remaining variance in $SD_c$ was comparably low (rows 3 and 4), the attenuation correction led to a reduction in ES heterogeneity. In most other scenarios, where score reliability was lower (.7 and .5 in rows 6 and 7) or remaining variance in $SD_c$ sufficiently large (row 2), the attenuation correction actually increased the heterogeneity in ES. Note that in the table, we did not manipulate expected value or variance of MD or SD.
 
 Reformulating the approximation of variance in a ratio variable demonstrates how correcting for differences in reliability might affect the heterogeneity in ES.
 
 Using analytical arguments from a reformulation of equation X we have demonstrated that differences in measuring quality often do not inflate estimates of heterogeneity. Instead, assuming that MD and SD are uncorrelated, we argue that in many circumstances differences in measuring quality deflate heterogeneity in standardized mean differences. This could be understood as a form of masking, where differences in measuring quality lead to a seemingly lower heterogeneity than we would have observed without any measurement error. Clearly, these arguments are in stark contrast with claims made by Hunter & Schmidt or Wiernik & Dahlke. To further illustrate this point, we turn towards an exemplary data-set, demonstrating that we can observe the deflation in heterogeneity in empirical data.
 
-**Part C**
+## Empirical Example
 
 An exemplary data-set needs to fulfil the following conditions: i) it needs to contain several (direct/close or conceptual) replications of something that can be described as a two-group experimental effect; ii) the dependent variable needs to be measured using an identical scale across administrations, with multiple indicators/items/responses, so that estimates of score reliability can be derived; iii) there needs to be statistically significant heterogeneity in the standardized effect sizes; and iv) there needs to be statistically significant heterogeneity in the score reliability across administrations.
 
-               While multi-site direct replication attempts, such as the Many Labs studies or Registered Replication Reports initially spring to mind, none of the studies replicated in these projects fulfil all four conditions. However, the Psychological Science Accelerator (PSA), even though their projects don’t have meta-analytic goals, provide data that may be transformed to fulfil all four conditions sufficiently. Specifically, we examined the data from PSACR002, one of the PSA’s studies concerning interventions and responses to the COVID-19 pandemic (reference). In the PSACR002 study, the authors assessed the effectiveness of reappraisal interventions on negative and positive emotion in participants grouped into four categories (reconstrual intervention, repurposing intervention, passive control, active control). The four groups may be collapsed into a single treatment group (reconstrual and repurposing) and a single control group (passive and active control). In total, Wang et al. (2021) assessed 21,644 individuals from 87 countries/regions. These countries/regions served as the study-level grouping variable for our meta-analyses.
+While multi-site direct replication attempts, such as the Many Labs studies or Registered Replication Reports initially spring to mind, none of the studies replicated in these projects fulfil all four conditions. However, the Psychological Science Accelerator (PSA), even though their projects don’t have meta-analytic goals, provide data that may be transformed to fulfil all four conditions sufficiently. Specifically, we examined the data from PSACR002, one of the PSA’s studies concerning interventions and responses to the COVID-19 pandemic (reference). In the PSACR002 study, the authors assessed the effectiveness of reappraisal interventions on negative and positive emotion in participants grouped into four categories (reconstrual intervention, repurposing intervention, passive control, active control). The four groups may be collapsed into a single treatment group (reconstrual and repurposing) and a single control group (passive and active control). In total, Wang et al. (2021) assessed 21,644 individuals from 87 countries/regions. These countries/regions served as the study-level grouping variable for our meta-analyses.
 
-               Wang et al. (2021) used several measures which may be promising for this study. Out of four measures they use to assess negative and positive emotions, three should fit conditions ii), ii) and iv); positive and negative emotional responses to ten photographs shown in the experimental trial, positive and negative state emotion after viewing the ten photographs and positive and negative anticipated emotions following the study. Over the following paragraphs, we will briefly describe the study design and measures used that are of interest to us. Details regarding the protocol, stimuli or additional measures used may be found at \[…\].
+Wang et al. (2021) used several measures which may be promising for this study. Out of four measures they use to assess negative and positive emotions, three should fit conditions ii), ii) and iv); positive and negative emotional responses to ten photographs shown in the experimental trial, positive and negative state emotion after viewing the ten photographs and positive and negative anticipated emotions following the study. Over the following paragraphs, we will briefly describe the study design and measures used that are of interest to us. Details regarding the protocol, stimuli or additional measures used may be found at […].
 
-               After randomization to one of four conditions, participants in the two intervention conditions received instructions on how to “change one’s thinking to change one’s emotions”, with more detail pertaining to the respective intervention. In the active control condition, participants were asked to reflect on their emotions, while in the passive control condition participants were asked to react naturally. Afterwards, the participants completed practice trials where they viewed two negative photographs in relation to the COVID-19 pandemic (e.g. people in hazmat suits, exhausted doctors), rated those photos on a Likert-scale from 1 to 5 on two questions: “how negative did the photo make you feel” and “how positive did the photo make you feel” (anchors: 1 = not at all, 5 = extremely). Depending on the condition the individual was randomized to, reminders of the strategy to be used were displayed.
+After randomization to one of four conditions, participants in the two intervention conditions received instructions on how to “change one’s thinking to change one’s emotions”, with more detail pertaining to the respective intervention. In the active control condition, participants were asked to reflect on their emotions, while in the passive control condition participants were asked to react naturally. Afterwards, the participants completed practice trials where they viewed two negative photographs in relation to the COVID-19 pandemic (e.g. people in hazmat suits, exhausted doctors), rated those photos on a Likert-scale from 1 to 5 on two questions: “how negative did the photo make you feel” and “how positive did the photo make you feel” (anchors: 1 = not at all, 5 = extremely). Depending on the condition the individual was randomized to, reminders of the strategy to be used were displayed.
 
-               In the experimental trials, the participants viewed 10, similarly negative, photographs of the COVID-19 pandemic and rated their emotions on each photograph using Likert-style responses to the positive/negative questions. After the experimental trials, individuals responded to five negative items from the Differential Emotions Scale on fear, anger, sadness, distrust, and stress. Similarly, they responded to five positive items from the same scale, on hope, gratitude, love, inspiration, and serenity. Averages of the five positive and negative items respectively were used as measures of state emotions after the experimental trials. Similarly, negative and positive anticipated emotions were assessed, by prefacing a question of “In the next week, to what extent, if at all, do you think you will feel each of the following?” and following up with the same items used to assess state emotions. All items or the measures used may be found in the appendix XXX, or at \[url…\].
+In the experimental trials, the participants viewed 10, similarly negative, photographs of the COVID-19 pandemic and rated their emotions on each photograph using Likert-style responses to the positive/negative questions. After the experimental trials, individuals responded to five negative items from the Differential Emotions Scale on fear, anger, sadness, distrust, and stress. Similarly, they responded to five positive items from the same scale, on hope, gratitude, love, inspiration, and serenity. Averages of the five positive and negative items respectively were used as measures of state emotions after the experimental trials. Similarly, negative and positive anticipated emotions were assessed, by prefacing a question of “In the next week, to what extent, if at all, do you think you will feel each of the following?” and following up with the same items used to assess state emotions. All items or the measures used may be found in the appendix XXX, or at [url…].
 
 *Table 3*
 
 Meta-analytic results concerning uncorrected and corrected standardized effect sizes across 3x2 measures of emotional response
 
-<table>
-<tbody>
-<tr class="odd">
-<td><p>  </p></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><p>   </p></td>
-<td><p>   </p>
-<p>Measure</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>Valence</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>ES</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>Tau ES</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>ES_c</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>Tau ES_c</p>
-<p>   </p></td>
-<td><p>  </p></td>
-</tr>
-<tr class="odd">
-<td><p>  </p></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><p>   </p></td>
-<td><p>   </p>
-<p>Photograph   Response</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>Positive</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>1.065   (.065)</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.377 (sq   .036)</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>1.219   (.080)</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.468 (sq   .056)</p>
-<p>   </p></td>
-<td><p>  </p></td>
-</tr>
-<tr class="odd">
-<td><p>  </p></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><p>   </p></td>
-<td><p>   </p>
-<p>Negative</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>-.663   (.040)</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.220 (sq .014)</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>-.747   (.047)</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.260 (sq   .019)</p>
-<p>   </p></td>
-<td><p>  </p></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><p>  </p></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><p>   </p></td>
-<td><p>   </p>
-<p>Emotional   State</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>Positive</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.213   (.018)</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.052 (sq   .003)</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.234   (.020)</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.054 (sq   .003)</p>
-<p>   </p></td>
-<td><p>  </p></td>
-</tr>
-<tr class="odd">
-<td><p>  </p></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><p>   </p></td>
-<td><p>   </p>
-<p>Negative</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>-.203   (.020)</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.071 (sq   .003)</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>-.221   (.022)</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.078   (.004)</p>
-<p>   </p></td>
-<td><p>  </p></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><p>  </p></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><p>   </p></td>
-<td><p>   </p>
-<p>Anticipated   Emotion</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>Positive</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.159   (.015)</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>0 (sq   .001)</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.172   (.016)</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>0 (.002)</p>
-<p>   </p></td>
-<td><p>  </p></td>
-</tr>
-<tr class="odd">
-<td><p>  </p></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><p>   </p></td>
-<td><p>   </p>
-<p>Negative</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>-.146   (.020)</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.073 (sq   .003)</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>-.145   (.022)</p>
-<p>   </p></td>
-<td><p>   </p></td>
-<td><p>   </p>
-<p>.079   (.004)</p>
-<p>   </p></td>
-<td><p>  </p></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><p> </p></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
+```{r, echo = FALSE}
+pos_SMDs.df <- read.csv(file = here("Data/Processed/SMDs_positive.csv"))
+neg_SMDs.df <- read.csv(file = here("Data/Processed/SMDs_negative.csv"))
+pos_state_SMDs.df <- read.csv(file = here("Data/Processed/SMDs_state_positive.csv"))
+neg_state_SMDs.df <- read.csv(file = here("Data/Processed/SMDs_state_negative.csv"))
+pos_antc_SMDs.df <- read.csv(file = here("Data/Processed/SMDs_antc_positive.csv"))
+neg_antc_SMDs.df <- read.csv(file = here("Data/Processed/SMDs_antc_negative.csv"))
+
+
+
+### photograph responses
+
+# fit a meta-analytic model to estimates of uncorrected Cohen's d, for positiveness-ratings
+pos_SMDs_rma_raw <- metafor::rma(yi = d_raw, 
+                                 sei = SE_d_raw, 
+                                 data = pos_SMDs.df,
+                                 measure = "GEN",
+                                 method = "REML")
+
+# fit a meta-analytic model to estimates of corrected Cohen's d, for positiveness-ratings
+pos_SMDs_rma_cor <- metafor::rma(yi = d_cor, 
+                                 sei = SE_d_cor, 
+                                 data = pos_SMDs.df,
+                                 measure = "GEN",
+                                 method = "REML")
+
+# fit a meta-analytic model to estimates of uncorrected Cohen's d, for negativeness-ratings
+neg_SMDs_rma_raw <- metafor::rma(yi = d_raw, 
+                                 sei = SE_d_raw, 
+                                 data = neg_SMDs.df,
+                                 measure = "GEN",
+                                 method = "REML")
+
+
+# fit a meta-analytic model to estimates of corrected Cohen's d, for negativeness-ratings
+neg_SMDs_rma_cor <- metafor::rma(yi = d_cor, 
+                                 sei = SE_d_cor, 
+                                 data = neg_SMDs.df,
+                                 measure = "GEN",
+                                 method = "REML")
+
+
+
+### state responses
+
+# fit a meta-analytic model to estimates of uncorrected Cohen's d, for positiveness-ratings
+pos_state_SMDs_rma_raw <- metafor::rma(yi = d_raw, 
+                                 sei = SE_d_raw, 
+                                 data = pos_state_SMDs.df,
+                                 measure = "GEN",
+                                 method = "REML")
+
+# fit a meta-analytic model to estimates of corrected Cohen's d, for positiveness-ratings
+pos_state_SMDs_rma_cor <- metafor::rma(yi = d_cor, 
+                                 sei = SE_d_cor, 
+                                 data = pos_state_SMDs.df,
+                                 measure = "GEN",
+                                 method = "REML")
+
+
+# fit a meta-analytic model to estimates of uncorrected Cohen's d, for negativeness-ratings
+neg_state_SMDs_rma_raw <- metafor::rma(yi = d_raw, 
+                                 sei = SE_d_raw, 
+                                 data = neg_state_SMDs.df,
+                                 measure = "GEN",
+                                 method = "REML")
+
+
+# fit a meta-analytic model to estimates of corrected Cohen's d, for negativeness-ratings
+neg_state_SMDs_rma_cor <- metafor::rma(yi = d_cor, 
+                                 sei = SE_d_cor, 
+                                 data = neg_state_SMDs.df,
+                                 measure = "GEN",
+                                 method = "REML")
+
+
+### anticipated respones
+
+# fit a meta-analytic model to estimates of uncorrected Cohen's d, for positiveness-ratings
+pos_antc_SMDs_rma_raw <- metafor::rma(yi = d_raw, 
+                                       sei = SE_d_raw, 
+                                       data = pos_antc_SMDs.df,
+                                       measure = "GEN",
+                                       method = "REML")
+
+# fit a meta-analytic model to estimates of corrected Cohen's d, for positiveness-ratings
+pos_antc_SMDs_rma_cor <- metafor::rma(yi = d_cor, 
+                                       sei = SE_d_cor, 
+                                       data = pos_antc_SMDs.df,
+                                       measure = "GEN",
+                                       method = "REML")
+
+
+# fit a meta-analytic model to estimates of uncorrected Cohen's d, for negativeness-ratings
+neg_antc_SMDs_rma_raw <- metafor::rma(yi = d_raw, 
+                                       sei = SE_d_raw, 
+                                       data = neg_antc_SMDs.df,
+                                       measure = "GEN",
+                                       method = "REML")
+
+
+# fit a meta-analytic model to estimates of corrected Cohen's d, for negativeness-ratings
+neg_antc_SMDs_rma_cor <- metafor::rma(yi = d_cor, 
+                                       sei = SE_d_cor, 
+                                       data = neg_antc_SMDs.df,
+                                       measure = "GEN",
+                                       method = "REML")
+
+
+
+df4 <- data.frame("Measure" = c(rep("Photograph Response", 2),
+                                rep("Emotional State", 2),
+                                rep("Anticipated Emotion",2)),
+                  "Valence" = rep(c("Positive", "Negative"), 3),
+                  "ES" = c(paste0(round(pos_SMDs_rma_raw$b[1], 3), " (", round(pos_SMDs_rma_raw$se, 3), ")"),
+                           paste0(round(neg_SMDs_rma_raw$b[1], 3), " (", round(neg_SMDs_rma_raw$se, 3), ")"),
+                           paste0(round(pos_state_SMDs_rma_raw$b[1], 3), " (", round(pos_state_SMDs_rma_raw$se, 3), ")"),
+                           paste0(round(neg_state_SMDs_rma_raw$b[1], 3), " (", round(neg_state_SMDs_rma_raw$se, 3), ")"),
+                           paste0(round(pos_antc_SMDs_rma_raw$b[1], 3), " (", round(pos_antc_SMDs_rma_raw$se, 3), ")"),
+                           paste0(round(neg_antc_SMDs_rma_raw$b[1], 3), " (", round(neg_antc_SMDs_rma_raw$se, 3), ")")
+                           ),
+                  "$\\tau_{ES}$"= c(paste0(round(sqrt(pos_SMDs_rma_raw$tau2), 3), " (sq. ", round(pos_SMDs_rma_raw$se.tau2, 3), ")"),
+                                    paste0(round(sqrt(neg_SMDs_rma_raw$tau2), 3), " (sq. ", round(neg_SMDs_rma_raw$se.tau2, 3), ")"),
+                                    paste0(round(sqrt(pos_state_SMDs_rma_raw$tau2), 3), " (sq. ", round(pos_state_SMDs_rma_raw$se.tau2, 3), ")"),
+                                    paste0(round(sqrt(neg_state_SMDs_rma_raw$tau2), 3), " (sq. ", round(neg_state_SMDs_rma_raw$se.tau2, 3), ")"),
+                                    paste0(round(sqrt(pos_antc_SMDs_rma_raw$tau2), 3), " (sq. ", round(pos_antc_SMDs_rma_raw$se.tau2, 3), ")"),
+                                    paste0(round(sqrt(neg_antc_SMDs_rma_raw$tau2), 3), " (sq. ", round(neg_antc_SMDs_rma_raw$se.tau2, 3), ")")
+                                    ),
+                  "$ES_c$" = c(paste0(round(pos_SMDs_rma_cor$b[1], 3), " (", round(pos_SMDs_rma_cor$se, 3), ")"),
+                               paste0(round(neg_SMDs_rma_cor$b[1], 3), " (", round(neg_SMDs_rma_cor$se, 3), ")"),
+                               paste0(round(pos_state_SMDs_rma_cor$b[1], 3), " (", round(pos_state_SMDs_rma_cor$se, 3), ")"),
+                               paste0(round(neg_state_SMDs_rma_cor$b[1], 3), " (", round(neg_state_SMDs_rma_cor$se, 3), ")"),
+                               paste0(round(pos_antc_SMDs_rma_cor$b[1], 3), " (", round(pos_antc_SMDs_rma_cor$se, 3), ")"),
+                               paste0(round(neg_antc_SMDs_rma_cor$b[1], 3), " (", round(neg_antc_SMDs_rma_cor$se, 3), ")")
+                               ),
+                  "$\\tau_{ES_c}$"= c(paste0(round(sqrt(pos_SMDs_rma_cor$tau2), 3), " (sq. ", round(pos_SMDs_rma_cor$se.tau2, 3), ")"),
+                                      paste0(round(sqrt(neg_SMDs_rma_cor$tau2), 3), " (sq. ", round(neg_SMDs_rma_cor$se.tau2, 3), ")"),
+                                      paste0(round(sqrt(pos_state_SMDs_rma_cor$tau2), 3), " (sq. ", round(pos_state_SMDs_rma_cor$se.tau2, 3), ")"),
+                                      paste0(round(sqrt(neg_state_SMDs_rma_cor$tau2), 3), " (sq. ", round(neg_state_SMDs_rma_cor$se.tau2, 3), ")"),
+                                      paste0(round(sqrt(pos_antc_SMDs_rma_cor$tau2), 3), " (sq. ", round(pos_antc_SMDs_rma_cor$se.tau2, 3), ")"),
+                                      paste0(round(sqrt(neg_antc_SMDs_rma_cor$tau2), 3), " (sq. ", round(neg_antc_SMDs_rma_cor$se.tau2, 3), ")")
+                                      )
+                  )
+
+
+```
+
+```{r, echo = FALSE}
+
+df4$Measure <- c(rep("Photograph Response", 2),
+                 rep("Emotional State", 2),
+                 rep("Anticipated Emotion",2))
+df4$Valence <- c(rep(c("Positive", "Negative"), 3))
+
+
+knitr::kable(df4)
+
+
+```
 
 In table 3 the results of meta-analyses on uncorrected and correct standardized effect sizes are summarised. In line with previous analytical arguments and the exemplary table of conditions, we observe that for effects of substantial size, meaning the absolute values of uncorrected ES for both photograph response measures, the heterogeneity in ES is increased by about 25% for the positive measures and about 20% for the negative measures after correcting for attenuation. For all other measures, where the difference in treatment and control groups is less strongly pronounced in terms of mean ES, heterogeneity also increases after correcting for attenuation, but a lot less strongly.
 
-               In figure 1 a), the meta-analytical results for the positive photograph response are visualised in a forest plot. Grey dots represent the uncorrected ESs for each country, with accompanying confidence interval represented by the bars surrounding the dots. The overlying black dots on the other hand represent the corrected ESs, with additional confidence intervals.  The position of the grey and black diamonds on the bottom display the meta-analytical estimate of mean ES, uncorrected (grey) and corrected (black), whereas the width of the diamonds represent the respective confidence interval. The forest plot shows that, as expected, the attenuation correction leads to larger ES and larger individual confidence intervals. Similarly, the meta-analytic estimate of mean ES is also larger, if score unreliability was corrected for, just like its accompanying confidence interval.
+In figure 1 a), the meta-analytical results for the positive photograph response are visualised in a forest plot. Grey dots represent the uncorrected ESs for each country, with accompanying confidence interval represented by the bars surrounding the dots. The overlying black dots on the other hand represent the corrected ESs, with additional confidence intervals.  The position of the grey and black diamonds on the bottom display the meta-analytical estimate of mean ES, uncorrected (grey) and corrected (black), whereas the width of the diamonds represent the respective confidence interval. The forest plot shows that, as expected, the attenuation correction leads to larger ES and larger individual confidence intervals. Similarly, the meta-analytic estimate of mean ES is also larger, if score unreliability was corrected for, just like its accompanying confidence interval.
 
 *Figure 1*
 
 Forest plot and visualised underlying density for positive measures of Photographs
 
+```{r, echo = FALSE}
+
+forest_plot_rel <- function(rma.fit_raw, rma.fit_cor, rma.data, ci.lvl = .975){
+  rma.data %>% 
+    mutate(cil_raw = d_raw - (1-(1-ci.lvl)/2) * (SE_d_raw),
+           ciu_raw = d_raw + (1-(1-ci.lvl)/2) * (SE_d_raw),
+           cil_cor = d_cor - (1-(1-ci.lvl)/2) * (SE_d_cor),
+           ciu_cor = d_cor + (1-(1-ci.lvl)/2) * (SE_d_cor)) %>% 
+    arrange(desc(d_raw)) %>% 
+    ggplot() +
+    # point estimate of raw d
+    geom_point(aes(x = d_raw, y = 1:nrow(rma.data)), colour = "darkgrey") +
+    # CI of point estimate of raw d
+    geom_segment(aes(x = cil_raw, y = 1:nrow(rma.data), xend = ciu_raw, yend = 1:nrow(rma.data)), colour = "darkgrey") +
+    geom_segment(aes(x = cil_raw, xend = cil_raw, y = (1:nrow(rma.data))+.3, yend = (1:nrow(rma.data))-.3), colour = "darkgrey") +
+    geom_segment(aes(x = ciu_raw, xend = ciu_raw, y =( 1:nrow(rma.data))+.3, yend = (1:nrow(rma.data))-.3), colour = "darkgrey") +
+    # point estiamte of corrected d
+    geom_point(aes(x = d_cor, y = 1:nrow(rma.data)), colour = "black") +
+    # CI of point estimate of corrected d
+    geom_segment(aes(x = cil_cor, y = 1:nrow(rma.data), xend = ciu_cor, yend = 1:nrow(rma.data)), colour = "black") +
+    geom_segment(aes(x = cil_cor, xend = cil_cor, y = (1:nrow(rma.data))+.3, yend = (1:nrow(rma.data))-.3), colour = "black") +
+    geom_segment(aes(x = ciu_cor, xend = ciu_cor, y = (1:nrow(rma.data))+.3, yend = (1:nrow(rma.data))-.3), colour = "black") +
+    # solid black line separating RMA-estimates from point estimates
+    geom_abline(slope = 0, intercept = -1, colour = "black") +
+    # adding diamond showing rma-estimate of raw d
+    geom_polygon(data = data.frame(x = c(rma.fit_raw$ci.ub, rma.fit_raw$b[1], rma.fit_raw$ci.lb, rma.fit_raw$b[1]),
+                                   y = c(-3, -3-.7, -3, -3+.7)),
+                 aes(x = x, y = y),
+                 fill = "darkgrey", colour = "darkgrey") +
+    # adding diamond showing rma-estimate of corrected d
+    geom_polygon(data = data.frame(x = c(rma.fit_cor$ci.ub, rma.fit_cor$b[1], rma.fit_cor$ci.lb, rma.fit_cor$b[1]),
+                                   y = c(-3, -3-.7, -3, -3+.7)),
+                 aes(x = x, y = y),
+                 colour = "black", fill = "black") +
+    # defining theme of plot (transparent background etc.)
+    theme(legend.position = "bottom", 
+          panel.background = element_rect(fill = "transparent"), 
+          plot.background = element_rect(fill = "transparent", colour = "transparent"), 
+          panel.grid.major.y = element_line(colour = "transparent"),
+          panel.grid.major.x = element_line(colour = "grey"),
+          panel.grid.minor = element_line(colour = "transparent"),
+          axis.ticks = element_line(colour = "grey"),
+          strip.background = element_rect(fill = "transparent"),
+          strip.text = element_text(size = 12)) +
+    scale_y_continuous(breaks = c(-3, 1:nrow(rma.data)), labels = c("RMA-estimate", rma.data$country)) +
+    labs(x = "Cohen's d",
+         y = "Country") 
+}
+
+underlying_density <- function(rma.fit_raw, rma.fit_cor){
+  
+  x_raw <- seq(rma.fit_raw$b[1] - 3*sqrt(rma.fit_raw$tau2), rma.fit_raw$b[1] + 3*sqrt(rma.fit_raw$tau2), length.out = 1000)
+  density_values_raw <- dnorm(x_raw, mean = rma.fit_raw$b[1], sd = sqrt(rma.fit_raw$tau2)) 
+  df_raw <- data.frame(x_raw, density_values_raw)
+  
+  x_cor <- seq(rma.fit_cor$b[1] - 3*sqrt(rma.fit_cor$tau2), rma.fit_cor$b[1] + 3*sqrt(rma.fit_cor$tau2), length.out = 1000)
+  density_values_cor <- dnorm(x_cor, mean = rma.fit_cor$b[1], sd = sqrt(rma.fit_cor$tau2)) 
+  df_cor <- data.frame(x_cor, density_values_cor)
+  
+  df <- data.frame(df_raw, df_cor)
+  
+  
+  ggplot(df) +
+    geom_line(aes(x = x_raw, y = density_values_raw), colour = "darkgrey") +
+    geom_area(aes(x = x_raw, y = density_values_raw), fill = "darkgrey") +
+    geom_line(aes(x = x_cor, y = density_values_cor), colour = "black", alpha = .7) +
+    geom_area(aes(x = x_cor, y = density_values_cor), fill = "black", alpha = .7) +
+    labs(x = "Cohen's d", 
+         y = "Density") +
+    theme(legend.position = "none", 
+          panel.background = element_rect(fill = "transparent"), 
+          plot.background = element_rect(fill = "transparent", colour = "transparent"), 
+          panel.grid.major.y = element_line(colour = "transparent"),
+          panel.grid.major.x = element_line(colour = "black"),
+          panel.grid.minor = element_line(colour = "transparent"),
+          axis.ticks = element_line(colour = "black"))
+  
+  
+}
+
+
+
+fig1.p <- gridExtra::arrangeGrob(forest_plot_rel(pos_SMDs_rma_raw, pos_SMDs_rma_cor, pos_SMDs.df) +
+                                   labs(subtitle = "a)"),
+                                 underlying_density(pos_SMDs_rma_raw, pos_SMDs_rma_cor) +
+                                   labs(subtitle = "b)"),
+                                 layout_matrix = matrix(c(rep(1, 90), rep(2, 54)), byrow = FALSE, ncol = 16, nrow = 9))
+
+plot(fig1.p)
+
+```
+
 *Note:* In a), grey dots represent individual uncorrected ES with grey bars representing the accompanying 95%-confidence intervals; black dots represent individual corrected ES wit black bars representing accompanying 95%-confidence intervals. In b), the grey density in the background represents the implied underlying distribution of uncorrected ES, while the black density in the foreground represents the implied underlying distribution of corrected ES.
 
 Part b) in figure 2 visualises the implied underlying “true” distribution of ESs, free of sampling error. Essentially, the meta-analytic estimates of mean ES and its heterogeneity are used to construct a density for a normal distribution with these specific parameters. In part b), again, the grey density represents the distribution of uncorrected ES, while the black density represents the distribution of ES corrected for score unreliability. The higher spike in the grey demonstrates that the heterogeneity in uncorrected ES is smaller than the heterogeneity for corrected ES. Generally, the distribution of corrected ES is positioned further to the right, as the average ES is larger, as can also be seen in the forest plot. Additionally, as the density is more “flat” and with a lower spike, it shows that the heterogeneity in corrected ES is larger as well.
 
-**Discussion**
+## Discussion
 
 Using both analytical arguments as well as an exemplary empirical dataset, we have demonstrated that differences in score reliability do not necessarily inflate heterogeneity in effect sizes. Inferences derived from the equation supplied in Hunter and Schmidt (ref) also do not warrant such a conclusion. Alternatively, describing standardised effect sizes in terms of a ratio distribution and approximating its variance, we have demonstrated that differences in score reliability may very well inflate or deflate variance in ES. In data supplied by the PSA (ref.) we have demonstrated that, across all measures, correcting observed ES for (un)reliability led to larger heterogeneity in ES than before correction.
 
-               These results fit in well with work recently published/preprinted by Olsson-Collentine et al. (2023). In a large simulation scheme, they demonstrate that differences in score reliability across administrations initially deflate heterogeneity in correlations. Only as the true heterogeneity in correlations grows larger, score reliability differences actually inflate heterogeneity as predicted by Wiernik and Dahlke (xxx). While correlations and standardized effect sizes are not identical, the way score (un)reliability affects these parameters is highly similar. Both correlations and ES are deflated by (un)reliability, implying that an attenuation correction increases these parameters.
+These results fit in well with work recently published/preprinted by Olsson-Collentine et al. (2023). In a large simulation scheme, they demonstrate that differences in score reliability across administrations initially deflate heterogeneity in correlations. Only as the true heterogeneity in correlations grows larger, score reliability differences actually inflate heterogeneity as predicted by Wiernik and Dahlke (xxx). While correlations and standardized effect sizes are not identical, the way score (un)reliability affects these parameters is highly similar. Both correlations and ES are deflated by (un)reliability, implying that an attenuation correction increases these parameters.
 
-               Heterogeneity in ES even in direct replications, where experimental factors are held as constant as possible, is substantial (Renkewitz, Fünderich, & Beinhauer, 2024). Previous assumptions on the role of score reliability differences, as discussed in Wiernik & Dahlke (xxx), has been that they “inflate” heterogeneity. If these previous assumptions were true, it would imply that the true heterogeneity in such projects may be considerably smaller and less alarming.
+Heterogeneity in ES even in direct replications, where experimental factors are held as constant as possible, is substantial (Renkewitz, Fünderich, & Beinhauer, 2024). Previous assumptions on the role of score reliability differences, as discussed in Wiernik & Dahlke (xxx), has been that they “inflate” heterogeneity. If these previous assumptions were true, it would imply that the true heterogeneity in such projects may be considerably smaller and less alarming.
 
 However, so far we have demonstrated that in several scenarios, differences in score reliability may in fact be masking, or “deflating” ES heterogeneity. This implies that the already substantial heterogeneity across direct replications may very well be even larger, if ES were corrected for (un)reliability. Understanding heterogeneity as an extent to which a theory or phenomenon is understood, heterogeneity that was actually deflated implies that the theory or phenomenon is understood even worse than initially assumed. If the score reliability varies across administrations because the measuring quality is not identical across populations (Beinhauer, Fünderich & Renkewitz, 2024), these differences additionally reflect the poor understanding of phenomenon or theory.
 
-\+ and – of this study
+The empirical arguments presented are based on a single study. While, based on the combination of analytical and empirical arguments, we are convinced that these differences in score reliability across replications oftentimes mask true heterogeneity, whether these results actually generalize beyond this data-set remains to be seen. Unfortunately, the behavioural sciences are in dire need of open-data that resembles multi-site replications. As the majority of results discussed over the last years (e.g. ManyLabs or Registered Replication Reports) employ single-indicator scales as dependent measures, score reliability can not be easily estimated in order to replicate our analyses.
 
-               The empirical arguments presented are based on a single study. While, based on the combination of analytical and empirical arguments, we are convinced that these differences in score reliability across replications oftentimes mask true heterogeneity, whether these results actually generalize beyond this data-set remains to be seen. Unfortunately, the behavioural sciences are in dire need of open-data that resembles multi-site replications. As the majority of results discussed over the last years (e.g. ManyLabs or Registered Replication Reports) employ single-indicator scales as dependent measures, score reliability can not be easily estimated in order to replicate our analyses.
-
-How to go from here
-
-               The analytical arguments presented in equation X could be improved by properly disentangling the terms concerning variance of SD and expected value of SD. As it stands now, the polynomial structure of the equation makes singling out an individual term rather difficult. However, in order to more easily understand in what way differences in score reliability lead to an inflation or deflation of heterogeneity, solving the equation for both the variance and expected value of SD would be highly beneficial.
+The analytical arguments presented in equation X could be improved by properly disentangling the terms concerning variance of SD and expected value of SD. As it stands now, the polynomial structure of the equation makes singling out an individual term rather difficult. However, in order to more easily understand in what way differences in score reliability lead to an inflation or deflation of heterogeneity, solving the equation for both the variance and expected value of SD would be highly beneficial.
