@@ -33,6 +33,8 @@ data_files <- list.files(here("Data/Extracted (Project) Data"), full.names = TRU
 data.list <- lapply(data_files, read.csv)
 
 
+data.list[[4]]$source <- substr(data.list[[4]]$source, start = nchar(data.list[[4]]$source) - 2, stop = nchar(data.list[[4]]$source))
+
 MASC_names <- substr(list.files(here("Data/Extracted (Project) Data")), 1, nchar(list.files(here("Data/Extracted (Project) Data")))-4) 
 
 

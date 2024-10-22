@@ -150,3 +150,26 @@ forest_plot_rel <- function(rma_df, aggregates, ci.lvl = .975){
 
 forest_plot_rel(ES_rma_df[c(1,2),], agg_L[[1]])
 
+
+
+plots3 <- lapply((1:length(agg_L)), FUN = function(idx){
+  
+  # name of MASC
+  name <- MASC_names[idx]
+  
+  # get aggregates per sample
+  y <- agg_L[[idx]]
+  
+  # get rma-results separated
+  rma_raw <- ES_rma_df[ES_rma_df$MASC == name & ES_rma_df$corr == 0,]
+  rma_corr <- ES_rma_df[ES_rma_df$MASC == name & ES_rma_df$corr == 1,]
+  
+  forest_plot_rel(ES_rma_df[ES_rma_df$MASC == name,], y)
+  
+})
+
+# combine plots using pathwork-infrastructure
+combined_plot3 <- Reduce('+', plots3) + plot_layout(ncol = 2) &
+  plot_annotation(theme = theme(plot.background = element_rect(fill = "transparent", colour = "transparent")))
+combined_plot3
+
