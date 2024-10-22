@@ -205,4 +205,19 @@ These results stand in stark contrast with the claims made by Wiernik & Dahlke (
 Correcting ES for imperfect score reliability, thereby implying that score reliability is identical across all samples, does not lead to a reduction in ES heterogeneity.
 
 To assess whether actual differences in score reliability existed, heterogeneity in score reliability is assessed across all four projects, making use of Reliability Generalization Meta-Analysis.
+Table 1 briefly summarises the results concerning differences in score reliability.
+From Cochran's Q-test, a hypothesis test on whether heterogeneity is larger than zero, we can gather that for the scales measuring all four phenomena, score reliability differs across samples.
+The individual heterogeneity in score reliabiliy tau_alpha, is rather low for the phenomena of Nosek, PSACR001 Anxiety, and PSACR002 negative photo.
+This is likely due to the higher levels of score reliability, averaging at least `r round(min(B_alpha_rma_df$mu_alpha[B_alpha_rma_df$mu_alpha >= .7]), 2)`.
+However, even for the phenomenon PSACR001_behav_int, where true mean score reliability is below .7 and the heterogeneity is rather large with tau_alpha = `r round(B_alpha_rma_df$tau_alpha[B_alpha_rma_df$mu_alpha < .7], 2)`, correcting for differences score reliability does not reduce ES heterogeneity.
+The analysis of score reliability highlights that the lack of reduction in corrected ES heterogeneity can not be explained away by a lack of variation in reliability or "insufficiently imperfect" reliability.
+
+
+```{r, echo = FALSE}
+tab_df <- B_alpha_rma_df %>% 
+  select(MASC, mu_alpha, tau_alpha, QE, k, QEp) %>% 
+  mutate(QEp = ifelse(QEp < .001, "<.001", QEp))
+
+knitr::kable(tab_df, digits = 3)
+```
 

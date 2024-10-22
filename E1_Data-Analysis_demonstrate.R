@@ -145,15 +145,6 @@ agg_L <- lapply(data.list, FUN = function(x){
 
 saveRDS(agg_L, file = here("Data/Processed/Aggregates_simple.csv"))
 
-# function to estimate heterogeneity in Cronbach's Alpha, if transformation was used
-var_Bonnett_backtransformed <- function(rma_obj){
-  (((-exp(rma_obj$b[1]))^2) * rma_obj$tau2) + (.5*((-exp(rma_obj$b[1]))^2)*(rma_obj$tau2^2)) + ((-exp(rma_obj$b[1])) * (-exp(rma_obj$b[1])) * (rma_obj$tau2^2))
-}
-
-# function to estimate mean value of Cronbach's Alpha, if transformation was used
-mean_Bonnett_backtransformed <- function(rma_obj){
-  1 - exp(rma_obj$b[1]) + ((-exp(rma_obj$b[1])) / 2) * rma_obj$tau2
-}
 
 
 # perform meta-analyses of transformed score reliability
@@ -189,9 +180,11 @@ B_alpha_rma <- lapply(agg_L, FUN = function(x){
   # return data-frame with all important aggregates
   return(data.frame(tau2_BA = BA_rma$tau2,
                     mu_BA = BA_rma$b[1],
-                    tau2_alpha = var_Bonnett_backtransformed(BA_rma),
+                    tau_alpha = sqrt(var_Bonnett_backtransformed(BA_rma)),
                     mu_alpha = mean_Bonnett_backtransformed(BA_rma),
+                    QE = BA_rma$QE,
                     k = nrow(x),
+                    QEp = BA_rma$QEp,
                     I2 = BA_rma$I2,
                     H2 = BA_rma$H2))
   

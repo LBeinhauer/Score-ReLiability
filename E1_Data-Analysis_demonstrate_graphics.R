@@ -25,6 +25,9 @@ apply(as.matrix(packages), MARGIN = 1, FUN = function(x) {
   }
 })
 
+source(here("ReLiability_Function-library.R"))
+
+
 B_alpha_rma_df <- read.csv(here("Data/Processed/Reliability_analysis.csv"))
 
 ES_rma_df <- read.csv(here("Data/Processed/Aggregates_ES_analysis.csv"))
@@ -96,57 +99,6 @@ ggsave(filename = here("Graphics/densities_four.png"),
        plot = last_plot(),
        width = 11, height = 5)
 
-
-
-forest_plot_rel <- function(rma_df, aggregates, ci.lvl = .975){
-  rma_raw <- rma_df[rma_df$corr == 0,]
-  rma_corr <- rma_df[rma_df$corr == 1,]
-  
-  aggregates %>% 
-    mutate(cil_raw = d_raw - (1-(1-ci.lvl)/2) * (SE_d),
-           ciu_raw = d_raw + (1-(1-ci.lvl)/2) * (SE_d),
-           cil_corr = d_corr - (1-(1-ci.lvl)/2) * (SE_d_corr),
-           ciu_corr = d_corr + (1-(1-ci.lvl)/2) * (SE_d_corr)) %>% 
-    arrange(desc(d_raw)) %>% 
-    ggplot() +
-    # point estimate of raw d
-    geom_point(aes(x = d_raw, y = 1:nrow(aggregates)), colour = "darkgrey") +
-    # CI of point estimate of raw d
-    geom_segment(aes(x = cil_raw, y = 1:nrow(aggregates), xend = ciu_raw, yend = 1:nrow(aggregates)), colour = "darkgrey") +
-    geom_segment(aes(x = cil_raw, xend = cil_raw, y = (1:nrow(aggregates))+.3, yend = (1:nrow(aggregates))-.3), colour = "darkgrey") +
-    geom_segment(aes(x = ciu_raw, xend = ciu_raw, y =( 1:nrow(aggregates))+.3, yend = (1:nrow(aggregates))-.3), colour = "darkgrey") +
-    # point estiamte of corrected d
-    geom_point(aes(x = d_corr, y = 1:nrow(aggregates)), colour = "black") +
-    # CI of point estimate of corrected d
-    geom_segment(aes(x = cil_corr, y = 1:nrow(aggregates), xend = ciu_corr, yend = 1:nrow(aggregates)), colour = "black") +
-    geom_segment(aes(x = cil_corr, xend = cil_corr, y = (1:nrow(aggregates))+.3, yend = (1:nrow(aggregates))-.3), colour = "black") +
-    geom_segment(aes(x = ciu_corr, xend = ciu_corr, y = (1:nrow(aggregates))+.3, yend = (1:nrow(aggregates))-.3), colour = "black") +
-    # solid black line separating RMA-estimates from point estimates
-    geom_abline(slope = 0, intercept = -1, colour = "black") +
-    # adding diamond showing rma-estimate of raw d
-    geom_polygon(data = data.frame(x = c(rma_raw$ci.ub, rma_raw$mu, rma_raw$ci.lb, rma_raw$mu),
-                                   y = c(-3, -3-.7, -3, -3+.7)),
-                 aes(x = x, y = y),
-                 fill = "darkgrey", colour = "darkgrey") +
-    # adding diamond showing rma-estimate of corrected d
-    geom_polygon(data = data.frame(x = c(rma_corr$ci.ub, rma_corr$mu, rma_corr$ci.lb, rma_corr$mu),
-                                   y = c(-3, -3-.7, -3, -3+.7)),
-                 aes(x = x, y = y),
-                 colour = "black", fill = "black") +
-    # defining theme of plot (transparent background etc.)
-    theme(legend.position = "bottom", 
-          panel.background = element_rect(fill = "transparent"), 
-          plot.background = element_rect(fill = "transparent", colour = "transparent"), 
-          panel.grid.major.y = element_line(colour = "transparent"),
-          panel.grid.major.x = element_line(colour = "grey"),
-          panel.grid.minor = element_line(colour = "transparent"),
-          axis.ticks = element_line(colour = "grey"),
-          strip.background = element_rect(fill = "transparent"),
-          strip.text = element_text(size = 12)) +
-    scale_y_continuous(breaks = c(-3, 1:nrow(aggregates)), labels = c("RMA-estimate", aggregates$source)) +
-    labs(x = "Cohen's d",
-         y = "Country") 
-}
 
 forest_plot_rel(ES_rma_df[c(1,2),], agg_L[[1]])
 
