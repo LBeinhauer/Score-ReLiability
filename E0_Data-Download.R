@@ -15,8 +15,28 @@ apply(as.matrix(packages), MARGIN = 1, FUN = function(x) {
 })
 
 
+### Many Labs 1
 
+# download the zipped-directory of Many Labs 1 data, from the OSF
+osfr::osf_retrieve_file("https://osf.io/nqg97") %>% 
+  osfr::osf_download(path = here("Data/Downloaded Data"), conflicts = "overwrite")
+# the data-file is named very generically "Datasets.zip" - it is renamed here to avoid confusion
+file.rename(here("Data/Downloaded Data/Datasets.zip"), here("Data/Downloaded Data/ML1_Datasets.zip"))
+
+# unzip the directory and extract only the specific data-file required for anayses
+unzip(here("Data/Downloaded Data/ML1_Datasets.zip"),
+      files = "Data/CleanedDataset.sav",
+      exdir = here("Data/Original Data/ManyLabs1"),
+      junkpaths = TRUE)
+
+### PSACR001
+
+# use osfr-package to download PSACR001-data, on IPD-level, pre-cleaned
+osfr::osf_retrieve_file("https://osf.io/jecmr") %>%
+  osfr::osf_download(path = here("Data/Original Data/PSACR001"))
+
+### PSACR002
 
 # use osfr-package to download PSACR002-data, on IPD-level, pre-cleaned
 osfr::osf_retrieve_file("https://osf.io/rwksu") %>%
-  osfr::osf_download(path = here("Data/Downloaded/"))
+  osfr::osf_download(path = here("Data/Original Data/PSACR002"))
