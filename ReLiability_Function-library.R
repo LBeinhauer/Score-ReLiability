@@ -69,7 +69,33 @@ bootstrap_SE_varE <- function(data, indices){
   # estimate errorcsore variance sigma^2_E
   var_E <- var_X - var_T
   
-  return(var_E)
+  return(sqrt(var_E))
+  
+}
+
+## a function required for the boot-package, which allows to estimate the error score
+##  variance in a bootstrapped sample
+bootstrap_SE_varX <- function(data, indices){
+  
+  # select subset of data.
+  d <- data[indices,]
+  
+  d1 <- d[d$group == 1, -(which(names(d) %in% c("source", "group")))]
+  d0 <- d[d$group == 0, -(which(names(d) %in% c("source", "group")))]
+  
+  mv1 <- rowMeans(d1)
+  mv0 <- rowMeans(d0)
+  
+  sd1 <- sqrt(mean((mv1 - mean(mv1))^2))
+  sd0 <- sqrt(mean((mv0 - mean(mv0))^2))
+  
+  n1 <- length(d1)
+  n0 <- length(d0)
+
+  # pooled standard deviation
+  var_X <- ((n1-1)*sd1^2 + (n0-1)*sd0^2)/(n1+n0-2)
+  
+  return(sqrt(var_X))
   
 }
 
@@ -77,9 +103,14 @@ bootstrap_SE_varE <- function(data, indices){
 # Function to estimate bootstrapped Standard Errors for either true or error score variance component,
 #  specifically made for empirical data (e.g. containing missing data)
 # expects data in a data.frame
-apply_Bootstrap_SE_Project.specific <- function(data, R = 100){
+apply_Bootstrap_SE_Project.specific <- function(data, R = 100, component = "E"){
   
-  stat.f <- bootstrap_SE_varE
+  if(component == "E"){
+    stat.f <- bootstrap_SE_varE
+  }else{
+    stat.f <- bootstrap_SE_varX
+  }
+  
  
   
   # suppress messages, as coefficientalpha-package can be quite "noisy"
@@ -128,12 +159,18 @@ apply_Bootstrap_SE_Project.specific <- function(data, R = 100){
       # estimate errorcsore variance sigma^2_E
       var_E <- var_X - var_T
       
+      if(component == "E"){
+        var_res <- var_E
+      }else{
+        var_res <- var_X
+      }
+      
       # return a data.frame, containing bootstrapped estimates of the standard error of the log-transformed
       #  variance component, as well as the bootstrapped mean of the log-transformed variance component. 
       # additionaly, return the empirical estimate using the full replication sample
       return(data.frame(SE = sd(log(bvar$t)), 
                         boot.mean = mean(log(bvar$t)),
-                        var.emp = log(var_E)))
+                        var.emp = log(sqrt(var_res))))
     })
   ) # output of this apply-loop is a List, each list-element consisting of estimates for a single replication
   

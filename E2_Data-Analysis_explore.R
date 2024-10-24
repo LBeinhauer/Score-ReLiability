@@ -54,7 +54,7 @@ varE_est.L <- lapply(seq_along(data.list), FUN = function(x){
   # sometimes calculation of SE might lead to issues, as negative variances can not be log-transformed
   #  therefore, function is run within a tryCatch-environment, so the script does not crash
   # apply_Bootstrap_SE_Project.specific is the project-specific function
-  tryCatch(apply_Bootstrap_SE_Project.specific(na.omit(data.list[[x]])),
+  tryCatch(apply_Bootstrap_SE_Project.specific(na.omit(data.list[[x]]), component = "E"),
            
            # print error to console
            error = function(e)(cat("ERROR: ", conditionMessage(e), " - ",
@@ -89,40 +89,19 @@ names(varE_rma.list) <- names(data.list)
 
 
 # generate estimates of ln-observed score variance for each sample & projects
-varX_est.L <- lapply(data.list, FUN = function(data){
+varX_est.L <- lapply(seq_along(data.list), FUN = function(x){
   
-  # apply over labs in MASC
-  df <- apply(as.matrix(seq_along(unique(data$source))), MARGIN = 1, FUN = function(x){
-    
-    # remove source-col & omit NAs
-    d <- na.omit(data[data$source == unique(data$source)[x],-grep("source", names(data))])
-    
-    d1 <- d[d$group == 1, -(which(names(d) %in% c("source", "group")))]
-    d0 <- d[d$group == 0, -(which(names(d) %in% c("source", "group")))]
-    
-    mv1 <- rowMeans(d1)
-    mv0 <- rowMeans(d0)
-    
-    sd1 <- sqrt(mean((mv1 - mean(mv1))^2))
-    sd0 <- sqrt(mean((mv0 - mean(mv0))^2))
-    
-    n1 <- length(d1)
-    n0 <- length(d0)
-    
-    # pooled variance
-    var_X <- ((n1-1)*sd1^2 + (n0-1)*sd0^2)/(n1+n0-2)
-    
-    # store SE, ln(varX) & varX
-    return(data.frame(SE = sqrt((2/(nrow(d) - 1))), 
-                      var.emp = log(var_X)))
-    
-  })
-  
-  # return formatted data.frame
-  df.formatted <- data.frame(SE = sapply(df, FUN = function(x){x$SE}),
-                             var.est = sapply(df, FUN = function(x){x$var.emp}),
-                             source = unique(data$source))
-  
+  # sometimes calculation of SE might lead to issues, as negative variances can not be log-transformed
+  #  therefore, function is run within a tryCatch-environment, so the script does not crash
+  # apply_Bootstrap_SE_Project.specific is the project-specific function
+  tryCatch(apply_Bootstrap_SE_Project.specific(na.omit(data.list[[x]]), component = "X"),
+           
+           # print error to console
+           error = function(e)(cat("ERROR: ", conditionMessage(e), " - ",
+                                   substr(names(data.list), 
+                                          (regexpr("Project) Data/", names(data.list)) + 14), 
+                                          (nchar(names(data.list))-4))[x], 
+                                   " - ", x, "\n")))
 })
 
 
@@ -154,6 +133,7 @@ vars_df <- data.frame(mu_varE = sapply(varE_rma.list, FUN = function(x){bt_var_m
                       tau2_varX = sapply(varX_rma.list, FUN = function(x){bt_var_v(x)}))
 
 vars_df$tau2_varE / vars_df$tau2_varX
+vars_df$mu_varE / vars_df$mu_varX
 
 write.csv(vars_df, here("Data/Processed/Variances_analysis.csv"), row.names = FALSE)
 
