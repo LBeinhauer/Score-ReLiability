@@ -26,6 +26,14 @@ bt_var_v <- function(rma_obj){
   (exp(rma_obj$tau2) - 1) * exp((2 * rma_obj$b[1]) + rma_obj$tau2)
 }
 
+bt_var_m2 <- function(rma_obj){
+  exp(.5*rma_obj$b[1] + (.5*.25*rma_obj$tau2))
+}
+
+bt_var_v2 <- function(rma_obj){
+  (exp(.5*rma_obj$tau2) - 1) * exp((2 * .5 * rma_obj$b[1]) + .25*rma_obj$tau2)
+}
+
 
 
 
@@ -95,7 +103,48 @@ bootstrap_SE_varX <- function(data, indices){
   # pooled standard deviation
   var_X <- ((n1-1)*sd1^2 + (n0-1)*sd0^2)/(n1+n0-2)
   
-  return(sqrt(var_X))
+  return(var_X)
+  
+}
+
+
+## a function required for the boot-package, which allows to estimate the true score
+##  variance in a bootstrapped sample
+bootstrap_SE_varT <- function(data, indices){
+  
+  # select subset of data.
+  d <- data[indices,]
+  
+  d1 <- d[d$group == 1, -(which(names(d) %in% c("source", "group")))]
+  d0 <- d[d$group == 0, -(which(names(d) %in% c("source", "group")))]
+  
+  mv1 <- rowMeans(d1)
+  mv0 <- rowMeans(d0)
+  
+  sd1 <- sqrt(mean((mv1 - mean(mv1))^2))
+  sd0 <- sqrt(mean((mv0 - mean(mv0))^2))
+  
+  n1 <- length(d1)
+  n0 <- length(d0)
+  
+  C1 <- cov(d1)
+  j1 <- dim(C1)[1]
+  alpha1 <- (1 - sum(diag(C1))/sum(C1)) * (j1/(j1 - 1))
+  
+  # compute Cronbach's Alpha
+  C0 <- cov(d0)
+  j0 <- dim(C0)[1]
+  alpha0 <- (1 - sum(diag(C0))/sum(C0)) * (j0/(j0 - 1))
+  
+  alpha_pooled <- (n1 / (n0 + n1)) * alpha1 + (n0 / (n0 + n1)) * alpha0
+  
+  # pooled standard deviation
+  var_X <- ((n1-1)*sd1^2 + (n0-1)*sd0^2)/(n1+n0-2)
+  
+  # estimate true score variance sigma^2_T
+  var_T <- as.numeric(alpha_pooled * var_X)
+  
+  return(var_T)
   
 }
 
@@ -107,11 +156,13 @@ apply_Bootstrap_SE_Project.specific <- function(data, R = 100, component = "E"){
   
   if(component == "E"){
     stat.f <- bootstrap_SE_varE
-  }else{
+  }
+  if(component == "T"){
+    stat.f <- bootstrap_SE_varT
+  }
+  if(component == "X"){
     stat.f <- bootstrap_SE_varX
   }
-  
- 
   
   # suppress messages, as coefficientalpha-package can be quite "noisy"
   suppressMessages(
@@ -161,16 +212,21 @@ apply_Bootstrap_SE_Project.specific <- function(data, R = 100, component = "E"){
       
       if(component == "E"){
         var_res <- var_E
-      }else{
+      }
+      if(component == "X"){
         var_res <- var_X
       }
+      if(component == "T"){
+        var_res <- var_T
+      }
+    
       
       # return a data.frame, containing bootstrapped estimates of the standard error of the log-transformed
       #  variance component, as well as the bootstrapped mean of the log-transformed variance component. 
       # additionaly, return the empirical estimate using the full replication sample
       return(data.frame(SE = sd(log(bvar$t)), 
                         boot.mean = mean(log(bvar$t)),
-                        var.emp = log(sqrt(var_res))))
+                        var.emp = log(var_res)))
     })
   ) # output of this apply-loop is a List, each list-element consisting of estimates for a single replication
   
