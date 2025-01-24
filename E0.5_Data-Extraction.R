@@ -12,7 +12,7 @@
 
 
 
-packages <- c("tidyverse", "here", "data.table", "haven")
+packages <- c("tidyverse", "here", "data.table", "haven", "readxl")
 
 # check, whether library already installed or not - install and load as needed:
 apply(as.matrix(packages), MARGIN = 1, FUN = function(x) {

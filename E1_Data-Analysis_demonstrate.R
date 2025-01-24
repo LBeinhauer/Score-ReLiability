@@ -26,6 +26,7 @@ apply(as.matrix(packages), MARGIN = 1, FUN = function(x) {
 })
 
 
+source(here("ReLiability_Function-library.R"))
 
 data_files <- list.files(here("Data/Extracted (Project) Data"), full.names = TRUE)
 
@@ -38,10 +39,28 @@ data.list[[4]]$source <- substr(data.list[[4]]$source, start = nchar(data.list[[
 MASC_names <- substr(list.files(here("Data/Extracted (Project) Data")), 1, nchar(list.files(here("Data/Extracted (Project) Data")))-4) 
 
 
+effect_index <- MASC_names %in% c("Albarracin_Priming_SAT", "Alter_Analytic_Processing",
+                                  "Carter_Flag_Priming", "Caruso_Currency_Priming",
+                                  "Dijksterhuis_trivia", "Finkel_Exit_Forgiveness", 
+                                  "Finkel_Neglect_Forgiveness",
+                                  "Giessner_Vertical_Position", "Hart_Criminal_Intentionality",    
+                                  "Hart_Detailed_Processing", "Hart_Intention_Attribution",       
+                                  "Husnu_Imagined_Contact", "Nosek_Explicit_Art",
+                                  "Nosek_Explicit_Math", "PSACR001_anxiety_int", 
+                                  "PSACR001_behav_int", 
+                                  "PSACR002_neg_photo", "Shnabel_Willingness_Reconcile_Rev",
+                                  "Shnabel_Willingness_Reconcile_RPP", "Srull_Behaviour_Hostility",
+                                  "Srull_Ronald_Hostility", "Tversky_Directionality_Similarity1", 
+                                  "Zhong_Desirability_Cleaning"
+)
+
+
 # generate aggregates for each lab/country/source within a single meta-analysis. This is done by
 #  running an lapply-loop across all MASCs (meta-analyses, see MetaPipeX, Fünderich et al. 2024)
 #  and, nested within each loop, a second lapply-loop across all labs/countries/sources (samples)
-agg_L <- lapply(data.list, FUN = function(x){
+agg_L <- lapply(which(effect_index), FUN = function(idx){
+  
+  x <- data.list[[idx]]
   
   # loop across labs/countries/sources (samples) within a single MASC
   MASC_MD_L <- lapply(unique(x$source), FUN = function(lab){
@@ -143,9 +162,12 @@ agg_L <- lapply(data.list, FUN = function(x){
 })
 
 
+
+
+
 saveRDS(agg_L, file = here("Data/Processed/Aggregates_simple.csv"))
 
-
+MASC_names[effect_index]
 
 # perform meta-analyses of transformed score reliability
 B_alpha_rma <- lapply(agg_L, FUN = function(x){
@@ -182,6 +204,8 @@ B_alpha_rma <- lapply(agg_L, FUN = function(x){
                     mu_BA = BA_rma$b[1],
                     tau_alpha = sqrt(var_Bonnett_backtransformed(BA_rma)),
                     mu_alpha = mean_Bonnett_backtransformed(BA_rma),
+                    mu_alpha_ul = 1 - exp(BA_rma$ci.lb) + ((-exp(BA_rma$ci.lb)) / 2) * BA_rma$tau2,
+                    mu_alpha_ll = 1 - exp(BA_rma$ci.ub) + ((-exp(BA_rma$ci.ub)) / 2) * BA_rma$tau2,
                     QE = BA_rma$QE,
                     k = nrow(x),
                     QEp = BA_rma$QEp,
@@ -192,7 +216,7 @@ B_alpha_rma <- lapply(agg_L, FUN = function(x){
 
 # construct a single data-frame from list element
 B_alpha_rma_df <- do.call(rbind, B_alpha_rma) %>% 
-  mutate(MASC = MASC_names)
+  mutate(MASC = MASC_names[effect_index])
 
 write.csv(B_alpha_rma_df, here("Data/Processed/Reliability_analysis.csv"), row.names = FALSE)
 
@@ -224,6 +248,7 @@ names(d_rma_full_L) <- MASC_names[effect_index]
 
 ES_rma_df <- data.frame(mu = unlist(lapply(d_rma_full_L, FUN = function(x){c(x$rma_raw$b[1], x$rma_cor$b[1])})),
                         se = unlist(lapply(d_rma_full_L, FUN = function(x){c(x$rma_raw$se, x$rma_cor$se)})),
+                        pval = unlist(lapply(d_rma_full_L, FUN = function(x){c(x$rma_raw$pval, x$rma_cor$pval)})),
                         ci.lb = unlist(lapply(d_rma_full_L, FUN = function(x){c(x$rma_raw$ci.lb, x$rma_cor$ci.lb)})),
                         ci.ub = unlist(lapply(d_rma_full_L, FUN = function(x){c(x$rma_raw$ci.ub, x$rma_cor$ci.ub)})),
                         tau = sqrt(unlist(lapply(d_rma_full_L, FUN = function(x){c(x$rma_raw$tau2, x$rma_cor$tau2)}))),
@@ -231,11 +256,15 @@ ES_rma_df <- data.frame(mu = unlist(lapply(d_rma_full_L, FUN = function(x){c(x$r
                         k = unlist(lapply(d_rma_full_L, FUN = function(x){c(x$rma_raw$k, x$rma_cor$k)})),
                         QEp = unlist(lapply(d_rma_full_L, FUN = function(x){c(x$rma_raw$QEp, x$rma_cor$QEp)})),
                         I2 = unlist(lapply(d_rma_full_L, FUN = function(x){c(x$rma_raw$I2, x$rma_cor$I2)})),
-                        corr = rep(c(0,1), 4),
-                        MASC = rep(MASC_names, each = 2)) %>% 
+                        corr = rep(c(0,1), length(d_rma_full_L)),
+                        MASC = rep(MASC_names[effect_index], each = 2)) %>% 
   mutate(CV = tau/mu)
 
 
 write.csv(ES_rma_df, here("Data/Processed/Aggregates_ES_analysis.csv"), row.names = FALSE)
+
+
+
+
 
 
