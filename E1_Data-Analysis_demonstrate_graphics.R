@@ -178,21 +178,24 @@ combined_plot3
 
 
 
-res_tab <- ES_rma_df[ES_rma_df$corr == 0,][nn_eff_idx,] %>% 
-  select(MASC, mu, se, pval, tau, QE, k, QEp) %>% 
-  mutate(mu_str = paste0(round(mu, 3), " (", round(se, 3), ")"),
-         QE_str = paste0(round(QE, 3), " (", k-1, ")"))
-
-MD_tab <- knitr::kable(res_tab %>% 
-               select(MASC, mu_str, pval, tau, QE_str, QEp), 
-             digits = 3, 
-             col.names = c("MASC", "$\\mu_{ES}$ (SE)", "p", "$\\tau$", "$Q_E$ (df)", "p"))
-
-writeLines(MD_tab, "C:/Users/Lukas/Downloads/markdown_table.txt")
-write.csv(res_tab %>% 
-            select(MASC, mu_str, pval, tau, QE_str, QEp), 
-          "C:/Users/Lukas/Downloads/markdown_table.csv",
-          row.names = F)
+# res_tab <- ES_rma_df[ES_rma_df$corr == 0,][nn_eff_idx,] %>% 
+#   select(MASC, mu, se, pval, tau, QE, k, QEp) %>% 
+#   mutate(mu_str = paste0(round(mu, 3), " (", round(se, 3), ")"),
+#          QE_str = paste0(round(QE, 3), " (", k-1, ")"))
+# 
+# MD_tab <- knitr::kable(res_tab %>% 
+#                select(MASC, mu_str, pval, tau, QE_str, QEp), 
+#              digits = 3, 
+#              col.names = c("MASC", "$\\mu_{ES}$ (SE)", "p", "$\\tau$", "$Q_E$ (df)", "p"))
+# 
+# writeLines(MD_tab, "C:/Users/Lukas/Downloads/markdown_table.txt")
+# write.csv(res_tab %>% 
+#             mutate_if(is.numeric, round, 3) %>% 
+#             mutate(pval = ifelse(pval < .001, yes = "<.001", no = pval),
+#                    QEp = ifelse(pval < .001, yes = "<.001", no = QEp)) %>% 
+#             select(MASC, mu_str, pval, tau, QE_str, QEp), 
+#           "C:/Users/Lukas/Downloads/markdown_table.csv",
+#           row.names = F)
 
 res_tab <- data.frame(MASC = ES_rma_df$MASC[which(ES_rma_df$corr == 0)],
                       k = ES_rma_df$k[which(ES_rma_df$corr == 0)],
@@ -216,7 +219,7 @@ res_tab <- data.frame(MASC = ES_rma_df$MASC[which(ES_rma_df$corr == 0)],
 
 write.csv(res_tab[nn_eff_idx,] %>% 
             select(MASC, tau_raw, QE_raw_str, QEp_raw, tau_cor, QE_cor_str, QEp_cor), 
-          "C:/Users/Lukas/Downloads/markdown_table.csv",
+          here("Tables/Heterogeneity_ES.csv"),
           row.names = F)
 
 
@@ -240,7 +243,7 @@ mean_es_res_tab <- data.frame(
   select(MASC, mu_str_raw, pval_raw, mu_str_cor, pval_cor)
 
 write.csv(mean_es_res_tab,
-          file = "C:/Users/Lukas/Downloads/mean_es_table.csv",
+          file = here("Tables/Mean_ES.csv"),
           row.names = FALSE)
 
 
@@ -252,7 +255,7 @@ alpha_res_tab <- B_alpha_rma_df[nn_eff_idx,] %>%
   select(MASC, mu_alpha_str, tau_alpha, QE_str, QEp) 
 
 write.csv(alpha_res_tab,
-          "C:/Users/Lukas/Downloads/alpha_table.csv",
+          here("Tables/Results_RMA_alpha.csv"),
           row.names = FALSE)
 
 forest_plot_rel(ES_rma_df[which(ES_rma_df$MASC == "Nosek_Explicit_Art"),], agg_L[[which(MASC_names == "Nosek_Explicit_Art")]])

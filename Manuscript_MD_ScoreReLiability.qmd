@@ -6,10 +6,41 @@ editor:
     wrap: 72
 ---
 
+```{r, include = FALSE}
+# library loading and installing as necessary
+
+
+# relevant libraries required for this script
+packages <- c("ggplot2", "here", "metafor", "gridExtra", "knitr", "magrittr", "dplyr")
+
+# check, whether library already installed or not - install and load as needed:
+apply(as.matrix(packages), MARGIN = 1, FUN = function(x) {
+  
+  pkg_avail <- nzchar(system.file(package = x))   # check if library is installed on system
+  
+  if(pkg_avail){
+    require(x, character.only = TRUE)             # load the library, if already installed
+    
+  }else{
+    install.packages(x, repos = "https://ftp.gwdg.de/pub/misc/cran/")                           # install the library, if missing
+    require(x, character.only = TRUE)             # load after installation
+  }
+})
+
+source(here("ReLiability_Function-library.R"))
+
+ES_rma_df <- read.csv(here("Data/Processed/Aggregates_ES_analysis.csv"))
+
+agg_L <- readRDS(here("Data/Processed/Aggregates_simple.csv"))
+
+MASC_names <- unique(ES_rma_df$MASC)
+
+```
+
 # Score ReLiability – Can we explain effect size heterogeneity using score reliability?
 
 Large-scale collaborative replication efforts have sparked discussions
-surrounding the replicability of psychological phenomena. However,
+surrounding the replicability of psychological phenomena. However, for
 attempts to estimate a phenomenon’s replicability or to predict whether
 a future replication will replicate successfully, heterogeneity is a
 crucial parameter that needs to be assessed. In the meta-analytic
@@ -24,7 +55,6 @@ we know the mean size and heterogeneity of a phenomenon’s effect size,
 we would theoretically be able to establish a baseline of expected
 replication rate (reference).
 
-
 Similarly, it has been argued that heterogeneity in effect sizes is an
 indicator of the theory’s “completeness” surrounding the phenomenon.
 Linden and Hönekopp argue that “low (as opposed to high) heterogeneity
@@ -32,7 +62,6 @@ reflects a more advanced understanding of the subject matter being
 studied” (2021, p.2). Similarly, Schuetze and von Hippel (2023) argue
 that heterogeneity in effects is an indicator of a vague, poorly
 specified theory.
-
 
 Re-analyses of multi-site direct replications have demonstrated that, if
 a psychological effect size can be distinguished from zero,
@@ -50,18 +79,17 @@ al. (2025) identify substantial heterogeneity in almost all projects
 where a non-zero effect could be identified. This aligns with the
 correlation found by Olsson-Collentine et al. (2020).
 
-
 ## Effect sizes and score reliability in meta-analysis
 
 In both the initial reports of large scale replication attempts, as well
 as the re-analyses by Olsson-Collentine et al. (2020), standardized
 effect sizes (from here-on abbreviated as ES) such as Cohen’s d or
 Hedge’s g were used. For the remainder of the article, Cohen’s d,
-defined in Equation 1, will be used as an exemplary estimate of ES, as
-it is used across a wide range of contexts and well understood by a
-broad audience.
+defined in @eq-d, will be used as an exemplary estimate of ES, as it is
+used across a wide range of contexts and well understood by a broad
+audience.
 
-$$d = \frac{MD}{\sigma_X}$${#eq-d}
+$$d = \frac{MD}{\sigma_X}$$ {#eq-d}
 
 Here, MD refers to the difference between two groups of interest, while
 $\sigma_X$ is the total pooled standard deviation. Since $d$ constitutes
@@ -70,15 +98,15 @@ heterogeneity, we are not interested in the variance of $d$, but the
 variance of the true, underlying ES $\delta$. The standard error of
 Cohen’s $d$, which is used to weight individual estimates in a
 random-effects meta-analysis (reference) is computed as defined in
-Equation 2.
+@eq-SEd.
 
-$$SE_d=\sqrt{\frac{n_1+n_2}{n_1n_2}+\frac{d^2}{2\left(n_1+n_2\right)}}$${#eq-SEd}
+$$SE_d=\sqrt{\frac{n_1+n_2}{n_1n_2}+\frac{d^2}{2\left(n_1+n_2\right)}}$$ {#eq-SEd}
 
 As is widely known, score reliability affects ES. In the context of
-classical test theory (CTT) score reliability ρXX’ is defined as the
-ratio of true to total score variance, as defined in Equation 3.
+classical test theory (CTT) score reliability $\rho_{XX’}$ is defined as
+the ratio of true to total score variance, as defined in @eq-rel.
 
-$$\rho_{XX’} = \frac{\sigma^2_T}{\sigma^2_X}=\frac{\sigma^2_T}{\sigma^2_T + \sigma^2_E}$${#eq-rel}
+$$\rho_{XX’} = \frac{\sigma^2_T}{\sigma^2_X}=\frac{\sigma^2_T}{\sigma^2_T + \sigma^2_E}$$ {#eq-rel}
 
 In this equation $\sigma_T^2$ refers to the true score variance in the
 sense of CTT, meaning the actual variance of the variable, undistorted
@@ -95,63 +123,60 @@ population. In the meta-analytic context, as studies tend to be
 replicated in different populations, neither true nor error score
 variance can be expected to always be identical across replications.
 This most likely leads to heterogeneity in score reliability, which, as
-discussed, is bound to affect ES heterogeneity as well. 
+discussed, is bound to affect ES heterogeneity as well.
 
+Previous discussions of heterogeneity in score reliability have
+exclusively discussed it as a parameter that inflates heterogeneity in
+ES, implying that, if score reliability was perfect across all
+replications, the actual heterogeneity would have been lower. In their
+discussion, Wiernik and Dahlke claim that „*Measurement error variance
+will impact the results of meta-analyses in three ways: by (a) biasing
+the mean effect size toward zero, (b) inflating effect-size
+heterogeneity and confounding moderator effects, and (c) confounding
+publication-bias and sensitivity analyses*” (p. 3, 2020). Additionally,
+more clearly, they state that “*If the studies included in a
+meta-analysis differ in their measures’ reliabilities, heterogeneity
+estimates will be artifactually inflated, erroneously suggesting larger
+potential moderator effects*” (p. 4, Wiernik & Dahlke, 2020). They base
+their claims largely on work done by Hunter and Schmidt (2014), who
+claim that “*Variation in reliability across studies causes variation in
+the observed effect sizes above and beyond that produced by sampling
+error.*” (p. 302). Overall, both references imply that differences in
+score (un)reliability inevitably lead to an inflated heterogeneity in
+ES.
 
-Previous
-discussions of heterogeneity in score reliability have exclusively
-discussed it as a parameter that inflates heterogeneity in ES, implying
-that, if score reliability was perfect across all replications, the
-actual heterogeneity would have been lower. In their discussion, Wiernik
-and Dahlke claim that „*Measurement error variance will impact the
-results of meta-analyses in three ways: by (a) biasing the mean effect
-size toward zero, (b) inflating effect-size heterogeneity and
-confounding moderator effects, and (c) confounding publication-bias and
-sensitivity analyses*” (p. 3, 2020). Additionally, more clearly, they
-state that “*If the studies included in a meta-analysis differ in their
-measures’ reliabilities, heterogeneity estimates will be artifactually
-inflated, erroneously suggesting larger potential moderator effects*” (p.
-4, Wiernik & Dahlke, 2020). They base their claims largely on work done
-by Hunter and Schmidt (2014), who claim that “*Variation in reliability
-across studies causes variation in the observed effect sizes above and
-beyond that produced by sampling error.*” (p. 302). Overall, both
-references imply that differences in score (un)reliability inevitably
-lead to an inflated heterogeneity in ES. 
+As both sources Hunter and Schmidt (2014) and Wiernik and Dahlke (2020)
+will be referred to repeatedly, we abbreviate these references as H&S
+and W&D respectively.
 
+### Attenuation correction
 
-As both sources Hunter and
-Schmidt (2014) and Wiernik and Dahlke (2020) will be referred to
-repeatedly, we abbreviate these references as H&S and W&D respectively.
+If information concerning score reliability is available, it is possible
+to correct the individual ES for its unreliability. This process is also
+known as attenuation correction and, while not without its criticisms
+(reference), is a widespread practice in Psychology (reference). @eq-dc
+describes a simple attenuation correction procedure.
 
-### Attenuation correction 
-
-If information concerning score reliability is
-available, it is possible to correct the individual ES for its
-unreliability. This process is also known as attenuation correction and,
-while not without its criticisms (reference), is a widespread practice
-in Psychology (reference). Equation 4 describes a simple attenuation
-correction procedure.
-
-$$d_c = \frac{d}{\sqrt{\hat{\rho}_{xx’}}}$${#eq-dc}
+$$d_c = \frac{d}{\sqrt{\hat{\rho}_{xx’}}}$$ {#eq-dc}
 
 Here, $d_c$ describes the attenuation-corrected estimate of $d$, which
 is corrected by dividing it by the estimate of score reliability
 $\hat{\rho}_{xx’}$. As described in W&D or Lord & Novick (references),
 this is essentially the same, as if the corrected estimate of $d_c$ was
 constructed using an estimate of true score standard deviation, as in
-Equation 5.
+@eq-dct.
 
-$$d_c = \frac{MD}{\hat{\sigma}_{T}}=\frac{MD}{\sqrt{\hat{\rho}_{xx’} \hat{\sigma}_X^2}}$${#eq-dct}
+$$d_c = \frac{MD}{\hat{\sigma}_{T}}=\frac{MD}{\sqrt{\hat{\rho}_{xx’} \hat{\sigma}_X^2}}$$ {#eq-dct}
 
 $\hat{\sigma}_T$ can be estimated by simply rearranging the terms from
-equation 2. Thereby, an estimate of ES is generated, under the premise
-that score reliability would have been perfect ($\rho_{xx'} = 1$). As
-the corrected estimate of Cohen’s $d$ is larger and requires an
-additional unknown parameter, an estimate of score reliability, the
-larger uncertainty in this parameter should be reflected in a larger
-standard error. The standard error for $d_c$ is defined in equation 6.
+@eq-rel. Thereby, an estimate of ES is generated, under the premise that
+score reliability would have been perfect ($\rho_{xx'} = 1$). As the
+corrected estimate of Cohen’s $d$ is larger and requires an additional
+unknown parameter, an estimate of score reliability, the larger
+uncertainty in this parameter should be reflected in a larger standard
+error. The standard error for $d_c$ is defined in @eq-SEdc.
 
-$$SE_{d_c} = \sqrt{SE^2_d \frac{d_c}{d}}$${#eq-SEdc}
+$$SE_{d_c} = \sqrt{SE^2_d \frac{d_c}{d}}$$ {#eq-SEdc}
 
 The claims made by W&D imply that corrections of individual observed ESs
 for their unreliability should lead to lower estimates of heterogeneity
@@ -178,10 +203,10 @@ we discuss why the expectation formulated in H&S does not allow for such
 claims. Alternatively, we explore to what extent defining ES as a random
 ratio variable helps understand how ES heterogeneity is affected by
 differences in score reliability. We close with a discussion on what
-future meta-analysts can expect to observe, when dealing with issues of
+future meta-analysts can expect, when dealing with issues of
 (un)reliability in assessments of meta-analyses of ES.
 
-## Re-analysis of archival data Data
+## Re-analysis of archival data
 
 We have attempted to collect all openly available multi-site direct
 replications on psychological phenomena (Fünderich et al. 2024). The
@@ -189,6 +214,8 @@ data-sets of about 50 phenomena , largely stemming from the efforts of
 the Many Labs studies, Registered Replication Reports or the
 Psychological Science Accelerator, are made openly available in a
 standardised format at \[osf.io\], the DRIPHT repository.
+
+### Data
 
 The ManyLabs projects were collaborative efforts to replicate several
 psychological phenomena across different research sites, employing
@@ -215,7 +242,7 @@ easily assessed using standardised effect sizes.
 While replication data on a decent number of psychological phenomena is
 available in the DRIPHT-repository, to demonstrate how incorporating
 score reliability affects heterogeneity in ES, selected phenomena need
-to fulfil three conditions: (1) As we focus on the use of ES $d$ d, the
+to fulfil three conditions: (1) As we focus on the use of ES $d$, the
 phenomenon needs to be assessed using a two-group design. This is the
 case for all projects in the DRIPHT repository; (2) Score reliability
 estimates can be derived, this implies that the phenomenon needs to be
@@ -264,10 +291,10 @@ to the first situation, as predicted in W&D and H&S.
 ### Methods
 
 For each replication of a phenomenon, Cohen’s $d$ is computed as an
-estimate of raw ES, according to Equation 1, including its standard
-error (Equation 2). Subsequently, a random-effects meta-analysis is
-performed using metafor version X.XX. To estimate meta-analytic mean ES
-and heterogeneity, the REML-estimatore is used (ref). To identify which
+estimate of raw ES, according to @eq-d, including its standard error
+(@eq-SEd). Subsequently, a random-effects meta-analysis is performed
+using metafor version X.XX. To estimate meta-analytic mean ES and
+heterogeneity, the REML-estimatore is used (ref). To identify which
 phenomena pass criterion (3), using a Wald-type significance test we
 assess for which phenomenon the meta-analytic mean ES is significantly
 different from zero. For this hypothesis test, as all other hypothesis
@@ -287,8 +314,8 @@ the individual’s test score. Therefore, Cronbach’s Alpha is the better
 choice to estimate score reliability, as it avoids this mismatch in
 assumptions between how the score is computed and how score reliability
 is estimated. Using these estimates of Cronbach’s Alpha, the individual
-estimates of Cohen’s d are corrected, according to Equation 4, including
-the corrected standard errors (Equation 5). Thereby, estimates of ES are
+estimates of Cohen’s d are corrected, according to @eq-dc, including the
+corrected standard errors (@eq-SEdc). Thereby, estimates of ES are
 computed, which are corrected for imperfect reliability. Again, a
 random-effects meta-analysis is run using metafor, generating an
 estimate of heterogeneity in corrected ES. Different indicators of
@@ -324,9 +351,9 @@ Reliability Generalization Meta-Analysis using these transformations can
 be back-transformed to the original score reliability scale
 (references):
 
-$$\mu_{\rho{xx'}} \approx 1 - exp(\mu_{T\left[\rho_{XX^\prime}\right]})-\frac{1}{2} exp(\mu_{T\left[\rho_{xx'}\right]})\tau_{T\left[\rho_{XX^\prime}\right]}^2$${#eq-rel_back_mu}
+$$\mu_{\rho{xx'}} \approx 1 - exp(\mu_{T\left[\rho_{XX^\prime}\right]})-\frac{1}{2} exp(\mu_{T\left[\rho_{xx'}\right]})\tau_{T\left[\rho_{XX^\prime}\right]}^2$$ {#eq-rel_back_mu}
 
-$$\tau_{\rho_{xx'}}^2 \approx exp(\mu_{T\left[\rho_{xx'}\right]})2 \tau_{T\left[\rho_{xx'}\right]}^2+exp(\mu_{T\left[\rho_{xx'}\right]})^2\tau_{T\left[\rho_{xx'}\right]}^4$${#eq-rel_back_tau}
+$$\tau_{\rho_{xx'}}^2 \approx exp(\mu_{T\left[\rho_{xx'}\right]})2 \tau_{T\left[\rho_{xx'}\right]}^2+exp(\mu_{T\left[\rho_{xx'}\right]})^2\tau_{T\left[\rho_{xx'}\right]}^4$$ {#eq-rel_back_tau}
 
 These procedures are followed separately for each phenomenon. The
 statistical programming language R, Version X.XXX (reference) is used
@@ -334,17 +361,17 @@ for all data manipulation and statistical analysis.
 
 ### Results
 
-Equations 1, 2, 4, and 5 were used to generate estimates of standardized
-ES, both uncorrected and corrected, with their corresponding standard
-errors. Generally, this leads to larger (absolute) ES and larger
-standard errors. As an example from the 12 selected phenomena, the
-results from this procedure on Nosek’s Explicit Art sex differences
-phenomenon are displayed in the forest plot in Figure 1. Here, grey dots
-represent the uncorrected ES for each sample, while black dots represent
-the corrected ES in each sample. The bars surrounding these dots show
-the respective 95%-Cis.
+[Equations @eq-d], [-@eq-SEd], [-@eq-dc], and [-@eq-SEdc] were used to
+generate estimates of standardized ES, both uncorrected and corrected,
+with their corresponding standard errors. Generally, this leads to
+larger (absolute) ES and larger standard errors. As an example from the
+12 selected phenomena, the results from this procedure on Nosek’s
+Explicit Art sex differences phenomenon are displayed in the forest plot
+in Figure 1. Here, grey dots represent the uncorrected ES for each
+sample, while black dots represent the corrected ES in each sample. The
+bars surrounding these dots show the respective 95%-Cis.
 
-In Figure 1 it becomes apparent that the reliability attenuation
+In @fig-forest it becomes apparent that the reliability attenuation
 procedure leads to an increase in the individual absolute effect size,
 as the black dots are moved further away from zero. Simultaneously, the
 standard errors grew larger after the attenuation correction, which
@@ -352,87 +379,53 @@ leads to larger 95%-Cis. This is most easily observed for the
 mturk-sample, which already had a rather large confidence interval to
 begin with. Additionally, in the diamond at the bottom of the figure, we
 can see that the meta-analytic estimate mean ES is also larger after the
-attenuation correction took place. In Table 2, the estimates and tests
-on the meta-analytic average ES, both corrected and uncorrected, can be
-found.
+attenuation correction took place. In @tbl-meanES, the estimates and
+tests on the meta-analytic average ES, both corrected and uncorrected,
+can be found.
 
-*Table 2: Meta-analytic average  ES* \| ------- \| ------- \|
-------- \| ------- \| ------- \| \| MASC \|
-{\hat{\mathbit{\mu}}}*{*\mathbit{\delta}\mathbit{o}} \| p \|
-{\hat{\mathbit{\mu}}}\_\mathbit{\delta} \| p \| \|
-Albarracin_Priming_SAT \| .127 (.053) \| .016 \| .158 (.066) \| .016 \|
-\| Alter_Analytic_Processing \| -.155 (.040) \| \<.001 \| -.174 (.044)
-\| \<.001 \| \| Carter_Flag_Priming \| .018 (.029) \| .538 \| .026
-(.036) \| .465 \| \| Caruso_Currency_Priming \| -.019 (.026) \| .457 \|
--.022 (.029) \| .459 \| \| Finkel_Exit_Forgiveness \| -.050 (.049) \|
-.314 \| -.056 (.056) \| .316 \| \| Finkel_Neglect_Forgiveness \| -.051
-(.055) \| .355 \| -.059 (.063) \| .347 \| \| Giessner_Vertical_Position
-\| .026 (.023) \| .248 \| .027 (.025) \| .267 \| \|
-Hart_Criminal_Intentionality \| .170 (.078) \| .030 \| .184 (.085) \|
-.030 \| \| Hart_Detailed_Processing \| .082 (.058) \| .157 \| .096
-(.067) \| .147 \| \| Hart_Intention_Attribution \| -.011 (.058) \| .856
-\| -.021 (.080) \| .795 \| \| Husnu_Imagined_Contact \| .116 (.032) \|
-\<.001 \| .129 (.035) \| \<.001 \| \| Nosek_Explicit_Art \| .360 (.047)
-\| \<.001 \| .383 (.050) \| \<.001 \| \| Nosek_Explicit_Math \| .401
-(.029) \| \<.001 \| .415 (.030) \| \<.001 \| \| PSACR001_anxiety_int \|
-.251 (.022) \| \<.001 \| .263 (.023) \| \<.001 \| \| PSACR001_behav_int
-\| .035 (.020) \| .079 \| .040 (.023) \| .088 \| \| PSACR002_neg_photo
-\| -.663 (.040) \| \<.001 \| -.747 (.047) \| \<.001 \| \|
-Shnabel_Willingness_Reconcile_Rev \| -.533 (.101) \| \<.001 \| -.582
-(.109) \| \<.001 \| \| Shnabel_Willingness_Reconcile_RPP \| -.585 (.062)
-\| \<.001 \| -.655 (.067) \| \<.001 \| \| Srull_Behaviour_Hostility \|
--.051 (.029) \| .079 \| -.062 (.034) \| .071 \| \|
-Srull_Ronald_Hostility \| .063 (.029) \| .028 \| .074 (.033) \| .026 \|
-\| Tversky_Directionality_Similarity1 \| -.111 (.034) \| .001 \| -.121
-(.037) \| \<.001 \| \| Zhong_Desirability_Cleaning \| -.031 (.024) \|
-.194 \| -.042 (.036) \| .240 \|
+```{r, echo = FALSE}
+#| label: fig-forest
+#| fig-cap: Forest Plot Nosek_Explicit_Art
+forest_plot_rel(ES_rma_df[which(ES_rma_df$MASC == "Nosek_Explicit_Art"),], agg_L[[which(MASC_names == "Nosek_Explicit_Art")]])
+```
 
-Table 2 demonstrates that what we observed in Figure 1 holds across all
-22 phenomena. All meta-analytic effect sizes are larger after applying
-an attenuation correction procedure. Similarly, the uncertainty
+```{r, echo = FALSE}
+#| label: tbl-meanES
+#| tbl-cap: Meta-analytic average  ES
+knitr::kable(x = read.csv(here("Tables/Mean_ES.csv")))
+```
+
+@tbl-meanES demonstrates that what we observed in Figure 1 holds across
+all 22 phenomena. All meta-analytic effect sizes are larger after
+applying an attenuation correction procedure. Similarly, the uncertainty
 quantified in the estimates’ standard error is larger. Additionally,
-Table 2 highlights which phenomena pass criterion (3) – the effect size
-must be statistically significantly distinguishable from zero. 12
+@tbl-meanES highlights which phenomena pass criterion (3) – the effect
+size must be statistically significantly distinguishable from zero. 12
 phenomena pass this criterion, highlighted in boldface. It may be
 remarked that the attenuation correction procedure, in this data,
 appears to have no influence on whether a phenomenon passes the
 criterion. The differences in p-value are rather small and lead to no
 difference in conclusion, regarding a significance level of .05.
 
-*Table 3: Tests for ES Heterogeneity* \| \| Corrected ES \| \|
-Corrected ES \| NA \| NA \| NA \| NA \| \| ------- \| ------- \| -------
-\| ------- \| ------- \| ------- \| ------- \| ------- \| \| MASC \|
-$\tau$ \| QE \| p \| \| $\tau$ \| QE \| p \| \| Albarracin_Priming_SAT
-\| 0 \| 5.987 (8) \| .649 \| \| 0 \| 6.055 (8) \| .641 \| \|
-Alter_Analytic_Processing \| .025 \| 15.706 (20) \| .735 \| \| .018 \|
-15.701 (20) \| .735 \| \| Hart_Criminal_Intentionality \| .171 \| 18.96
-(11) \| .062 \| \| .185 \| 18.81 (11) \| .065 \| \|
-Husnu_Imagined_Contact \| .087 \| 47.581 (35) \| .076 \| \| .094 \|
-47.351 (35) \| .079 \| \| Nosek_Explicit_Art \| .178 \| 62.771 (35) \|
-.003 \| \| .19 \| 63.074 (35) \| .003 \| \| Nosek_Explicit_Math \| 0 \|
-39.169 (35) \| .288 \| \| 0 \| 39.107 (35) \| .29 \| \|
-PSACR001_anxiety_int \| .085 \| 74.655 (48) \| .008 \| \| .088 \| 74.251
-(48) \| .009 \| \| PSACR002_neg_photo \| .22 \| 219.709 (36) \| \<.001
-\| \| .26 \| 237.115 (36) \| \<.001 \| \| Shnabel\_ Reconcile_Rev \|
-.233 \| 23.367 (7) \| .001 \| \| .253 \| 23.182 (7) \| .002 \| \|
-Shnabel\_ Reconcile_RPP \| .073 \| 8.472 (7) \| .293 \| \| .071 \| 8.244
-(7) \| .312 \| \| Srull_Ronald_Hostility \| .046 \| 24.756 (21) \| .258
-\| \| .053 \| 24.593 (21) \| .265 \| \| Tversky\_ Similarity1 \| .001 \|
-59.434 (60) \| .496 \| \| .001 \| 59.102 (60) \| .509 \|
+```{r, echo = FALSE}
+#| label: tbl-tauES
+#| tbl-cap: Tests for ES Heterogeneity
+knitr::kable(x = read.csv(here("Tables/Heterogeneity_ES.csv")))
+```
 
 Cases incompatible with claims made in W&D and H&S are highlighted using
 boldface.
 
-However, what Figure 1 and Table 2 can not inform us about is in how far
-the heterogeneity has changed after correcting for (un)reliability. In
-Table 3, the estimates and tests of heterogeneity concerning uncorrected
-and corrected ES on the 12 remaining phenomena, which passed all
-criteria (1) – (3), can be found. In the table, the estimate of
-heterogeneity $\tau$, with the accompanying QE-test statistic, degrees
-of freedom and its p-value are reported, separately for uncorrected and
-corrected ES.
+However, what @fig-forest and @tbl-meanES can not inform us about is in
+how far the heterogeneity has changed after correcting for
+(un)reliability. In @tbl-tauES, the estimates and tests of heterogeneity
+concerning uncorrected and corrected ES on the 12 remaining phenomena,
+which passed all criteria (1) – (3), can be found. In the table, the
+estimate of heterogeneity $\tau$, with the accompanying QE-test
+statistic, degrees of freedom and its p-value are reported, separately
+for uncorrected and corrected ES.
 
-Most importantly, Table 3 demonstrates that of 12 phenomena assessed,
+Most importantly, @tbl-tauES demonstrates that of 12 phenomena assessed,
 for seven phenomena we find patterns incompatible with claims made in
 W&D and H&S. For those seven phenomena, the reliability attenuation
 correction led to an increase in absolute ES heterogeneity $\tau$. For
@@ -449,22 +442,22 @@ H&S predictions.
 
 To make sure that actual differences in score reliability exist,
 heterogeneity in score reliability is assessed, making use of
-Reliability Generalization Meta-Analysis (reference). Table 4 summarises
-the results across all 12 phenomena. Overall, scales for almost all
-phenomena appear have produced scores with an average score reliability
-larger than .7. Only two phenomena (Albarracin_Priming_SAT and
-Alter_Analytic_Processing) come with lower score reliability. However,
-for those phenomena we could not identify statistically significant
-heterogeneity in effect sizes in Table 2 in the first place. From the
-phenomena where the ES heterogeneity grew larger as a result from the
-attenuation correction procedure, for six out of seven phenomena, we
-observe statistically significant heterogeneity in score reliability.
-Only the Shnabel_Willingness_Reconcile_Rev project produced scores where
-no heterogeneity in score reliability was identified. However, for this
-project, it is crucial to note that only a small number of replications
-(8), was available for analysis. Since the power of Cochran’s Q-test for
-heterogeneity largely depends on the number of replications, this result
-is inconclusive.
+Reliability Generalization Meta-Analysis (reference). @tbl-RGMA
+summarises the results across all 12 phenomena. Overall, scales for
+almost all phenomena appear have produced scores with an average score
+reliability larger than .7. Only two phenomena (Albarracin_Priming_SAT
+and Alter_Analytic_Processing) come with lower score reliability.
+However, for those phenomena we could not identify statistically
+significant heterogeneity in effect sizes in @tbl-meanES in the first
+place. From the phenomena where the ES heterogeneity grew larger as a
+result from the attenuation correction procedure, for six out of seven
+phenomena, we observe statistically significant heterogeneity in score
+reliability. Only the Shnabel_Willingness_Reconcile_Rev project produced
+scores where no heterogeneity in score reliability was identified.
+However, for this project, it is crucial to note that only a small
+number of replications (8), was available for analysis. Since the power
+of Cochran’s Q-test for heterogeneity largely depends on the number of
+replications, this result is inconclusive.
 
 Despite this one inconclusive result, for the majority of phenomena
 where ES heterogeneity is larger after applying an attenuation
@@ -474,26 +467,11 @@ seven phenomena came with an average score reliability from .74 to .9
 and for six out of seven phenomena we identified statistically
 significant heterogeneity in score reliability.
 
-*Table 4: Reliability Generalization Meta-Analysis MASC* \| MASC \|
-\mathbit{\mu}*{*\mathbit{\rho}{\mathbit{xx}\prime}} \|
-\mathbit{\tau}*{*\mathbit{\rho}{\mathbit{xx}\prime}} \| QE \| p \| \|
-------- \| ------- \| ------: \| ------- \| ------- \| \|
-Albarracin_Priming_SAT \| .61 \[.557 : .657\] \| .057 \| 26.019 (9) \|
-.001 \| \| Alter_Analytic_Processing \| .64 \[.604 : .673\] \| .056 \|
-38.384 (20) \| .008 \| \| Hart_Criminal_Intentionality \| .849 \[.811 :
-.879\] \| .054 \| 66.17 (11) \| \<.001 \| \| Husnu_Imagined_Contact \|
-.814 \[.802 : .825\] \| .023 \| 66.389 (35) \| .001 \| \|
-Nosek_Explicit_Art \| .881 \[.869 : .891\] \| .029 \| 142.551 (35) \|
-\<.001 \| \| Nosek_Explicit_Math \| .936 \[.932 :.939\] \| .007 \| 59.43
-(35) \| .006 \| \| PSACR001_anxiety_int \| .903 \[.89 : .914\] \| .041
-\| 494.822 (48) \| \<.001 \| \| PSACR002_neg_photo \| .791 \[.774 :
-.806\] \| .047 \| 350.852 (36) \| \<.001 \| \|
-Shnabel_Willingness_Reconcile_Rev \| .832 \[.818 : .845\] \| 0 \| 5.053
-(7) \| .653 \| \| Shnabel_Willingness_Reconcile_RPP \| .768 \[.737:
-.796\] \| .032 \| 17.535 (7) \| .014 \| \| Srull_Ronald_Hostility \|
-.739 \[.716 : .76\] \| .047 \| 91.722 (21) \| \<.001 \| \|
-Tversky_Directionality_Similarity1 \| .854 \[.841 : .866\] \| .039 \|
-164.933 (60) \| \<.001 \|
+```{r, echo = FALSE}
+#| label: tbl-RGMA
+#| tbl-cap: Reliability Generalization Meta-Analysis
+knitr::kable(x = read.csv(here("Tables/Results_RMA_alpha.csv")))
+```
 
 ## Alternative discussion of how score reliability affects ES heterogeneity
 
@@ -509,31 +487,54 @@ how heterogeneity in score reliability inflates heterogeneity in ESs.
 “If the level of reliability is independent of the true effect size
 across studies, then, to a close approximation:” (p. 309)
 
-$$\tau^2_{\delta_0} = [\mu_{\rho_{xx‘}}]^2 \tau^2_{\delta} + [\mu_{\delta}]^2 \tau^2_{\rho_{xx‘}}$${#eq-HS}
+$$\tau^2_{\delta_0} = [\mu_{\rho_{xx‘}}]^2 \tau^2_{\delta} + [\mu_{\delta}]^2 \tau^2_{\rho_{xx‘}}$$ {#eq-HS}
 
-We adjusted Equation 9 using the notation used throughout this text.
-Here, $\delta_0$ refers to the ES, undistorted by sampling error but not
+We adjusted @eq-HS using the notation used throughout this text. Here,
+$\delta_0$ refers to the ES, undistorted by sampling error but not
 corrected for measuring error, $\delta$ refers to the ES, undistorted by
 sampling error and measurement error and ρxx‘ refers to score
 reliability.
 
-Equation 9 implies that heterogeneity in $\delta_0$ is essentially a
+@eq-HS implies that heterogeneity in $\delta_0$ is essentially a
 function where heterogeneity and mean value of $\delta$ are weighted by
 mean score reliability ρxx‘ and its heterogeneity. While it may not be
 self-evident in the equation itself, it is easy to construct cases where
 heterogeneity in $\delta_0$ is inflated or deflated by heterogeneity in
 ρxx‘, contradicting Hunter & Schmidt’s interpretation of this equation.
-In Figure 2, the results of employing equation 9 to compute the
-heterogeneity (variance) in corrected ES is highlighted. All else held
-equal, only the individual level of mean reliability \$
-\mu*{*\rho{xx‘}}\$ is varied from .5 to .8. Mean corrected ES
-$\mu_{\delta}$ is held constant at 1, its variance $\tau^2_{\delta}$
-held constant at .04 and the variance of score reliability
-$\tau^2_{\rho_{xx‘}}$ held constant at .02.
+In @fig-hs, the results of employing @eq-HS to compute the heterogeneity
+(variance) in corrected ES is highlighted. All else held equal, only the
+individual level of mean reliability \$ \mu\*{\*\\rho{xx‘}}\$ is varied
+from .5 to .8. Mean corrected ES $\mu_{\delta}$ is held constant at 1,
+its variance $\tau^2_{\delta}$ held constant at .04 and the variance of
+score reliability $\tau^2_{\rho_{xx‘}}$ held constant at .02.
 
-*Figure 2*
+```{r, echo = FALSE}
+#| label: fig-HS
+#| fig-cap: Implications by Hunter & Schmidt's @eg-HS
 
-In Figure 2, the red line corresponds to the variance of corrected ES.
+mu_delta <- 1
+var_delta <- .2^2
+mu_alpha <- seq(from = .5, to = .8, length.out = 100)
+var_alpha <- .14^2
+
+
+var_delta0 <- mu_alpha^2 * var_delta + mu_delta^2 * var_alpha
+
+ggplot() +
+  geom_hline(yintercept = .04, colour = "red", linewidth = 1, linetype = "dashed") +
+  geom_line(aes(y = var_delta0, x = mu_alpha), linewidth = 2) +
+  theme(panel.background = element_rect(fill = "transparent"), 
+        plot.background = element_rect(fill = "transparent", colour = "transparent"), 
+        panel.grid.major.y = element_line(colour = "grey"),
+        panel.grid.major.x = element_line(colour = "grey"),
+        panel.grid.minor = element_line(colour = "transparent"),
+        axis.ticks = element_line(colour = "grey"),
+        strip.background = element_rect(fill = "transparent")) +
+  labs(y = expression(tau^2~"["~delta[0]~"]"),
+       x = expression(mu~"["~rho[xx]~"]"))
+```
+
+In @fig-hs, the red line corresponds to the variance of corrected ES.
 
 If everything else is held constant, the variance in uncorrected ES can
 be a function only of the mean level of score reliability
@@ -545,9 +546,9 @@ the heterogeneity in corrected ES. Depending on the mean level of score
 reliability, heterogeneity in uncorrected ES can be higher or lower than
 heterogeneity in corrected ES.
 
-However, Equation 9 is additionally flawed, as it violates a crucial
-definition. As Hunter & Schmidt point out, Equation 9 is only valid “If
-the level of reliability is independent of the true effect size across
+However, @eq-hs is additionally flawed, as it violates a crucial
+definition. As Hunter & Schmidt point out, @eq-hs is only valid “If the
+level of reliability is independent of the true effect size across
 studies \[…\]” (2014, p. 309). However, both parameters, ES $\delta$ and
 score reliability ρxx‘, can not be independent parameters by definition.
 ES $\delta$ is the “true” standardized mean difference, unaffected by
@@ -555,44 +556,44 @@ sampling or measurement error. The ES $\delta_0$ is standardized using
 the total standard deviation, which is inflated by measurement error.
 Equation 1, demonstrating how Cohen’s d is computed demonstrates how the
 mean difference is standardized in this case. As demonstrated further
-above in equation 4, ES $\delta$ is standardized using the true standard
+above in @eg-dct, ES $\delta$ is standardized using the true standard
 deviation in the sense of CTT. The fact that the true standard deviation
-parameter $\sigma_T$ is found both in equation 4 and equation 2
-demonstrates that ES $\delta$ and score reliability $\rho_{xx‘}$ can not
-be independent variables. Therefore, the basic premise of equation 9 is
-not fulfilled, as the assumption of variable independence could not be
+parameter $\sigma_T$ is found both in @eq-dct and @eq-rel demonstrates
+that ES $\delta$ and score reliability $\rho_{xx‘}$ can not be
+independent variables. Therefore, the basic premise of @eq-hs is not
+fulfilled, as the assumption of variable independence could not be
 fulfilled.
 
 ### Describing ES as a random ratio variable
 
-However, realising that an ES, as defined in Equation 1, is actually a
-ratio, allows for a different analytical description of how differences
-in score reliability can affect ES heterogeneity. If the phenomenon is
+However, realising that an ES, as defined in @eq-d, is actually a ratio,
+allows for a different analytical description of how differences in
+score reliability can affect ES heterogeneity. If the phenomenon is
 heterogeneous and score reliability varies across replications, it seems
 sensible to assume that both numerator and denominator (MD and
-$\sigma_X$) from Equation 1 vary across replications. In that case, an
-ES can be described as a random variable stemming from a ratio
-distribution. A ratio distribution is a probability distribution
-constructed by dividing one random variable by a second random variable:
-$Z = \frac{X}{Y}$ (reference). If the distribution of the components is
-known, first order taylor approximation may be used to generate
-estimates of mean and variance of the ratio variable (reference). Here
-we use the Taylor-estimator of the ratio’s variance to demonstrate how
-differences in score reliability may affect heterogeneity in ES.
+$\sigma_X$) from @eq-d vary across replications. In that case, an ES can
+be described as a random variable stemming from a ratio distribution. A
+ratio distribution is a probability distribution constructed by dividing
+one random variable by a second random variable: $Z = \frac{X}{Y}$
+(reference). If the distribution of the components is known, first order
+taylor approximation may be used to generate estimates of mean and
+variance of the ratio variable (reference). Here we use the
+Taylor-estimator of the ratio’s variance to demonstrate how differences
+in score reliability may affect heterogeneity in ES.
 
-$$\tau^2[Z] \approx \frac{\tau^2[X]}{\mu[Y]^2} - \frac{2\mu[X]}{\mu[Y]^3} cov[X,Y] + \frac{\mu[X]^2}{\mu[Y]^4} \tau^2[Y]$${#eq-XYZ_cov}
+$$\tau^2[Z] \approx \frac{\tau^2[X]}{\mu[Y]^2} - \frac{2\mu[X]}{\mu[Y]^3} cov[X,Y] + \frac{\mu[X]^2}{\mu[Y]^4} \tau^2[Y]$$ {#eq-XYZ_cov}
 
 Assuming that the random variables are uncorrelated, simplifies the
 equation to
 
-$$\tau^2[Z] \approx \frac{\tau^2[X]}{\mu[Y]^2} + \frac{\mu[X]^2}{\mu[Y]^4} \tau^2[Y]$${#eq-XYZ}
+$$\tau^2[Z] \approx \frac{\tau^2[X]}{\mu[Y]^2} + \frac{\mu[X]^2}{\mu[Y]^4} \tau^2[Y]$$ {#eq-XYZ}
 
 Substituting for ES, unstandardized mean difference MD and pooled
 standard deviation $\sigma_X$ leads to
 
-$$\tau^2[\delta_0] \approx \frac{\tau^2[MD]}{\mu[\sigma_x]^2} + \frac{\mu[MD]^2}{\mu[\sigma_x]^4} var[SD]$${#eq-ratio_d0}
+$$\tau^2[\delta_0] \approx \frac{\tau^2[MD]}{\mu[\sigma_x]^2} + \frac{\mu[MD]^2}{\mu[\sigma_x]^4} var[SD]$$ {#eq-ratio_d0}
 
-As stated in Equation 5, correcting ES for score reliability can be
+As stated in @eq-dct, correcting ES for score reliability can be
 described through a correction of the pooled standard deviation:
 $\sigma_T = \sqrt{\rho_{xx’} \sigma^2_x}$. Since $\rho_{xx'}$ is always
 between zero and one, in the case of imperfect score reliability,
@@ -617,13 +618,14 @@ Equation X to describe how, instead of total score standard deviation,
 mean and variance in true score standard deviation $\sigma_T$ \sigma\_T
 affect heterogeneity in corrected ES $\delta$.
 
-$$\tau^2[\delta] \approx \frac{\tau^2[MD]}{\mu[\sigma_T]^2} + \frac{\mu[MD]^2}{\mu[\sigma_T]^4} \tau^2[\sigma_T]$${#eq-ratio_d}
+$$\tau^2[\delta] \approx \frac{\tau^2[MD]}{\mu[\sigma_T]^2} + \frac{\mu[MD]^2}{\mu[\sigma_T]^4} \tau^2[\sigma_T]$$ {#eq-ratio_d}
 
-The differences between the two Equations 12 and 13 demonstrates how ES
-heterogeneity is affected by an attenuation correction procedure.
-According to the quotes in H&S and W&D, Equation 12 should lead to a
-larger value of $\tau^2\left[\delta_0\right]$, compared to the estimate
-of $\tau^2\left[\delta\right]$ from Equation 13. This, however, does not
+The differences between the two [Equations @eq-ratio_d0] and
+[-@eq-ratio_d] demonstrates how ES heterogeneity is affected by an
+attenuation correction procedure. According to the quotes in H&S and
+W&D, @eq-ratio_d0 should lead to a larger value of
+$\tau^2\left[\delta_0\right]$, compared to the estimate of
+$\tau^2\left[\delta\right]$ from @eq-ratio_d. This, however, does not
 follow from any equations shown throughout the text.
 
 What is guaranteed is that the expected value of $\sigma_T$ is smaller
@@ -631,11 +633,11 @@ than the expected value of $\sigma_X$. Similarly, the variance in
 $\sigma_T$ is guaranteed to be smaller than the uncorrected variance in
 $\sigma_X$. However, since the expected value of either standard
 deviation is placed in the denominator of the function and the variance
-of either is placed in the numerator of the function, Equation 9 is not
+of either is placed in the numerator of the function, @eq-hs is not
 sufficient to explain how heterogeneity in ES changes due to the
 attenuation correction. Instead, we introduce two additional metrics.
 
-$$R_1 = \frac{\mu_{\sigma^2_T}}{\mu_{\sigma^2_X}}$${#eq-R1}
+$$R_1 = \frac{\mu_{\sigma^2_T}}{\mu_{\sigma^2_X}}$$ {#eq-R1}
 
 $R_1$ describes the relative size of mean true score variance, compared
 to the mean observed score variance. This informs us, how much of the
@@ -647,96 +649,84 @@ procedure should lead to smaller change. Small values indicate the
 opposite, large amounts of random error score variance on average lead
 to large changes in mean score variance (or mean standard deviation).
 
-$$R_2 = \frac{CV_{\sigma^2_T}}{CV_{\sigma^2_X}}$${#eq-R2}
-The metric $R_2$ in
-Equation 15 introduces the Coefficient of Variation
-($CV = \frac{\tau}{\mu}$). The CV describes the amount of heterogeneity
-of a parameters, relative to its mean value. Here, the CV describes how
-much heterogeneity can be found in either true or observed score
-variance, relative to how large either score variance is on average.
-Since any variance component is bound to be larger than zero, its
-heterogeneity can not be independent of its mean value. This means that
-a smaller score variance inevitably needs to come with a smaller
-heterogeneity, everything else held constant. Therefore, the absolute
-heterogeneity $\tau$ is less informative for score variance
-(components). The CV on the other hand can describe how much
-heterogeneity is found in the score variance, relative to the mean
-value. By conditioning on the mean value, the CV might therefore be a
-more informative tool about the amount of heterogeneity in a score
-variance (component).
+$$R_2 = \frac{\tau^2_{\sigma^2_T}}{\tau^2_{\sigma^2_X}}$$ {#eq-R2}
 
-The metric $R_2$ therefore describes, in how far the relative amount of
-heterogeneity in the score variance after the attenuation correction,
-the $CV_{\sigma^2_T}$, is different compared to the relative amount of
-heterogeneity before the attenuation correction, the $CV_{\sigma^2_X}$.
-A value smaller than 1 implies that the $CV_{\sigma^2_T}$ is smaller
-than the $CV_{\sigma^2_X}$. The relative amount of heterogeneity is
-reduced after the attenuation correction procedure. This would imply
-that a substantial amount of the relative heterogeneity observed in
-$\sigma^2_X$ was in fact due to differences in random error variance, or
-differences in the measurement precision. As these differences are
-corrected for, the relative heterogeneity in the score variance is
-reduced. A value larger than 1, on the other hand, implies that the
-$CV_{\sigma^2_T}$ is larger than the $CV_{\sigma^2_X}$. In that case,
-the heterogeneity in score reliability can be less strongly attributed
-to differences in random error variance but were actually due to
-substantial heterogeneity in the true score variances $\sigma^2_X$.
+The metric $R_2$ on the other hand describes, in how far the attenuation
+correction procedure has successfully reduced heterogeneity in score
+variance $\tau^2_{\sigma^2_X}$. A value of 1 indicates that the
+heterogeneity in true score variance $\tau^2_{\sigma^2_T}$, the score
+variance after the attenuation correction, is essentially just as large
+as the heterogeneity initally observed. Smaller values indicate how much
+heterogeneity is "left", after applying an attenuation correction,
+relative to the inital heterogeneity. This means that a value of .7
+indicates that about 70% of heterogeneity in score variance remains,
+even after correcting for differences in score reliability. As only 30%
+of score variance heterogeneity could be removed, this would imply that
+differences in error score variance $\sigma^2_E$ were responsible for
+less than a third of the heterogeneity in score variances found. On the
+contrary, more than two thirds of heterogeneity could be attributed to
+actual differences in how the underlying true scores are distributed
+across samples.
 
 In this section, we attempt to understand under which circumstances the
 heterogeneity in ES grows larger as the result of an attenuation
 correction procedure, contrary to claims made in W&D and H&S. To do so,
-we propose the following inequality, involving Equations 8 and 9.
+we propose the following inequality, involving [Equations @eq-ratio_d0]
+and [-@eq-ratio_d].
+
 $$\tau^2_{\delta} > \tau^2_{\delta_0} \quad  \quad \quad \quad \quad 
-\frac{\tau_{MD}^2}{\mu_{\sigma_T}^2} + \frac{\mu_{MD}^2}{\mu_{\sigma_T}^4} \tau^2_{\sigma_T} > \frac{\tau_{MD}^2}{\mu_{\sigma_x}^2} + \frac{\mu_{MD}^2}{\mu_{\sigma_x}^4} \tau^2_{\sigma_x}$${#eq-ineq_init}
+\frac{\tau_{MD}^2}{\mu_{\sigma_T}^2} + \frac{\mu_{MD}^2}{\mu_{\sigma_T}^4} \tau^2_{\sigma_T} > \frac{\tau_{MD}^2}{\mu_{\sigma_x}^2} + \frac{\mu_{MD}^2}{\mu_{\sigma_x}^4} \tau^2_{\sigma_x}$$ {#eq-ineq_init}
 
-Using the metrics $R_1$ and $R_2$, defined in Equations 14 and 15, we
-attempt to understand under which circumstances the inequality defined
-in Equation 16 holds true. However, while the metrics make use of mean
-and heterogeneity of the score variances, Equation 15 makes use of mean
-and heterogeneity of the standard deviations. In order to incorporate
-the metrics, it is necessary to reparameterised the equation. Using the
-delta method to approximate mean value and heterogeneity of variance
-from those of the standard deviations, we know that (ref):
+Using the metrics $R_1$ and $R_2$, defined in [Equations @eq-R1] and
+[-@eq-R2], we attempt to understand under which circumstances the
+inequality defined in @eq-ineq_init holds true. However, while the
+metrics make use of mean and heterogeneity of the score variances,
+@eq-ineq_init makes use of mean and heterogeneity of the standard
+deviations. In order to incorporate the metrics, it is necessary to
+reparameterised the equation. Using the delta method to approximate mean
+value and heterogeneity of variance from those of the standard
+deviations, we know that (ref):
 $$\mu_{\sigma^2_X} \approx \mu^2_{\sigma_X} \quad \quad  and \quad \quad 
-CV_{\sigma^2} \approx 2 CV_{\sigma}$${#eq-delta_method}
+CV_{\sigma^2} \approx 2 CV_{\sigma}$$ {#eq-delta_method}
 
-While Equation 16 only explicitly contains parameters for the observed
-score variance/standard deviation, the same can be done using the true
-score variance/standard deviation. Using the approximates defined in
-Equation 17 for observed and true score variance, we arrive at a new
-inequality in Equation 18.
+While @eq-delta_method only explicitly contains parameters for the
+observed score variance/standard deviation, the same can be done using
+the true score variance/standard deviation. Using the approximates
+defined in @eq-delta_method for observed and true score variance, we
+arrive at a new inequality in @eq-ineq_CV.
 
-$$\frac{\tau_{MD}^2}{\mu_{\sigma^2_t}} + \frac{\mu_{MD}^2}{\mu^2_{\sigma_t^2}} 4 CV^2_{\sigma^2_t} \mu_{\sigma^2_t} > \frac{\tau_{MD}^2}{\mu_{\sigma^2_x}} + \frac{\mu_{MD}^2}{\mu^2_{\sigma_x^2}} 4 CV^2_{\sigma^2_x} \mu_{\sigma^2_x}$${#eq-ineq_CV}
+$$\frac{\tau_{MD}^2}{\mu_{\sigma^2_t}} + \frac{\mu_{MD}^2}{\mu^2_{\sigma_t^2}} \frac{1}{4} CV^2_{\sigma^2_t} \mu_{\sigma^2_t} > \frac{\tau_{MD}^2}{\mu_{\sigma^2_x}} + \frac{\mu_{MD}^2}{\mu^2_{\sigma_x^2}} \frac{1}{4} CV^2_{\sigma^2_x} \mu_{\sigma^2_x}$$ {#eq-ineq_CV}
 
-18 Equation 18 describes that the heterogeneity in corrected ES is
-larger than the heterogeneity in uncorrected ES, using parameters of the
+@eq-ineq_CV describes that the heterogeneity in corrected ES is larger
+than the heterogeneity in uncorrected ES, using parameters of the
 distributions of mean differences MD, true score variances\*
 $\sigma^2_T$ and observed score variances $\sigma^2_X$. By introducing
 the metrics $R_1$ and $R_2$ to this inequality, we can begin to
 disentangle which circumstances need to be fulfilled for the inequality
-to hold. Rearranging the terms in Equations 14 and 15, and subsequently
-entering these terms into Equation 18 leads to the following
-$$ \frac{\tau_{MD}^2}{R_1 \mu_{\sigma^2_x}} + \frac{\mu_{MD}^2}{R_1^2 \mu^2_{\sigma^2_x}} 4 R^2_2 CV^2_{\sigma^2_X} R_1 \mu_{\sigma^2_x} > \frac{\tau_{MD}^2}{\mu_{\sigma^2_x}} + \frac{\mu_{MD}^2}{\mu^2_{\sigma_x^2}} 4 CV^2_{\sigma^2_x} \mu_{\sigma^2_x}$${#eq-ineq_R}
+to hold. Rearranging the terms in [Equations @eq-R1] and [-@eq-R2], and
+subsequently entering these terms into Equation 18 leads to the
+following
+$$ \frac{\tau_{MD}^2}{R_1 \mu_{\sigma^2_x}} + \frac{\mu_{MD}^2}{R_1^2 \mu^2_{\sigma^2_x}} \frac{1}{4} R^2_2 CV^2_{\sigma^2_X} R_1 \mu_{\sigma^2_x} > \frac{\tau_{MD}^2}{\mu_{\sigma^2_x}} + \frac{\mu_{MD}^2}{\mu^2_{\sigma_x^2}} \frac{1}{4} CV^2_{\sigma^2_x} \mu_{\sigma^2_x}$$ {#eq-ineq_R}
 
-Equation 15, again, describes the inequality that heterogeneity in
+@eq-ineq_R, again, describes the inequality that heterogeneity in
 corrected ES is larger than the heterogeneity in uncorrected ES,
-incorporating the metrics\* $R_1$ and $R_2$. This equation alone is not
+incorporating the metrics $R_1$ and $R_2$. This equation alone is not
 sufficient to identify the relevant circumstances required for the
-inequality to hold. However, rearranging the terms from Equation 19
-leads to Equation 20:
+inequality to hold. However, rearranging the terms from @eq-ineq_R leads
+to @eq-ineq_fin:
 
-$$ \tau_{MD}^2\left(\frac{1}{R_1} - 1\right) + \mu_{MD}^2 4 CV^2_{\sigma^2_X} \left(\frac{R^2_2}{R_1}  - 1\right) > 0$${#eq-ineq_fin}
+$$ \tau_{MD}^2\left(\frac{1}{R_1} - 1\right) + \mu_{MD}^2 \frac{1}{4} CV^2_{\sigma^2_X} \left(\frac{R_2}{R_1^3}  - 1\right) > 0$$ {#eq-ineq_fin}
 
 The circumstances under which the inequality described in Equation 20
 holds, are circumstances where the claims made in W&D and H&S are
 directly contradicted, as in those cases the ES heterogeneity is larger
 after applying an attenuation correction procedure. Concerning the terms
-in Equation 20, we know that all terms left-hand of the inequality,
+in @eq-ineq_fin, we know that all terms left-hand of the inequality,
 outside of the brackets ($\tau^2_{MD}$, $\mu^2_{MD}$ and
 $CV^2_{\sigma^2_X}$), are bound to be positive. For the inequality to
 hold, we need the left-hand side of the equation to remain positive,
-larger than zero. We can distil two scenarios, under which this equation
-should hold: (a) one of the terms inside the brackets
+larger than zero. We can distill two scenarios, under which this
+equation should hold: (a) one of the terms inside the brackets
 ($\frac{1}{R_1} - 1$ and $\frac{R^2_2}{R_1}  - 1$) is positive and large
 enough, so that the second term not containing that same bracket is
 positively dominated by the first term; or (b) both terms inside the
@@ -747,14 +737,13 @@ as both contain different, strictly positive parameters of the
 distributions of true and observed score variance. Additionally, we know
 that $R_1$ is equivalent to the average score reliability, and therefore
 bound between $0\le R_1\le1$. Therefore, the term inside the first
-bracket is bound to be positive ($\frac{1}{R_1} – 1$). Since $R_2$ is
-the ratio of CVs, or relative heterogeneity in true and total score
-variance, it can very well be larger than 1, it is only restricted to be
-positive. If $R_1$ is smaller than $R_2^2$, then the term inside the
-second bracket turns negative. Generally, this means that the inequality
-can only be violated if the squared reduction in relative heterogeneity
-of score variance ($R_2^2$) is larger than the average score
-reliability.
+bracket is bound to be positive ($\frac{1}{R_1} – 1$). Similalry, $R_2$,
+as the ratio of true and error score variance heterogeneity, is bound
+between $0\le R_2\le1$. If $R_1^3$ is smaller than $R_2$, then the term
+inside the second bracket turns negative. Generally, this means that the
+inequality can only be violated if the reduction in relative
+heterogeneity of score variance ($R_2$) is larger than the the average
+score reliability to the power of 3.
 
 Concerning the two scenarios, for scenario (a) to hold true, since the
 term involving only $R_1$ in the first bracket can only be positive, the
@@ -766,33 +755,41 @@ $\mu_{MD}$. This is something we would prefer to avoid, as it involves
 additional assumptions about the individual raw effect sizes of the
 different phenomena. Additionally, it can be said that as long as the
 term in the second bracket involving both metrics is positive, scenario
-(b) is true by default. This occurs any time $R_1 > R^2_2$. For example,
-if the average score reliability is about .8, if $R_2$ is at least .89
+(b) is true by default. This occurs any time $R_1^3 > R_2$. For example,
+if the average score reliability is about .8, if $R_2$ is at least .512
 or larger, the inequality holds true and ES heterogeneity grows larger
 as a consequence of the attenuation correction procedure, contrary to
 claims made in W&D and H&S. This means that for the exemplary score
 reliability of .8, a reduction in relative heterogeneity in score
-variance of 11% ($1 – R_2$) or more is necessary for scenario (b) to no
-longer be true. The smaller the average score reliability, the smaller
-the $R_2$-metric may be for the inequality to still hold true.
+variance of 49.8% ($1 – R_2$) or more is necessary for scenario (b) to
+no longer be true. The smaller the average score reliability, the
+smaller the $R_2$-metric may be for the inequality to still hold true.
 
-Keeping this in mind, even if $R^2_2$ is smaller than .8, it does not
+Keeping this in mind, even if $R_2$ is smaller than .512, it does not
 immediately imply that ES heterogeneity is smaller in $\delta$. For
-example, it is unlikely that an $R^2_2 = .79$ leads to a term that is
-not positively dominated by the first term involving only $R_1$.
-However, where exactly the cut-off is, when ES heterogeneity starts
-shrinking due to the attenuation correction procedure, can not be easily
-defined without additional assumptions about the distribution of $MD$.
+example, it is unlikely that an $R_2 = .51$ leads to a term that is not
+positively dominated by the first term involving only $R_1$. However,
+where exactly the cut-off is, when ES heterogeneity starts shrinking due
+to the attenuation correction procedure, can not be easily defined
+without additional assumptions about the distribution of $MD$.
 
-Generally speaking, as long as the relative heterogeneity in
-$\sigma^2_X$ does not substantially exceed the relative heterogeneity in
-$\sigma^2_T$, heterogeneity in corrected ES will remain larger than
-heterogeneity in uncorrected ES. Additionally, the proportion of
-relative heterogeneity quantified in $R_2$ needs to lie below
-$\sqrt{R_1}$, the square root of the average score reliability, for the
-second term to be negative. Only if the second term is negative AND no
-longer positively dominated by the first term, can the heterogeneity in
-corrected ES shrink as a result of the attenuation correction procedure.
+Generally speaking, the attenuation correction leads to a reduction both
+in mean value of $\sigma^2_X$ and in its heterogeneity. While a
+reduction in the former typically leads to an increase in heterogeneity
+of $d_c$, the latter has the potential to compensate for that increase
+and thereby reduce that heterogeneity after the attenuation correction.
+This reduction in ES heterogeneity can only occur, if the reduction in
+score variance heterogeneity is substantially stronger than the
+reduction in mean score variance. An extreme version of such a situation
+might occur, if the true score variance is identical across all samples.
+This would imply that all heterogeneity in score variance identified can
+be attributed to differences in how much random noise is found in the
+scores across the samples. In such a case, $R_2$ would be zero and a
+reduction in ES heterogeneity due to the attenuation correction would be
+guaranteed. This also implies that the lower $R_2$ and the larger the
+average score reliability $R_1$, the more likely it is that the
+attenuation correction actually does lead to a reduction in ES
+heterogeneity.
 
 ### Re-analysis of archival data
 
@@ -814,35 +811,24 @@ variances. As demonstrated in Equation 20, this implies that the ES
 heterogeneity grows even larger, as we correct for differences in score
 reliability.
 
-In Table 3 we also found some phenomena where the heterogeneity did in
-fact shrink after applying the attenuation correction procedure. This is
-not reflected by what we observe in Table 5, as $R_2 > R_1$ for almost
-all phenomena, which would imply that across all phenomena we expected
-ES heterogeneity to grow as a consequence of the attenuation correction
-procedure. However, it is crucial to realise that we did not find
-statistically significant heterogeneity for any of the phenomena where
-ES heterogeneity was reduced. This implies, that we actually could not
-statistically distinguish the ES heterogeneity from zero. Therefore,
+In @tbl-tauES we also found some phenomena where the heterogeneity did
+in fact shrink after applying the attenuation correction procedure. This
+is not reflected by what we observe in @tbl-R1R2, as $R_2 > R_1$ for
+almost all phenomena, which would imply that across all phenomena we
+expected ES heterogeneity to grow as a consequence of the attenuation
+correction procedure. However, it is crucial to realise that we did not
+find statistically significant heterogeneity for any of the phenomena
+where ES heterogeneity was reduced. This implies, that we actually could
+not statistically distinguish the ES heterogeneity from zero. Therefore,
 what seems to be a reduction in ES heterogeneity was most likely caused
 by estimation issues, as we could not accurately estimate the extent of
 ES heterogeneity, either before or after the attenuation correction.
 
-*Table 5: Re-analysis concerning metrics $R_1$ and $R_2$*
-
-| MASC | \mathbit{\mu}*{*\mathbit{\sigma}\mathbit{X}\^\mathbf{2}} | \mathbit{\mu}*{*\mathbit{\sigma}\mathbit{T}\^\mathbf{2}} | {\mathbit{CV}}*{*\mathbit{\sigma}\mathbit{X}\^\mathbf{2}} | {\mathbit{CV}}*{*\mathbit{\sigma}\mathbit{T}\^\mathbf{2}} | \mathbit{R}\_\mathbf{1} | \mathbit{R}\_\mathbf{2} |
-|-----------|----------:|----------:|----------:|----------:|----------:|----------:|
-| Albarracin_Priming_SAT | 0.024 | 0.015 | 0.155 | 0.25 | 0.618 | 1.614 |
-| Alter_Analytic_Processing | 0.166 | 0.105 | 0 | NA | 0.632 | NA |
-| Hart_Criminal_Intentionality | 2.195 | 1.865 | 0.354 | 0.41 | 0.85 | 1.16 |
-| Husnu_Imagined_Contact | 3.336 | 2.725 | 0.145 | 0.177 | 0.817 | 1.217 |
-| Nosek_Explicit_Art | 0.927 | 0.822 | 0.218 | 0.245 | 0.887 | 1.124 |
-| Nosek_Explicit_Math | 1.74 | 1.629 | 0.059 | 0.063 | 0.936 | 1.058 |
-| PSACR001_anxiety_int | 1.149 | 1.04 | 0.219 | 0.237 | 0.905 | 1.085 |
-| PSACR002_neg_photo | 0.603 | 0.482 | 0.218 | 0.271 | 0.799 | 1.243 |
-| Shnabel_Willingness_Reconcile_Rev | 1.055 | 0.878 | 0 | NA | 0.832 | NA |
-| Shnabel_Willingness_Reconcile_RPP | 0.9 | 0.698 | 0.216 | 0.277 | 0.775 | 1.283 |
-| Srull_Ronald_Hostility | 1.87 | 1.38 | 0.181 | 0.23 | 0.738 | 1.267 |
-| Tversky_Directionality_Similarity1 | 4.474 | 3.836 | 0.275 | 0.32 | 0.857 | 1.16 |
+```{r, echo = FALSE}
+#| label: tbl-R1R2
+#| tbl-cap: Re-analysis concerning metrics $R_1$ and $R_2$
+knitr::kable(read.csv(here("Tables/Variances_analysis.csv")))
+```
 
 Lastly, for two out of the 12 phenomena, we find a $CV_{\sigma^2_X}$ of
 0, as the estimate of absolute heterogeneity $\tau_{\sigma^2_X}$ was 0

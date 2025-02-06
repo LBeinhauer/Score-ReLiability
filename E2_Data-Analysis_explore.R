@@ -172,7 +172,7 @@ vars_rma_df <- do.call(rbind, vars_rma_L) %>%
 
 
 write.csv(vars_rma_df %>% 
-            select(MASC, mu_X, mu_T, CV_X, CV_T, R1, R2), here("Data/Processed/Variances_analysis.csv"), row.names = FALSE)
+            select(MASC, mu_X, mu_T, CV_X, CV_T, R1, R2), here("Tables/Variances_analysis.csv"), row.names = FALSE)
 
 
 agg_L <- lapply(agg_L, FUN = function(x){
