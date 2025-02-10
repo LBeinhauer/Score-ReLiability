@@ -205,3 +205,66 @@ abline(a = 0, b = 1)
 
 plot(cbind(.5*(sqrt(vars$tau2_X) / vars$mu_X), (sqrt(sds$tau2_X) / sds$mu_X)))
 abline(a = 0, b = 1)
+
+
+
+
+liability_inequality <- function(tau_MD, mu_MD, mu_sigma2x, mu_sigma2t, tau_sigma2x, tau_sigma2t){
+  
+  R1 <- mu_sigma2t/mu_sigma2x
+  R2 <- (tau_sigma2t^2)/(tau_sigma2x^2)
+  
+  ineq <- ((tau_MD^2 )* ((1/R1) - 1)) + (.25 * (mu_MD^2) * ((tau_sigma2x/mu_sigma2x)^2) * ((R2 / (R1^3)) - 1))
+  
+  return(data.frame(R1 = R1,
+                    R2 = R2,
+                    inequality = ineq,
+                    tau_MD = tau_MD,
+                    mu_MD = mu_MD,
+                    mu_sigma2x = mu_sigma2x,
+                    mu_sigma2t = mu_sigma2t,
+                    tau_sigma2x = tau_sigma2x, 
+                    tau_sigma2t = tau_sigma2t,
+                    CV_sigma2x = tau_sigma2x/mu_sigma2x))
+  
+}
+
+
+
+input_df <- data.frame(tau_MD = .1, 
+                       mu_MD = 1, 
+                       mu_sigma2x = 1, 
+                       mu_sigma2t = c(.5, .5, .5, .7, .7, .7, .9, .9, .9), 
+                       tau_sigma2x = .3, 
+                       tau_sigma2t = c(.3, .2, .1, .3, .2, .1, .3, .2, .1))
+
+test <- liability_inequality(input_df$tau_MD, input_df$mu_MD, input_df$mu_sigma2x, input_df$mu_sigma2t,
+                     input_df$tau_sigma2x, input_df$tau_sigma2t)
+
+test
+
+
+R1 <- seq(from = .01, to = 1, length.out = 50)
+R2 <- seq(from = .01, to = 1, length.out = 50)
+
+R_grid <- expand.grid(R1, R2)
+names(R_grid) <- c("R1", "R2")
+
+tau_MD <- .1
+mu_MD <- 1
+mu_sigma2x <- 1
+tau_sigma2x <- .1
+
+ineq_func <- function(R_grid, tau_MD, mu_MD, mu_sigma2x, tau_sigma2x){
+  
+  val <- ((tau_MD^2 )* ((1/R_grid$R1) - 1)) + (.25 * (mu_MD^2) * ((tau_sigma2x/mu_sigma2x)^2) * ((R_grid$R2 / (R_grid$R1^3)) - 1))
+  
+  data.frame(R1 = R_grid$R1,
+             R2 = R_grid$R2,
+             val = val)
+}
+
+input_df <- ineq_func(R_grid, tau_MD, mu_MD, mu_sigma2x, tau_sigma2x)
+
+ggplot(input_df) +
+  geom_raster(aes(x = R1, y = R2, fill = val))
