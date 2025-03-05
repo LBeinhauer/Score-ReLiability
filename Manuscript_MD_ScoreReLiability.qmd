@@ -276,16 +276,7 @@ made use of Likert-style items, where respondents would indicate their
 agreement to some kind of statement. The scale-length varied from 3 to
 10-points. The items measuring the remaining 3 phenomena were coded
 dichotomously, as responses were right or wrong (2 cases), or expressed
-agreement vs disagreement dichotomously (1 case). While the majority of
-designs make use of some form of control-treatment manipulation,
-randomly assigning participants to a condition (20 phenomena), some
-phenomena discuss the effect of pre-existing differences, e.g.
-biological sex (2 phenomena). Subsequently, those phenomena need to be
-identified where the meta-analytic mean effect size is statistically
-significant different from zero. This will be done as a first step of
-this manuscript’s analysis procedure. Detailed information concerning
-the different phenomena and how they were measured can be found at
-\[osf-link\], while a brief summary can be found in Table 1.
+
 
 To assess whether ES heterogeneity can be reduced by correcting for
 score reliability, estimates of meta-analytic heterogeneity are compared
@@ -508,7 +499,7 @@ mean score reliability $\rho_{xx‘}$ and its heterogeneity. While it may
 not be self-evident in the equation itself, it is easy to construct
 cases where heterogeneity in $\delta_0$ is inflated or deflated by
 heterogeneity in $\rho_{xx‘}$, contradicting Hunter & Schmidt’s
-interpretation of this equation. In @fig-hs, the results of employing
+interpretation of this equation. In @fig-HS, the results of employing
 @eq-HS to compute the heterogeneity (variance) in corrected ES is
 highlighted. All else held equal, only the individual level of mean
 reliability $\mu_{\rho_{xx‘}}$ is varied from .5 to .8. Mean corrected
@@ -518,7 +509,7 @@ $\tau^2_{\rho_{xx‘}}$ held constant at .02.
 
 ```{r, echo = FALSE}
 #| label: fig-HS
-#| fig-cap: Implications by Hunter & Schmidt's @eg-HS
+#| fig-cap: Implications by Hunter & Schmidt's @eq-HS
 
 mu_delta <- 1
 var_delta <- .2^2
@@ -542,7 +533,8 @@ ggplot() +
        x = expression(mu~"["~rho[xx]~"]"))
 ```
 
-In @fig-hs, the red line corresponds to the variance of corrected ES.
+In @fig-HS, the dashed red line corresponds to the variance of corrected
+ES.
 
 If everything else is held constant, the variance in uncorrected ES can
 be a function only of the mean level of score reliability
@@ -550,12 +542,20 @@ $\mu_{\rho_{xx‘}}$, according to H&S equation. In that case, Figure 2
 demonstrates that correcting for imperfect score reliability does not
 inevitably lead to lower heterogeneity, as the line representing
 heterogeneity in uncorrected ES does cross the red line, representing
-the heterogeneity in corrected ES. Depending on the mean level of score
-reliability, heterogeneity in uncorrected ES can be higher or lower than
-heterogeneity in corrected ES.
+the heterogeneity in corrected ES. This implies that, as long as mean
+score reliability is below .72, an attenuation correction would lead to
+a reduction in ES heterogeneity. As mean score reliability grows larger
+than .72, however, the heterogeneity in uncorrected ES grows larger than
+the heterogeneity in corrected ES - an attenuation correction would
+therefore only increase the extent of ES heterogeneity. This
+demonstrates that, depending on the mean level of score reliability,
+heterogeneity in uncorrected ES can be higher or lower than
+heterogeneity in corrected ES. As heterogeneity in corrected ES is not
+always smaller, the interpretationsof H&S concerning this equation is
+erroneous.
 
-However, @eq-hs is additionally flawed, as it violates a crucial
-definition. As Hunter & Schmidt point out, @eq-hs is only valid “If the
+However, @eq-HS is additionally flawed, as it violates a crucial
+definition. As Hunter & Schmidt point out, @eq-HS is only valid “If the
 level of reliability is independent of the true effect size across
 studies \[…\]” (2014, p. 309). However, both parameters, ES $\delta$ and
 score reliability ρxx‘, can not be independent parameters by definition.
@@ -568,7 +568,7 @@ above in @eg-dct, ES $\delta$ is standardized using the true standard
 deviation in the sense of CTT. The fact that the true standard deviation
 parameter $\sigma_T$ is found both in @eq-dct and @eq-rel demonstrates
 that ES $\delta$ and score reliability $\rho_{xx‘}$ can not be
-independent variables. Therefore, the basic premise of @eq-hs is not
+independent variables. Therefore, the basic premise of @eq-HS is not
 fulfilled, as the assumption of variable independence could not be
 fulfilled.
 
@@ -642,7 +642,7 @@ heterogeneity in $\sigma_T$ is guaranteed to be smaller than the
 uncorrected heterogeneity in $\sigma_X$. However, since the expected
 value of either standard deviation is placed in the denominator of the
 function and the variance of either is placed in the numerator of the
-function, @eq-hs is not sufficient to explain how heterogeneity in ES
+function, @eq-HS is not sufficient to explain how heterogeneity in ES
 changes due to the attenuation correction. Instead, we introduce two
 additional metrics.
 
@@ -935,6 +935,53 @@ Understanding heterogeneity as an extent to which a theory or phenomenon
 is understood, deflated estimates of heterogeneity imply that the theory
 or phenomenon is understood even worse than initially assumed.
 
+The data-sets available to this project fall into two categories: direct
+multi-site replications of a specific phenomenon, employing identical
+protocols across samples; a large-scale collaborative effort to assess a
+single phenomenon globally, distributed across a large number of
+independent laboratories. For both categories, rather arbitrary sampling
+schemes were used. The majority of respondents are students at the
+respective universities, taking part in the studies voluntarily or
+because they were required as part of their study's programme (at times
+compensation was awarded). This is not the same as random sampling.
+These samples are put together arbitrarily, it is unlikely that the
+underlying distribution of true scores is meaningful for a properly
+specified population. The between-studies randomness introduced by these
+undefined sampling schemes manifests itself in true score variance
+heterogeneity $\tau^2_{\sigma^2_X}$. Between-studies randomness
+introduces by issues of measurement quality manifest themselves in error
+score variance heterogeneity $\tau^2_{\sigma^2_X }$. This implies that
+it should be of little surprise that the differences in true score
+variance largely exceed those in error score variance.
+
+Without sampling schemes that assure that the samples are constructed to
+be representative for some kind of population, we have no reason to
+assume that there should be few differences in the dispersion of true
+scores. Even though the measuring instruments are translated to
+different languages, which is bound to introduce differences in how much
+random noise is added to scores across samples, we have no reason to
+assume that these differences are larger than those introduced by
+employing no sampling schemes. Therein, we believe that, as the
+differences in score reliability are largely introduced by failure of
+ensuring appropriate sampling mechanisms, not by differences in how well
+the instrument captures the underlying construct, attenuation correction
+can not be expected to remedy ES heterogeneity.
+
+However, this also means that results contrary to what we observed in
+this project are not unthinkable. Valid sampling schemes need to be
+considered, ensuring that the samples are representative for populations
+that can be meaningfully compared. In that case, we are convinced that
+true score variance should be more stable across samples and differences
+in the instrument's measuring quality are bound to have a much larger
+impact. Not only would an attenuation correction in such a case actually
+have the potential of reducing ES heterogeneity, the variability
+underlying a psychological phenomenon could be meaningfully assessed
+across samples - something that would greatly help attempts to identify
+universal and non-universal patterns of psychological phenomena. As it
+stands, current approaches to multi-site direct replications and other
+collaborative efforts suffer strongly from the lack of appropriate
+sampling schemes.
+
 The empirical arguments presented are based on a rather small number of
 non-representative data-sets. Based on the combination of analytical and
 empirical arguments, we are convinced that these differences in score
@@ -955,11 +1002,6 @@ discussed over the last years (in e.g. ManyLabs or Registered
 Replication Reports) employ single-indicator scales as dependent
 measures, score reliability can not be easily estimated in order to
 replicate our analyses.
-
-Paragraph on implications -\> data collected using no specific sampling
-schemes - little surprise that the radomness induced by sampling
-schemes, which manifests itself in true score variance heterogeneity,
-largely surpasses the heterogeneity induced by imperfect measurement.
 
 The analytical arguments presented following Equation 17 rested on the
 use of the delta-method, as Equation 17 contained parameters of the
@@ -987,6 +1029,11 @@ discuss how an attenuation correction procedure can affect ES
 heterogeneity. Therefore, we believe that the violation of these
 assumptions is defensible in this case, as the analytical arguments
 derived from the inequality should still hold up, nevertheless.
+Additionally, we used the empirical examples available to assess in how
+far estimates derived using the delta-method approximations diverge from
+estimates derived without it. The differences identified are rather
+miniscule at the third decimal, reinforcing our belief that these
+assumption violations are defensible.
 
 Similarly, all Equations following Equation 10 rest on the assumption
 that mean difference ($MD$) and true or total score variance
