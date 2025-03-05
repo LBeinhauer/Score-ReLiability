@@ -1,6 +1,6 @@
 ---
 title: "Manuscript"
-format: docx
+format: html
 editor: 
   markdown: 
     wrap: 72
@@ -37,47 +37,61 @@ MASC_names <- unique(ES_rma_df$MASC)
 
 ```
 
-# Score ReLiability – Can we explain effect size heterogeneity using score reliability?
+# Liability or reliability? Exploring the role of effect size attenuation on meta-analytic heterogeneity
 
 Large-scale collaborative replication efforts have sparked discussions
-surrounding the replicability of psychological phenomena. However, for
-attempts to estimate a phenomenon’s replicability or to predict whether
-a future replication will replicate successfully, heterogeneity is a
-crucial parameter that needs to be assessed. In the meta-analytic
-context, heterogeneity describes the variation in effect sizes, free of
-sampling error, if these are not stable or constant across replications.
-Therefore, the presence of heterogeneity implies that some replications
-of a single phenomenon may be successful, while others are not. If
-heterogeneity grows, meaning the phenomenon’s effect size varies more
-strongly for unexplained reasons, the probability of observing an effect
-size around zero or even in the negative space grows larger as well. If
-we know the mean size and heterogeneity of a phenomenon’s effect size,
-we would theoretically be able to establish a baseline of expected
-replication rate (reference).
+surrounding the replicability of psychological phenomena. For attempts
+to estimate a phenomenon’s replicability or to predict whether a future
+replication will replicate successfully, heterogeneity is a crucial
+parameter that needs to be assessed. In the meta-analytic context,
+heterogeneity describes the variation in effect sizes, free of sampling
+error, if these are not constant across replications. Therefore, the
+presence of heterogeneity implies that some replications of a single
+phenomenon may be successful, while others are not. If heterogeneity
+grows, meaning the phenomenon’s effect size varies more strongly for
+unexplained reasons, the probability of observing an effect size around
+zero or even in the negative space grows larger as well. If we know the
+mean size and heterogeneity of a phenomenon’s effect size, we would
+theoretically be able to establish an expected replication rate
+(reference).
 
 Similarly, it has been argued that heterogeneity in effect sizes is an
 indicator of the theory’s “completeness” surrounding the phenomenon.
 Linden and Hönekopp argue that “low (as opposed to high) heterogeneity
 reflects a more advanced understanding of the subject matter being
-studied” (2021, p.2). Similarly, Schuetze and von Hippel (2023) argue
-that heterogeneity in effects is an indicator of a vague, poorly
+studied” (2021, p.2). Alternatively, Schuetze and von Hippel (2023)
+argue that heterogeneity in effects is an indicator of a vague, poorly
 specified theory.
 
-Re-analyses of multi-site direct replications have demonstrated that, if
-a psychological effect size can be distinguished from zero,
-heterogeneity is present across most phenomena (ref). Large-scale
-attempts of direct replications, using identical protocols, such as the
-Many Labs studies or Registered Replication Reports (references), for
-the first time allow researchers to estimate heterogeneity undistorted
-by differences in experimental designs. In re-analyses of these studies,
-Olsson-Collentine et al. (2020) identify a positive correlation between
-a phenomenon’s effect size and its heterogeneity. Similarly, van Erp et
-al. (2017) or Stanley et al. (2018) estimate strong degrees of
-heterogeneity across conceptual replications in Psychology. In a
-separate re-analysis of large scale direct replications, Renkewitz et
-al. (2025) identify substantial heterogeneity in almost all projects
-where a non-zero effect could be identified. This aligns with the
-correlation found by Olsson-Collentine et al. (2020).
+Large-scale attempts of direct replications, using identical protocols,
+such as the Many Labs studies or Registered Replication Reports
+(references), for the first time allow researchers to estimate
+heterogeneity undistorted by selection processes induced by publication
+bias. In re-analyses of these studies, Olsson-Collentine et al. (2020)
+identify a positive correlation between a phenomenon’s effect size and
+its heterogeneity. Similarly, van Erp et al. (2017) or Stanley et al.
+(2018) estimate strong degrees of heterogeneity across conceptual
+replications in Psychology. In a separate re-analysis of large scale
+direct replications, Renkewitz et al. (2025) identify substantial
+heterogeneity in almost all projects where a non-zero effect could be
+identified. This aligns with the correlation found by Olsson-Collentine
+et al. (2020).
+
+One source for this heterogeneity, which is not a typical moderator tied
+to a specific theory, might be impairments in score reliability which
+vary in their extent across replications. This is an argument put
+forward repeatedly by original researchers and replicators alike.
+Literature discussing the role of score reliability for standardized
+effect sizes claims that differences in score reliability should
+inflate, and therefore increase, heterogeneity. Over the following
+pages, we assess whether score reliability can in fact be made
+responsible for heterogeneity identified across phenomena. Even though
+only a limited number of phenomena allow for such an analysis, we find
+no empirical evidence for the argument that differences in score
+reliability inflate effect size heterogeneity. Therefore, in the last
+part of this text we turn towards an alternative discussion using
+analytical arguments on how differences in measurement quality affect
+standardized effect sizes and their differences.
 
 ## Effect sizes and score reliability in meta-analysis
 
@@ -178,7 +192,7 @@ error. The standard error for $d_c$ is defined in @eq-SEdc.
 
 $$SE_{d_c} = \sqrt{SE^2_d \frac{d_c}{d}}$$ {#eq-SEdc}
 
-The claims made by W&D imply that corrections of individual observed ESs
+The claims made in W&D imply that corrections of individual observed ESs
 for their unreliability should lead to lower estimates of heterogeneity
 in meta-analyses of corrected ES. If heterogeneity in score reliability
 adds to ES heterogeneity, attenuation correction procedures should
@@ -189,22 +203,14 @@ Re-analyses of the collaborative multi-site replication efforts have
 uncovered differences in score reliability across replications of the
 same phenomena (ref McShaw etc.). The claims made in W&D and H&S imply
 that the ES heterogeneity uncovered in these projects therefore could
-potentially be explained by these differences in score reliability. The
-same argument has been proposed by both original authors of phenomena
-that did not replicate or carry substantial heterogeneity (references)
-as well as the authors of the multi-site replication attempts (refs).
-Over the following pages, we assess for the first time, whether the
-differences in score reliability do indeed explain, and thereby reduce,
-the ES heterogeneity observed across the different multi-site
-replication efforts. Even though only a limited number of phenomena
-allow for such an analysis, we find no evidence for a reduction in ES
-heterogeneity after taking score reliability into account. Subsequently,
-we discuss why the expectation formulated in H&S does not allow for such
-claims. Alternatively, we explore to what extent defining ES as a random
-ratio variable helps understand how ES heterogeneity is affected by
-differences in score reliability. We close with a discussion on what
-future meta-analysts can expect, when dealing with issues of
-(un)reliability in assessments of meta-analyses of ES.
+potentially be explained by these differences in score reliability.
+Similarly, attempting to explain the substantial extent of ES
+heterogeneity identified in psychological phenomena, both the original
+authors as well as the multi-site replication authors claim that
+differences in score reliability might be responsible (references).
+
+Therefore, in the following section we assess to what extent this
+intuition can be . The re-analysis of archival data is
 
 ## Re-analysis of archival data
 
@@ -254,31 +260,32 @@ statistically distinguished from zero.
 
 As all phenomena in the collection fulfil the first condition, 50
 phenomena have been catalogued where the effect is studied by comparing
-the outcome across two separate groups. While the majority of designs
-make use of some form of control-treatment manipulation, randomly
-assigning participants to a condition (20 phenomena), some phenomena
-discuss the effect of pre-existing differences, e.g. biological sex (2
-phenomena). From the collection of 50 phenomena, 22 fulfil the second
-condition, so that estimates of score reliability can be derived. For
-these phenomena, the dependent variable used to construct the effect
-size is measured by employing more than a single indicator. At the same
-time, however, this implies that the remaining 28 phenomena did not make
-use of more than a single indicator to measure the dependent variable.
-Therefore, for the majority of phenomena it is not possible to assess in
-how far measurement quality is sufficiently high in terms of e.g.
-internal consistency or low random error variance.
+the outcome across two separate groups. From the collection of 50
+phenomena, 22 fulfil the second condition, so that estimates of score
+reliability can be derived. For the 22 phenomena, the dependent variable
+used to construct the effect size is measured by employing more than a
+single indicator. At the same time, however, this implies that the
+remaining 28 phenomena did not make use of more than a single indicator
+to measure the dependent variable. Therefore, for the majority of
+phenomena it is not possible to assess in how far measurement quality is
+sufficiently high in terms of e.g. internal consistency or low random
+error variance.
 
 From the 22 phenomena that employed more than a single indicator, 19
 made use of Likert-style items, where respondents would indicate their
 agreement to some kind of statement. The scale-length varied from 3 to
 10-points. The items measuring the remaining 3 phenomena were coded
 dichotomously, as responses were right or wrong (2 cases), or expressed
-agreement vs disagreement dichotomously (1 case). Subsequently, those
-phenomena need to be identified where the meta-analytic mean effect size
-is statistically significant different from zero. This will be done as a
-first step of this manuscript’s analysis procedure. Detailed information
-concerning the different phenomena and how they were measured can be
-found at \[osf-link\], while a brief summary can be found in Table 1.
+agreement vs disagreement dichotomously (1 case). While the majority of
+designs make use of some form of control-treatment manipulation,
+randomly assigning participants to a condition (20 phenomena), some
+phenomena discuss the effect of pre-existing differences, e.g.
+biological sex (2 phenomena). Subsequently, those phenomena need to be
+identified where the meta-analytic mean effect size is statistically
+significant different from zero. This will be done as a first step of
+this manuscript’s analysis procedure. Detailed information concerning
+the different phenomena and how they were measured can be found at
+\[osf-link\], while a brief summary can be found in Table 1.
 
 To assess whether ES heterogeneity can be reduced by correcting for
 score reliability, estimates of meta-analytic heterogeneity are compared
