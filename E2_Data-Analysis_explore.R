@@ -48,7 +48,7 @@ data.list <- lapply(data_files, read.csv)
 data.list[[4]]$source <- substr(data.list[[4]]$source, start = nchar(data.list[[4]]$source) - 2, stop = nchar(data.list[[4]]$source))
 
 
-effect_index <- MASC_names %in% c("Albarracin_Priming_SAT", "Alter_Analytic_Processing",
+effect_index <- MASC_names %in% c("Albarracin_Priming_SAT", 
                                   "Carter_Flag_Priming", "Caruso_Currency_Priming",
                                   "Dijksterhuis_trivia", "Finkel_Exit_Forgiveness", 
                                   "Finkel_Neglect_Forgiveness",

@@ -115,7 +115,7 @@ ch_bh_items_c.idx <- which(names(ch_df) %in%
 # add the required source-column
 ch_df <- ch_df %>%
   mutate(source = lab.name,
-         group = ifelse(sw.prime.cond == "neutral", yes = 0, no = 1))
+         group = ifelse(sw.prime.cond == "neutral", yes = 1, no = 0))
 
 
 # excluding labs, with fewer than 100 participants in a condition, as required by the replication authors

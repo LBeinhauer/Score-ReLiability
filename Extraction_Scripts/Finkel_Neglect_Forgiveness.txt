@@ -124,7 +124,9 @@ cr_df <- cr_df[,-c(grep("^V", names(cr_df)), grep("^Location", names(cr_df)))]
 
 # only keeping the variables explicitly relevant for this scale:
 cr_df <- cr_df[,c(RRR5_NF_items, "source")] %>% 
-  mutate(group = cr_df[,group_item])
+  mutate(group = cr_df[,group_item]) %>% 
+  mutate(group = (group * (-1)) + 1)
+
 
 
 write.csv(cr_df, here("Data/Extracted (Project) Data/Finkel_Neglect_Forgiveness.csv"), row.names = FALSE)

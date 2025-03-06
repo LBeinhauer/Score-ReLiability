@@ -39,7 +39,7 @@ data.list[[4]]$source <- substr(data.list[[4]]$source, start = nchar(data.list[[
 MASC_names <- substr(list.files(here("Data/Extracted (Project) Data")), 1, nchar(list.files(here("Data/Extracted (Project) Data")))-4) 
 
 
-effect_index <- MASC_names %in% c("Albarracin_Priming_SAT", "Alter_Analytic_Processing",
+effect_index <- MASC_names %in% c("Albarracin_Priming_SAT", 
                                   "Carter_Flag_Priming", "Caruso_Currency_Priming",
                                   "Dijksterhuis_trivia", "Finkel_Exit_Forgiveness", 
                                   "Finkel_Neglect_Forgiveness",
@@ -248,7 +248,10 @@ names(d_rma_full_L) <- MASC_names[effect_index]
 
 ES_rma_df <- data.frame(mu = unlist(lapply(d_rma_full_L, FUN = function(x){c(x$rma_raw$b[1], x$rma_cor$b[1])})),
                         se = unlist(lapply(d_rma_full_L, FUN = function(x){c(x$rma_raw$se, x$rma_cor$se)})),
-                        pval = unlist(lapply(d_rma_full_L, FUN = function(x){c(x$rma_raw$pval, x$rma_cor$pval)})),
+                        pval = unlist(lapply(d_rma_full_L, FUN = function(x){c(
+                          if(x$rma_raw$b[1] > 0){x$rma_raw$pval/2}else{1 - (x$rma_raw$pval/2)}, 
+                          if(x$rma_cor$b[1] > 0){x$rma_cor$pval/2}else{1 - (x$rma_cor$pval/2)}
+                          )})),
                         ci.lb = unlist(lapply(d_rma_full_L, FUN = function(x){c(x$rma_raw$ci.lb, x$rma_cor$ci.lb)})),
                         ci.ub = unlist(lapply(d_rma_full_L, FUN = function(x){c(x$rma_raw$ci.ub, x$rma_cor$ci.ub)})),
                         tau = sqrt(unlist(lapply(d_rma_full_L, FUN = function(x){c(x$rma_raw$tau2, x$rma_cor$tau2)}))),

@@ -16,6 +16,8 @@ psacr002_neg <- psacr002_dat %>%
   mutate(group = ifelse(condition %in% c("Active Control", "Passive Control"), yes = 0, no = 1)) %>% 
   mutate(source = country) %>% 
   dplyr::select(c(all_of(neg_items), "group", "source")) %>% 
-  filter(source %in% samples)
+  filter(source %in% samples) %>% 
+  mutate(group = (group * (-1)) + 1)
+
 
 write.csv(psacr002_neg, file = here("Data/Extracted (Project) Data/PSACR002_neg_photo.csv"), row.names = FALSE)

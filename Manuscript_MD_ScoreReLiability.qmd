@@ -210,11 +210,18 @@ authors as well as the multi-site replication authors claim that
 differences in score reliability might be responsible (references).
 
 Therefore, in the following section we assess to what extent this
-intuition can be . The re-analysis of archival data is
+intuition is supported by empirical evidence. The re-analysis of
+archival data serves to shed light on the following two research
+questions central to this text:
+
+-   Can score reliability be used to explain heterogeneity in
+    standardized effect sizes?
+
+-   How does score reliability affect ES heterogeneity?
 
 ## Re-analysis of archival data
 
-We have attempted to collect all openly available multi-site direct
+We have collected a large number of openly available multi-site direct
 replications on psychological phenomena (Fünderich et al. 2024). The
 data-sets of about 50 phenomena , largely stemming from the efforts of
 the Many Labs studies, Registered Replication Reports or the
@@ -279,7 +286,7 @@ dichotomously, as responses were right or wrong (2 cases), or expressed
 agreement vs disagreement dichotomously (1 case). While the majority of
 designs make use of some form of control-treatment manipulation,
 randomly assigning participants to a condition (20 phenomena), some
-phenomena discuss the effect of pre-existing differences, e.g.
+phenomena refer to the effect of pre-existing differences, e.g.
 biological sex (2 phenomena). Subsequently, those phenomena need to be
 identified where the meta-analytic mean effect size is statistically
 significant different from zero. This will be done as a first step of
@@ -305,7 +312,8 @@ heterogeneity, the REML-estimator is used (ref). To identify which
 phenomena pass criterion (3), using a Wald-type significance test we
 assess for which phenomenon the meta-analytic mean ES is significantly
 different from zero. For this hypothesis test, as all other hypothesis
-tests in this manuscript, a significance level of .05 is used.
+tests in this manuscript, a one-tailed significance level of .05 is
+used.
 
 Additionally, estimates of score reliability are derived. While not
 without criticism (references), Cronbach’s Alpha is used to estimate
