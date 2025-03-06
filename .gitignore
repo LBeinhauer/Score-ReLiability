@@ -46,5 +46,4 @@ Data/Processed/*
 !Data/Processed/.gitkeep
 Graphics/*
 !Graphics/.gitkeep
-Tables/*
-!Tables/.gitkeep
+
