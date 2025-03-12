@@ -268,31 +268,76 @@ statistically distinguished from zero.
 As all phenomena in the collection fulfil the first condition, 50
 phenomena have been catalogued where the effect is studied by comparing
 the outcome across two separate groups. From the collection of 50
-phenomena, 22 fulfil the second condition, so that estimates of score
-reliability can be derived. For the 22 phenomena, the dependent variable
+phenomena, 21 fulfil the second condition, so that estimates of score
+reliability can be derived. For the 21 phenomena, the dependent variable
 used to construct the effect size is measured by employing more than a
 single indicator. At the same time, however, this implies that the
-remaining 28 phenomena did not make use of more than a single indicator
+remaining 29 phenomena did not make use of more than a single indicator
 to measure the dependent variable. Therefore, for the majority of
 phenomena it is not possible to assess in how far measurement quality is
 sufficiently high in terms of e.g. internal consistency or low random
 error variance.
 
-From the 22 phenomena that employed more than a single indicator, 19
+From the 21 phenomena that employed more than a single indicator, 19
 made use of Likert-style items, where respondents would indicate their
 agreement to some kind of statement. The scale-length varied from 3 to
-10-points. The items measuring the remaining 3 phenomena were coded
-dichotomously, as responses were right or wrong (2 cases), or expressed
-agreement vs disagreement dichotomously (1 case). While the majority of
+10-points. The items measuring the remaining 2 phenomena were coded
+dichotomously, as responses were right or wrong. While the majority of
 designs make use of some form of control-treatment manipulation,
 randomly assigning participants to a condition (20 phenomena), some
 phenomena refer to the effect of pre-existing differences, e.g.
 biological sex (2 phenomena). Subsequently, those phenomena need to be
 identified where the meta-analytic mean effect size is statistically
-significant different from zero. This will be done as a first step of
+significant different from zero. This will be done as a preliminary step in
 this manuscript’s analysis procedure. Detailed information concerning
 the different phenomena and how they were measured can be found at
 \[osf-link\], while a brief summary can be found in Table 1.
+
+[Equations @eq-d], [-@eq-SEd], [-@eq-dc], and [-@eq-SEdc] were used to
+generate estimates of standardized ES, both uncorrected and corrected,
+with their corresponding standard errors. Generally, this leads to
+larger (absolute) ES and larger standard errors. As an example from the
+21 selected phenomena, the results from this procedure on Nosek’s
+Explicit Art sex differences phenomenon are displayed in the forest plot
+in @fig-forest. Here, grey dots represent the uncorrected ES for each
+sample, while black dots represent the corrected ES in each sample. The
+bars surrounding these dots show the respective 95%-Cis.
+
+In @fig-forest it becomes apparent that the reliability attenuation
+procedure leads to an increase in the individual absolute effect size,
+as the black dots are moved further away from zero. Simultaneously, the
+standard errors grew larger after the attenuation correction, which
+leads to larger 95%-CIs. This is most easily observed for the
+mturk-sample, which already had a rather large confidence interval to
+begin with. Additionally, in the diamond at the bottom of the figure, we
+can see that the meta-analytic estimate mean ES is also larger after the
+attenuation correction took place. In @tbl-meanES, the estimates and
+tests on the meta-analytic average ES, both corrected and uncorrected,
+can be found.
+
+```{r, echo = FALSE}
+#| label: fig-forest
+#| fig-cap: Forest Plot Nosek_Explicit_Art
+forest_plot_rel(ES_rma_df[which(ES_rma_df$MASC == "Nosek_Explicit_Art"),], agg_L[[which(MASC_names == "Nosek_Explicit_Art")]])
+```
+
+```{r, echo = FALSE}
+#| label: tbl-meanES
+#| tbl-cap: Meta-analytic average  ES
+knitr::kable(x = read.csv(here("Tables/Mean_ES.csv")))
+```
+
+@tbl-meanES demonstrates that what we observed in Figure 1 holds across
+all 21 phenomena. All meta-analytic effects are larger in their absolute size after
+applying an attenuation correction procedure. Similarly, the uncertainty
+quantified in the estimates’ standard error is larger. Additionally,
+@tbl-meanES highlights which phenomena pass criterion (3) – the effect
+size must be statistically significantly distinguishable from zero. 12
+phenomena pass this criterion, highlighted in boldface. It may be
+remarked that the attenuation correction procedure, in this data,
+appears to have no influence on whether a phenomenon passes the
+criterion. The differences in p-value are rather small and lead to no
+difference in conclusion, regarding a significance level of .05.
 
 To assess whether ES heterogeneity can be reduced by correcting for
 score reliability, estimates of meta-analytic heterogeneity are compared
@@ -376,56 +421,19 @@ for all data manipulation and statistical analysis.
 
 ### Results
 
-[Equations @eq-d], [-@eq-SEd], [-@eq-dc], and [-@eq-SEdc] were used to
-generate estimates of standardized ES, both uncorrected and corrected,
-with their corresponding standard errors. Generally, this leads to
-larger (absolute) ES and larger standard errors. As an example from the
-12 selected phenomena, the results from this procedure on Nosek’s
-Explicit Art sex differences phenomenon are displayed in the forest plot
-in Figure 1. Here, grey dots represent the uncorrected ES for each
-sample, while black dots represent the corrected ES in each sample. The
-bars surrounding these dots show the respective 95%-Cis.
-
-In @fig-forest it becomes apparent that the reliability attenuation
-procedure leads to an increase in the individual absolute effect size,
-as the black dots are moved further away from zero. Simultaneously, the
-standard errors grew larger after the attenuation correction, which
-leads to larger 95%-CIs. This is most easily observed for the
-mturk-sample, which already had a rather large confidence interval to
-begin with. Additionally, in the diamond at the bottom of the figure, we
-can see that the meta-analytic estimate mean ES is also larger after the
-attenuation correction took place. In @tbl-meanES, the estimates and
-tests on the meta-analytic average ES, both corrected and uncorrected,
-can be found.
-
-```{r, echo = FALSE}
-#| label: fig-forest
-#| fig-cap: Forest Plot Nosek_Explicit_Art
-forest_plot_rel(ES_rma_df[which(ES_rma_df$MASC == "Nosek_Explicit_Art"),], agg_L[[which(MASC_names == "Nosek_Explicit_Art")]])
-```
-
-```{r, echo = FALSE}
-#| label: tbl-meanES
-#| tbl-cap: Meta-analytic average  ES
-knitr::kable(x = read.csv(here("Tables/Mean_ES.csv")))
-```
-
-@tbl-meanES demonstrates that what we observed in Figure 1 holds across
-all 22 phenomena. All meta-analytic effect sizes are larger after
-applying an attenuation correction procedure. Similarly, the uncertainty
-quantified in the estimates’ standard error is larger. Additionally,
-@tbl-meanES highlights which phenomena pass criterion (3) – the effect
-size must be statistically significantly distinguishable from zero. 12
-phenomena pass this criterion, highlighted in boldface. It may be
-remarked that the attenuation correction procedure, in this data,
-appears to have no influence on whether a phenomenon passes the
-criterion. The differences in p-value are rather small and lead to no
-difference in conclusion, regarding a significance level of .05.
-
 ```{r, echo = FALSE}
 #| label: tbl-tauES
 #| tbl-cap: Tests for ES Heterogeneity
-knitr::kable(x = read.csv(here("Tables/Heterogeneity_ES.csv")))
+#knitr::kable(x = read.csv(here("Tables/Heterogeneity_ES.csv")))
+
+tab_hetES <- read.csv(here("Tables/Heterogeneity_ES.csv"))
+tab_hetrel <- read.csv(here("Tables/Results_RMA_alpha.csv"))
+
+tab_both <- data.frame(tab_hetES$MASC,
+                       tab_hetrel[,c("mu_alpha_str", "tau_alpha", "QE_str", "QEp")],
+                       tab_hetES[,c("tau_raw", "QE_raw_str", "QEp_raw", "tau_cor", "QE_cor_str", "QEp_cor")])
+
+knitr::kable(tab_both)
 ```
 
 Cases incompatible with claims made in W&D and H&S are highlighted using
