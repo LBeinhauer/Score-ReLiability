@@ -288,8 +288,8 @@ randomly assigning participants to a condition (20 phenomena), some
 phenomena refer to the effect of pre-existing differences, e.g.
 biological sex (2 phenomena). Subsequently, those phenomena need to be
 identified where the meta-analytic mean effect size is statistically
-significant different from zero. This will be done as a preliminary step in
-this manuscript’s analysis procedure. Detailed information concerning
+significant different from zero. This will be done as a preliminary step
+in this manuscript’s analysis procedure. Detailed information concerning
 the different phenomena and how they were measured can be found at
 \[osf-link\], while a brief summary can be found in Table 1.
 
@@ -328,13 +328,13 @@ knitr::kable(x = read.csv(here("Tables/Mean_ES.csv")))
 ```
 
 @tbl-meanES demonstrates that what we observed in Figure 1 holds across
-all 21 phenomena. All meta-analytic effects are larger in their absolute size after
-applying an attenuation correction procedure. Similarly, the uncertainty
-quantified in the estimates’ standard error is larger. Additionally,
-@tbl-meanES highlights which phenomena pass criterion (3) – the effect
-size must be statistically significantly distinguishable from zero. 12
-phenomena pass this criterion, highlighted in boldface. It may be
-remarked that the attenuation correction procedure, in this data,
+all 21 phenomena. All meta-analytic effects are larger in their absolute
+size after applying an attenuation correction procedure. Similarly, the
+uncertainty quantified in the estimates’ standard error is larger.
+Additionally, @tbl-meanES highlights which phenomena pass criterion (3)
+– the effect size must be statistically significantly distinguishable
+from zero. 12 phenomena pass this criterion, highlighted in boldface. It
+may be remarked that the attenuation correction procedure, in this data,
 appears to have no influence on whether a phenomenon passes the
 criterion. The differences in p-value are rather small and lead to no
 difference in conclusion, regarding a significance level of .05.
@@ -428,73 +428,63 @@ for all data manipulation and statistical analysis.
 
 tab_hetES <- read.csv(here("Tables/Heterogeneity_ES.csv"))
 tab_hetrel <- read.csv(here("Tables/Results_RMA_alpha.csv"))
+tab_muES <- read.csv(here("Tables/Mean_ES.csv"))
 
 tab_both <- data.frame(tab_hetES$MASC,
                        tab_hetrel[,c("mu_alpha_str", "tau_alpha", "QE_str", "QEp")],
                        tab_hetES[,c("tau_raw", "QE_raw_str", "QEp_raw", "tau_cor", "QE_cor_str", "QEp_cor")])
 
-knitr::kable(tab_both)
+
+knitr::kable(tab_both,
+             col.names = c("MASC", 
+                           "$\\hat{\\mu}_{\\alpha}$ (95%-CI)", 
+                           "$\\hat{\\tau}_{\\alpha}$", 
+                           "QE (df)", "p", 
+                           "$\\hat{\\tau}_{\\delta_0}$", 
+                           "QE (df)", "p",
+                           "$\\hat{\\tau}_{\\delta}$", 
+                           "QE (df)", "p"),
+             escape = FALSE)
+# 
+# tab_one <- data.frame(tab_muES,
+#                       tab_hetrel[,c("mu_alpha_str", "tau_alpha", "QE_str", "QEp")])
 ```
 
-Cases incompatible with claims made in W&D and H&S are highlighted using
-boldface.
+@tbl-tauES contains the results from performing an RG-MA on the
+Cronbach's Alpha coefficients of the scales used to measure the 12
+remaining phenomena. Additionally, it contains estimates of
+heterogeneity for both uncorrected ES ($\delta_0$) and corrected ES
+($\delta$), which are central to assess the research questions posed in
+section XXX. Most importantly, @tbl-tauES demonstrates that for all but
+one of the phenomena, the attenuation correction procedure barely has an
+impact on the extent of ES heterogeneity. For all phenomena but
+Srull_Behaviour_Hostility, the heterogeneity in ES before and after the
+correction changes very little. This implies that for 11 out of 12
+phenomena, differences in score reliability can not be made responsible
+for heterogeneity in standardized effect sizes. Only for the
+Srull_Behaviour_Hostility phenomenon, accounting for score reliability
+actually does reduce, and therefore explain, ES heterogeneity.
 
-However, what @fig-forest and @tbl-meanES can not inform us about is in
-how far the heterogeneity has changed after correcting for
-(un)reliability. In @tbl-tauES, the estimates and tests of heterogeneity
-concerning uncorrected and corrected ES on the 12 remaining phenomena,
-which passed all criteria (1) – (3), can be found. In the table, the
-estimate of heterogeneity $\tau$, with the accompanying QE-test
-statistic, degrees of freedom and its p-value are reported, separately
-for uncorrected and corrected ES.
+Secondly, in @tbl-tauES we find that for ten out of twelve phenomena, ES
+heterogeneity grows as a result from the attenuation correction
+procedure. Even though these differences tend to be small, it is clear
+that in all those cases, not only did accounting for score reliability
+not explain any ES heterogeneity, we find even more than initially
+expected. This is incompatible with claims made in W&D and H&S, the
+attenuation correction increased ES heterogeneity. Concerning the
+remaining two phenomena, for the Shnabel_Willingness_Reconcile_Rev, the
+reduction in heterogeneity is miniscule and the estimate of
+heterogeneity is not statistically significant in the first place. Most
+likely, the difference in ES heterogeneity estimates can be explained by
+issues of estimation, as only eight replications are available. Again,
+only for the Srull_Behaviour_Hostility phenomenon, we find a substantial
+reduction in heterogeneity due to the attenuation correction procedure.
+However, for the majority of phenomena it appears that differences in
+score reliability do not inflate heterogeneity in uncorrected effect
+sizes, but instead masks heterogeneity, that can be unveiled by
+accounting for score reliability.
 
-Most importantly, @tbl-tauES demonstrates that of 12 phenomena assessed,
-for seven phenomena we find patterns incompatible with claims made in
-W&D and H&S. For those seven phenomena, the reliability attenuation
-correction led to an increase in absolute ES heterogeneity $\tau$. For
-the remaining five phenomena, estimates of ES heterogeneity were zero
-before and after the correction procedure, leading to no change at all.
-This leaves three phenomena where the attenuation correction did indeed
-lead to a reduction of heterogeneity. However, it is crucial to note
-that the hypothesis tests identified statistically significant
-heterogeneity in only four out of 12 phenomena and for none of those a
-reduction in heterogeneity took place. In all four cases of
-statistically significant heterogeneity, the attenuation correction
-procedure led to an increase in heterogeneity, contrary to the W&D and
-H&S predictions.
 
-To make sure that actual differences in score reliability exist,
-heterogeneity in score reliability is assessed, making use of
-Reliability Generalization Meta-Analysis (reference). @tbl-RGMA
-summarises the results across all 12 phenomena. Overall, scales for
-almost all phenomena appear have produced scores with an average score
-reliability larger than .7. Only two phenomena (Albarracin_Priming_SAT
-and Alter_Analytic_Processing) come with lower score reliability.
-However, for those phenomena we could not identify statistically
-significant heterogeneity in effect sizes in @tbl-meanES in the first
-place. From the phenomena where the ES heterogeneity grew larger as a
-result from the attenuation correction procedure, for six out of seven
-phenomena, we observe statistically significant heterogeneity in score
-reliability. Only the Shnabel_Willingness_Reconcile_Rev project produced
-scores where no heterogeneity in score reliability was identified.
-However, for this project, it is crucial to note that only a small
-number of replications (8), was available for analysis. Since the power
-of Cochran’s Q-test for heterogeneity largely depends on the number of
-replications, this result is inconclusive.
-
-Despite this one inconclusive result, for the majority of phenomena
-where ES heterogeneity is larger after applying an attenuation
-correction, a lack of differences in score reliability can not be made
-responsible for results contrary to claims made in W&D and H&S. All
-seven phenomena came with an average score reliability from .74 to .9
-and for six out of seven phenomena we identified statistically
-significant heterogeneity in score reliability.
-
-```{r, echo = FALSE}
-#| label: tbl-RGMA
-#| tbl-cap: Reliability Generalization Meta-Analysis
-knitr::kable(x = read.csv(here("Tables/Results_RMA_alpha.csv")))
-```
 
 ## Alternative discussion of how score reliability affects ES heterogeneity
 
