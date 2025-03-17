@@ -484,59 +484,68 @@ score reliability do not inflate heterogeneity in uncorrected effect
 sizes, but instead masks heterogeneity, that can be unveiled by
 accounting for score reliability.
 
-
-
 ## Alternative discussion of how score reliability affects ES heterogeneity
 
-In this section, we explore some facets on why we disagree with claims
-stated in W&D and H&S. Additionally, we explore some alternative
-explanations that might help understand why correcting ES for score
-reliability does not lead to an inevitable reduction in heterogeneity.
+In the previous section we demonstrated that assumptions formulated in
+the literature regarding meta-scientific methodology are false. We found
+a large number of phenomena where, contrary to popular claims, score
+reliability does not explain ES heterogeneity. Over the following
+paragraphs, we discuss how the true relationship between these two
+parameters might look like. Therein, we also identify under which
+circumstances an attenuation correction can actually reduce ES
+heterogeneity - and where it is more likely to inflate it.
 
 ### Misinterpreted equation in Hunter & Schmidt (XXXX)
 
 Hunter & Schmidt claim to have derived an equation which demonstrates
 how heterogeneity in score reliability inflates heterogeneity in ESs.
 “If the level of reliability is independent of the true effect size
-across studies, then, to a close approximation:” (p. 309)
+across studies, then, to a close approximation:” (p. 309). However, as
+can be easily verified, the equation presented in Hunter & Schmidt
+(ref.), Equation X on p. 309, does not imply that assumption across all
+conditions.
 
 $$\tau^2_{\delta_0} = [\mu_{\rho_{xx‘}}]^2 \tau^2_{\delta} + [\mu_{\delta}]^2 \tau^2_{\rho_{xx‘}}$$ {#eq-HS}
 
 We adjusted @eq-HS using the notation used throughout this text. Here,
-$\delta_0$ refers to the ES, undistorted by sampling error but not
-corrected for measuring error, $\delta$ refers to the ES, undistorted by
-sampling error and measurement error and ρxx‘ refers to score
-reliability.
+$\delta_0$, carrying a 0 in the index, refers to the uncorrected ES,
+undistorted by sampling error but not corrected for measuring error. On
+the other hand $\delta$, no index, refers to the corrected ES,
+undistorted by sampling error and measurement error. Lastly,
+$\rho_{XX'}$ refers to score reliability.
 
 @eq-HS implies that heterogeneity in $\delta_0$ is essentially a
-function where heterogeneity and mean value of $\delta$ are weighted by
-mean score reliability $\rho_{xx‘}$ and its heterogeneity. While it may
-not be self-evident in the equation itself, it is easy to construct
-cases where heterogeneity in $\delta_0$ is inflated or deflated by
-heterogeneity in $\rho_{xx‘}$, contradicting Hunter & Schmidt’s
-interpretation of this equation. In @fig-hs, the results of employing
-@eq-HS to compute the heterogeneity (variance) in corrected ES is
-highlighted. All else held equal, only the individual level of mean
-reliability $\mu_{\rho_{xx‘}}$ is varied from .5 to .8. Mean corrected
-ES $\mu_{\delta}$ is held constant at 1, its variance $\tau^2_{\delta}$
-held constant at .04 and the variance of score reliability
-$\tau^2_{\rho_{xx‘}}$ held constant at .02.
+function in which heterogeneity and mean value of $\delta$ are weighted
+by mean score reliability $\rho_{xx‘}$ and its heterogeneity. Using
+selected values for the parameters in @eq-HS, we demonstrate how the
+heterogeneity in standardized ES can be both inflated and deflated by
+the presence of differences in score reliability. In @fig-hs, the
+results of employing @eq-HS to compute the heterogeneity (variance) in
+uncorrected ES $\delta_0$ is highlighted. All else held equal, only the
+individual level of mean reliability $\mu_{\rho_{xx‘}}$ is varied from
+.5 to .8. Mean corrected ES $\mu_{\delta_0}$ is held constant at 1, its
+heterogeneity $\tau_{\delta_0}$ held constant at .2 and the
+heterogeneity of score reliability $\tau_{\rho_{xx‘}}$ held constant at
+.12.
 
 ```{r, echo = FALSE}
 #| label: fig-HS
-#| fig-cap: Implications by Hunter & Schmidt's @eg-HS
+#| fig-cap: Implications by Hunter & Schmidt's @eg-HS \n Note: The red line corresponds to the variance of uncorrected ES $\delta_0$.
 
-mu_delta <- 1
-var_delta <- .2^2
+library(ggplot2)
+
+mu_delta0 <- 1
+var_delta0 <- .2^2
 mu_alpha <- seq(from = .5, to = .8, length.out = 100)
-var_alpha <- .14^2
+var_alpha <- .12^2
+mu_delta <- mu_delta0/sqrt(mu_alpha)
 
-
-var_delta0 <- mu_alpha^2 * var_delta + mu_delta^2 * var_alpha
+# var_delta0 <- mu_alpha^2 * var_delta + mu_delta^2 * var_alpha
+var_delta <- (var_delta0 - mu_delta^2 * var_alpha) / (mu_alpha^2)
 
 ggplot() +
   geom_hline(yintercept = .04, colour = "red", linewidth = 1, linetype = "dashed") +
-  geom_line(aes(y = var_delta0, x = mu_alpha), linewidth = 2) +
+  geom_line(aes(y = var_delta, x = mu_alpha), linewidth = 2) +
   theme(panel.background = element_rect(fill = "transparent"), 
         plot.background = element_rect(fill = "transparent", colour = "transparent"), 
         panel.grid.major.y = element_line(colour = "grey"),
@@ -544,39 +553,31 @@ ggplot() +
         panel.grid.minor = element_line(colour = "transparent"),
         axis.ticks = element_line(colour = "grey"),
         strip.background = element_rect(fill = "transparent")) +
-  labs(y = expression(tau^2~"["~delta[0]~"]"),
+  labs(y = expression(tau^2~"["~delta~"]"),
        x = expression(mu~"["~rho[xx]~"]"))
 ```
 
-In @fig-hs, the red line corresponds to the variance of corrected ES.
-
-If everything else is held constant, the variance in uncorrected ES can
-be a function only of the mean level of score reliability
+If everything else is held constant, the variance in corrected ES
+$\delta$ can be a function only of the mean level of score reliability
 $\mu_{\rho_{xx‘}}$, according to H&S equation. In that case, Figure 2
 demonstrates that correcting for imperfect score reliability does not
 inevitably lead to lower heterogeneity, as the line representing
-heterogeneity in uncorrected ES does cross the red line, representing
-the heterogeneity in corrected ES. Depending on the mean level of score
+heterogeneity in corrected ES does cross the red line, representing the
+heterogeneity in uncorrected ES. Depending on the mean level of score
 reliability, heterogeneity in uncorrected ES can be higher or lower than
 heterogeneity in corrected ES.
 
 However, @eq-hs is additionally flawed, as it violates a crucial
 definition. As Hunter & Schmidt point out, @eq-hs is only valid “If the
 level of reliability is independent of the true effect size across
-studies \[…\]” (2014, p. 309). However, both parameters, ES $\delta$ and
-score reliability ρxx‘, can not be independent parameters by definition.
-ES $\delta$ is the “true” standardized mean difference, unaffected by
-sampling or measurement error. The ES $\delta_0$ is standardized using
-the total standard deviation, which is inflated by measurement error.
-Equation 1, demonstrating how Cohen’s d is computed demonstrates how the
-mean difference is standardized in this case. As demonstrated further
-above in @eg-dct, ES $\delta$ is standardized using the true standard
-deviation in the sense of CTT. The fact that the true standard deviation
-parameter $\sigma_T$ is found both in @eq-dct and @eq-rel demonstrates
-that ES $\delta$ and score reliability $\rho_{xx‘}$ can not be
-independent variables. Therefore, the basic premise of @eq-hs is not
-fulfilled, as the assumption of variable independence could not be
-fulfilled.
+studies \[…\]” (2014, p. 309). However, if we assume that true score
+variance $\sigma^2_T$ varies across administrations, it is unlikely that
+this assumption can hold. As demonstrated further above in @eg-dct, ES
+$\delta$ is standardized using the true standard deviation $\sigma_T$ in
+the sense of CTT. The fact that this parameter is found both in @eq-dct
+and @eq-rel demonstrates that ES $\delta$ and score reliability
+$\rho_{xx‘}$ are unlikely to constitute truly independent variables, as
+long as true score variance is not identical across administrations.
 
 ### Describing ES as a random ratio variable
 
