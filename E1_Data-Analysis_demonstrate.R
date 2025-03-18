@@ -51,7 +51,7 @@ effect_index <- MASC_names %in% c("Albarracin_Priming_SAT",
                                   "PSACR002_neg_photo", "Shnabel_Willingness_Reconcile_Rev",
                                   "Shnabel_Willingness_Reconcile_RPP", "Srull_Behaviour_Hostility",
                                   "Srull_Ronald_Hostility", "Tversky_Directionality_Similarity1", 
-                                  "Zhong_Desirability_Cleaning"
+                                  "Strack_Facial_Feedback", "Zhong_Desirability_Cleaning"
 )
 
 
