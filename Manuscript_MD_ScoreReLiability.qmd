@@ -606,7 +606,7 @@ $$\tau^2[Z] \approx \frac{\tau^2[X]}{\mu[Y]^2} + \frac{\mu[X]^2}{\mu[Y]^4} \tau^
 Substituting for ES, unstandardized mean difference MD and pooled
 standard deviation $\sigma_X$ leads to
 
-$$\tau^2[\delta_0] \approx \frac{\tau^2[MD]}{\mu[\sigma_x]^2} + \frac{\mu[MD]^2}{\mu[\sigma_x]^4} var[SD]$$ {#eq-ratio_d0}
+$$\tau^2[\delta_0] \approx \frac{\tau^2[MD]}{\mu[\sigma_x]^2} + \frac{\mu[MD]^2}{\mu[\sigma_x]^4} var[\sigma_x]$$ {#eq-ratio_d0}
 
 As stated in @eq-dct, correcting ES for score reliability can be
 described through a correction of the pooled standard deviation:
@@ -650,8 +650,27 @@ uncorrected heterogeneity in $\sigma_X$. However, since the expected
 value of either standard deviation is placed in the denominator of the
 function and the variance of either is placed in the numerator of the
 function, @eq-hs is not sufficient to explain how heterogeneity in ES
-changes due to the attenuation correction. Instead, we introduce two
-additional metrics.
+changes due to the attenuation correction.
+
+In this section, we attempt to understand under which circumstances the
+heterogeneity in ES grows larger as the result of an attenuation
+correction procedure, contrary to claims made in W&D and H&S. To do so,
+we propose the following inequality, involving [Equations @eq-ratio_d0]
+and [-@eq-ratio_d].
+
+$$\tau^2_{\delta} > \tau^2_{\delta_0} \quad  \quad \quad \quad \quad  \frac{\tau_{MD}^2}{\mu_{\sigma_T}^2} + \frac{\mu_{MD}^2}{\mu_{\sigma_T}^4} \tau^2_{\sigma_T} > \frac{\tau_{MD}^2}{\mu_{\sigma_x}^2} + \frac{\mu_{MD}^2}{\mu_{\sigma_x}^4} \tau^2_{\sigma_x}$$ {#eq-ineq_init}
+
+As long as the inequality defined in @eq-ineq_init holds true, an
+attenuation correction procedure would lead to larger estimates of ES
+heterogeneity. Conditions under which @eq-ineq_init does not hold are
+conditions under which the claims made in W&D and H&S are met. However,
+the inequality in this form does not convey sufficient information about
+the conditions under which it can potentially hold. In Appendix A, we
+rearranged @eq-ineq_init, so we end up with a form that we can use to
+actually derive conditions under which ES heterogeneity can be inflated
+or deflated by differences in score reliability.
+
+To do so, we introduce two additional metrics.
 
 $$R_1 = \frac{\mu_{\sigma^2_T}}{\mu_{\sigma^2_X}}$$ {#eq-R1}
 
@@ -660,14 +679,15 @@ to the mean observed score variance. This informs us, how much of the
 mean total score variance can be attributed to mean true score variance.
 Therefore, this metric is close to the average score reliability. Even
 though formally $R_1$ and the meta-analytic mean score reliability
-$\mu_{\rho_{xx'}}$ are not the same value, in practice we observe little
-to no differences between the two parameters. Large values indicate that
-correcting the individual score variances (or standard deviations for
-that matter) using the attenuation correction procedure should lead to
-very little change, as most of the variation observed were due to
-genuine differences in true scores. Small values indicate the opposite,
-the observed score variance was due to a larger amount of random error
-score variance, leading to a stronger correction.
+$\mu_{\rho_{xx'}}$ do not share not the same value, in practice we
+observe little to no differences between the two parameters. Large
+values indicate that correcting the individual score variances (or
+standard deviations for that matter) using the attenuation correction
+procedure should lead to very little change in ES, as most of the
+variation observed were due to genuine differences in true scores. Small
+values indicate the opposite, the observed score variance was due to a
+larger amount of random error score variance, leading to a stronger
+correction.
 
 $$R_2 = \frac{\tau^2_{\sigma^2_T}}{\tau^2_{\sigma^2_X}}$$ {#eq-R2}
 
@@ -688,134 +708,55 @@ contrary, more than two thirds of heterogeneity could be attributed to
 actual differences in how the underlying true scores are distributed
 across samples.
 
-Both metrics $R_1$ and $R_2$ make use of parameters of the distribution
-of true and total score variance, not standard deviations. This choice
-was made to facilitate the role of score reliability in the subsequent
-discussion, as score reliability itself is defined by variances, not
-standard deviations (see @eq-rel).
+Concerning the re-arranged inequality from Appendix A, we identify one
+crucial condition described in @eq-ineq_short.
 
-In this section, we attempt to understand under which circumstances the
-heterogeneity in ES grows larger as the result of an attenuation
-correction procedure, contrary to claims made in W&D and H&S. To do so,
-we propose the following inequality, involving [Equations @eq-ratio_d0]
-and [-@eq-ratio_d].
+$$R_1^3 \leq R_2$$ {#eq-ineq_short}
 
-$$\tau^2_{\delta} > \tau^2_{\delta_0} \quad  \quad \quad \quad \quad 
-\frac{\tau_{MD}^2}{\mu_{\sigma_T}^2} + \frac{\mu_{MD}^2}{\mu_{\sigma_T}^4} \tau^2_{\sigma_T} > \frac{\tau_{MD}^2}{\mu_{\sigma_x}^2} + \frac{\mu_{MD}^2}{\mu_{\sigma_x}^4} \tau^2_{\sigma_x}$$ {#eq-ineq_init}
+As long as $R_1^3$ is smaller or equal compared to $R_2$, @eq-ineq_init
+is bound to hold true. This means that as long as the average score
+reliability, to the power of 3, does not exceed the reduction in score
+variance heterogeneity due to the attenuation correction, @eq-ineq_init
+is not violated. For example, assuming the average score reliability is
+about .8, as long as $R_2$ is at least .512 or larger, the inequality
+holds true and ES heterogeneity grows larger as a consequence of the
+attenuation correction procedure. In such cases, the claims made in W&D
+and H&S could not hold.
 
-Using the metrics $R_1$ and $R_2$, defined in [Equations @eq-R1] and
-[-@eq-R2], we attempt to understand under which circumstances the
-inequality defined in @eq-ineq_init holds true. However, while the
-metrics make use of mean and heterogeneity of the score variances,
-@eq-ineq_init makes use of mean and heterogeneity of the standard
-deviations. In order to incorporate the metrics, it is necessary to
-reparameterise the equation. Using the delta method to approximate mean
-value and heterogeneity of variance from those of the standard
-deviations, we know that (ref):
-$$\mu^2_{\sigma_X} \approx \mu_{\sigma^2_X} \quad \quad  and \quad \quad 
-\tau^2_{\sigma_X} \approx \frac{\tau^2_{\sigma_X^2}}{4\mu_{\sigma^2_X}}$$ {#eq-delta_method}
+$R_1$ essentially describes the reduction in mean score variance due to
+the attenuation correction, and $R_2$ essentially described the
+reduction in heterogeneity of score variance due to the attenuation
+correction. Therefore, @eq-ineq_init states that for such a correction
+procedure to truly reduce ES heterogeneity, the reduction in the
+heterogeneity of score variance needs to be substantially larger than
+the reduction in its mean values. The mean value reduction carries
+stronger weight, as $R_1$ is taken to the power of 3 in @eq-ineq_init.
 
-While @eq-delta_method only explicitly contains parameters for the
-observed score variance/standard deviation, the same can be done using
-the true score variance/standard deviation. Using the approximates
-defined in @eq-delta_method for observed and true score variance, we
-arrive at a new inequality in @eq-ineq_CV.
+As long as there are substantial differences in the true score variance
+across administrations, it is unlikely that an attenuation correction
+can actually produce such a low $R_2$. Generally speaking, $R_1$, and
+therefore the reduction in mean score variance, largely depends on the
+relative measurement precision. If measurements were made more
+precisely, average score reliability and $R_1$ would be higher. On the
+other hand $R_2$, and therefore the reduction in heterogeneity of score
+variance, depends on how different the measurement precision was at the
+individual administrations, but also how different the individual
+administrations sites are regarding their true score variance. If the
+administration sites carry large differences in true score variance
+$R_2$ is unlikely to be substantially smaller than $R_1$.
 
-$$\frac{\tau_{MD}^2}{\mu_{\sigma^2_t}} + \frac{\mu_{MD}^2}{\mu^2_{\sigma_t^2}} \frac{\tau^2_{\sigma_t^2}}{4\mu_{\sigma^2_t}} > \frac{\tau_{MD}^2}{\mu_{\sigma^2_x}} + \frac{\mu_{MD}^2}{\mu^2_{\sigma_x^2}} \frac{\tau^2_{\sigma_x^2}}{4\mu_{\sigma^2_x}}$$ {#eq-ineq_CV}
-
-@eq-ineq_CV describes that the heterogeneity in corrected ES is larger
-than the heterogeneity in uncorrected ES, using parameters of the
-distributions of mean difference MD, true score variance $\sigma^2_T$
-and observed score variance $\sigma^2_X$. By introducing the metrics
-$R_1$ and $R_2$ to this inequality, we can begin to disentangle which
-conditions need to be fulfilled for the inequality to hold. Rearranging
-the terms in [Equations @eq-R1] and [-@eq-R2], and subsequently entering
-these terms into Equation 18 leads to the following
-$$\frac{\tau_{MD}^2}{R_1 \mu_{\sigma^2_x}} + \frac{\mu_{MD}^2}{R_1^2 \mu^2_{\sigma^2_x}} \frac{R_2 \tau^2_{\sigma_x^2}}{4 R_1 \mu_{\sigma^2_x}} > \frac{\tau_{MD}^2}{\mu_{\sigma^2_x}} + \frac{\mu_{MD}^2}{\mu^2_{\sigma_x^2}} \frac{\tau^2_{\sigma_x^2}}{4\mu_{\sigma^2_x}}$$ {#eq-ineq_R}
-
-@eq-ineq_R, again, describes the inequality that heterogeneity in
-corrected ES is larger than the heterogeneity in uncorrected ES,
-incorporating the metrics $R_1$ and $R_2$. This equation alone is not
-sufficient to identify the relevant circumstances required for the
-inequality to hold. However, rearranging the terms from @eq-ineq_R leads
-to @eq-ineq_fin:
-
-$$ \tau_{MD}^2\left(\frac{1}{R_1} - 1\right) + \mu_{MD}^2 \frac{1}{4} CV^2_{\sigma^2_X} \left(\frac{R_2}{R_1^3}  - 1\right) > 0$$ {#eq-ineq_fin}
-
-The circumstances under which the inequality described in Equation 20
-holds, are circumstances where the claims made in W&D and H&S are
-directly contradicted, as in those cases the ES heterogeneity is larger
-after applying an attenuation correction procedure. Concerning the terms
-in @eq-ineq_fin, we know that all terms left-hand of the inequality,
-outside of the brackets ($\tau^2_{MD}$, $\mu^2_{MD}$ and
-$CV^2_{\sigma^2_X}$), are bound to be positive. For the inequality to
-hold, we need the left-hand side of the equation to remain positive,
-larger than zero. We can distill two scenarios, under which this
-equation should hold: (a) one of the terms inside the brackets
-($\frac{1}{R_1} - 1$ and $\frac{R^2_2}{R_1}  - 1$) is positive and large
-enough, so that the second term not containing that same bracket is
-positively dominated by the first term; or (b) both terms inside the
-brackets need to be positive.
-
-Generally, we know that both $R_1$ and $R_2$ are bound to be positive,
-as both contain different, strictly positive parameters of the
-distributions of true and observed score variance. Additionally, we know
-that $R_1$ is equivalent to the average score reliability, and therefore
-bound between $0\le R_1\le1$. Therefore, the term inside the first
-bracket is bound to be positive ($\frac{1}{R_1} – 1$). Similarly, $R_2$,
-as the ratio of true and error score variance heterogeneity, is bound
-between $0\le R_2\le1$. If $R_1^3$ is smaller than $R_2$, then the term
-inside the second bracket turns negative. Generally, this means that the
-inequality can only be violated if the reduction in relative
-heterogeneity of score variance ($R_2$) is larger than the the average
-score reliability to the power of 3.
-
-Concerning the two scenarios, for scenario (a) to hold true, since the
-term involving only $R_1$ in the first bracket can only be positive, the
-second term involving both metrics would need to be negative. For the
-first term to positively dominate the second term, however, we would
-need to make additional assumptions about the size of the parameters
-outside of the brackets, specifically about $\tau^2_{MD}$ and
-$\mu_{MD}$. This is something we would prefer to avoid, as it involves
-additional assumptions about the individual raw effect sizes of the
-different phenomena. Additionally, it can be said that as long as the
-term in the second bracket involving both metrics is positive, scenario
-(b) is true by default. This occurs any time $R_1^3 > R_2$. For example,
-assuming the average score reliability is about .8, if $R_2$ is at least
-.512 or larger, the inequality holds true and ES heterogeneity grows
-larger as a consequence of the attenuation correction procedure,
-contrary to claims made in W&D and H&S. This means that for the
-exemplary score reliability of .8, a reduction in relative heterogeneity
-in score variance of 48.8% ($(1 – R_2)100\%$) or more is necessary for
-scenario (b) to no longer be true. The smaller the average score
-reliability, the smaller the $R_2$-metric may be for the inequality to
-still hold true.
-
-Keeping this in mind, even if $R_2$ is smaller than .512, it does not
-immediately imply that ES heterogeneity is smaller in $\delta$. For
-example, it is unlikely that an $R_2 = .5$ leads to a term that is not
-positively dominated by the first term involving only $R_1$. However,
-where exactly the cut-off is, where ES heterogeneity starts shrinking
-due to the attenuation correction procedure, can not be easily defined
-without additional assumptions about the distribution of $MD$.
-
-Generally speaking, the attenuation correction leads to a reduction both
-in mean value of $\sigma^2_X$ and in its heterogeneity. While a
-reduction in the former typically leads to an increase in heterogeneity
-of $d_c$, the latter has the potential to compensate for that increase
-and thereby reduce that heterogeneity after the attenuation correction.
-This reduction in ES heterogeneity can only occur, if the reduction in
-score variance heterogeneity is substantially stronger than the
-reduction in mean score variance. An extreme version of such a situation
-might occur, if the true score variance is identical across all samples.
-This would imply that all heterogeneity in score variance identified can
-be attributed to differences in how much random noise is found in the
-scores across the samples. In such a case, $R_2$ would be zero and a
-reduction in ES heterogeneity due to the attenuation correction would be
-guaranteed. This also implies that the lower $R_2$ and the larger the
-average score reliability $R_1$, the more likely it is that the
-attenuation correction actually does lead to a reduction in ES
-heterogeneity.
+***\[maybe move to discussion further below\]*** The majority of studies
+in the social sciences make use of convenience sampling. Often,
+respondents are collected from a local student pool, where students
+themselves would choose which studies to partake in. In such cases, we
+believe there is little reason for us to expect homogeneity in true
+score variance across administration sites. As participants across
+administrations self-select into the study, no real sampling process
+takes place - implying that we have no reason to assume that the true
+score variance is stable across these administration sites. However,
+since researchers are well aware of the importance of measurement
+precision, which is also held stable more easily, we believe there is
+little reason for $R_1$ to be extremely low.
 
 ### Re-analysis of archival data
 
