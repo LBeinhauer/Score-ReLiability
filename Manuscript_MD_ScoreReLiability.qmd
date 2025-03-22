@@ -767,10 +767,55 @@ statistically significant ES heterogeneity, the heterogeneity was even
 larger after the attenuation correction procedure. Subsequently, in
 Appendix A we demonstrate that if the $R_2$ metric is larger than
 $R_1^3$, ES heterogeneity is bound to be larger after applying said
-procedure. @tbl-R1R2 reports the meta-analytic estimates of observed and
-true score variances, including their heterogeneity and metrics $R_1$
-and $R_2$ across all 12 phenomena. In @tbl-R1R2 we see that for ten out
-of 12 phenomena, the $R_2$ metric is larger than the $R_1$ metric.
+procedure. Here, we will re-analyse the data, estimating $R_1$ and $R_2$
+for each phenomenon respectively. This allows us to assess in how far
+the estimates of ES heterogeneity align with our claims regarding the
+$R_1$ and $R_2$ metrics.
+
+#### Methods
+
+Estimation of $R_1$ and $R_2$ require estimates of meta-analytic mean
+and heterogeneity of both the total score variance $\sigma^2_X$ and the
+true score variance $\sigma^2_T$. Elsewhere, we proposed the method
+boot-err (ref.) as an alternative method to test for and estimate the
+differences in error score variance $\sigma^2_E$. In this text, we
+deliver detailed instructions on how estimates for mean and
+heterogeneity of total score variance, and the score variance components
+can be derived. For the total score variance $\sigma^2_X$, all we need
+to do is to appropriately transform the observed estimates using the
+variance-stabilizing properties of the natural log. Subsequently, we use
+bootstrapping to derive robust standard errors for these transformed
+observations. Using a random-efffects meta-analysis, we derive estimates
+of mean and heterogeneity, which need to be backtransformed to the
+original scale. Appropriate equation to back-transform estimates can be
+found in Appendix B.
+
+For the true score variance $\sigma^2_T$, we found that directly
+estimating its heterogeneity, even if an appropriate
+variance-stabilizing transformation is used, is severely biased.
+Instead, we can estimate the error score variance $\sigma^2_E$ using an
+estimate of score reliability. Performing the boot-err, which, again,
+implies transformations using the natural log, deriving standard errors
+using Bootstrapping, running a random-effects meta-analysis and
+back-transforming the estimates, nets us estimates of mean and
+heterogeneity of $\sigma^2_E$. Since we already have the same estimates
+available for the total score variance, we can estimate meta-analytic
+mean and heterogeneity of true score variance.
+
+$$\hat{\mu}_{\sigma^2_T} = \hat{\mu}_{\sigma^2_X} - \hat{\mu}_{\sigma^2_E} \ \ \ \ \ \ and \ \ \ \ \  \hat{\tau}^2_{\sigma^2_T} = \hat{\tau}^2_{\sigma^2_X} - \hat{\tau}^2_{\sigma^2_E}$$ {#eq-meantauT}
+
+@eq-meantauT provides estimates of meta-analytic mean of true score
+variance and heterogeneity. These estimates are largely unbiased, unlike
+estimates stemming from using the boot-err to directly run meta-analytic
+models on true score variance estimates. Interested readers are referred
+to Beinhauer et al. (ref.)
+
+#### Results
+
+@tbl-R1R2 reports the meta-analytic estimates of observed and true score
+variances, including their heterogeneity and metrics $R_1$ and $R_2$
+across all 12 phenomena. In @tbl-R1R2 we see that for ten out of 12
+phenomena, the $R_2$ metric is larger than the $R_1$ metric.
 Additionally, we observe that across nine phenomena, $R_2$ is larger
 than .96. This implies that of the heterogeneity observed in score
 variances, 97% or more could not be explained by differences in random
