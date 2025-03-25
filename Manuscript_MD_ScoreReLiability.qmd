@@ -881,101 +881,105 @@ knitr::kable(read.csv(here("Tables/Variances_analysis.csv")))
 
 ## Discussion
 
--   examing heterogeneity in standardized mean differences before and
-    after correction for differences in score reliability using an
-    attenuation correction.
+We have examined meta-analytic heterogeneity in standardized mean
+difference. Since score reliability is often discussed as a source for
+such heterogeneity, we estimated the heterogeneity before and after
+correcting for differences in reliability coefficients using an
+attenuation correction procedure. We found that a) in the majority of
+cases, the change in ES heterogeneity is small to non-existent. This
+implies that, across the data-sets we got to examine, differences in
+score reliability do not serve as an appropriate explanation for ES
+heterogeneity. We also found that b) in the majority of cases, the
+direction of change in ES heterogeneity does not align with assumptions
+formulated in W&D and H&S. In almost all cases (every single case, if we
+restrict ourself to phenomena where we found statistically significant
+differences in ES), the attenuation correction led to increased
+estimates of ES heterogeneity. This implies that the claims found in W&D
+and H&S stem from a general misunderstanding of how score reliability
+can affect ESs.
 
--   Find that a) in the majority of cases, the change in ES
-    heterogeneity is small to non-existent, implying that differences in
-    score reliability do not serve an appropriate explanation of ES
-    heterogeneity.
+Using analytical arguments, we derived a broad rule, outlining under
+which conditions we can expect an attenuation correction to reduce ES
+heterogeneity. In general, score reliability affects ESs by inflating
+the score variance, as the (square root of the) score variance is used
+to standardize the mean difference. The conditions we found depend on
+how both the mean value and the heterogeneity of score variance are
+reduced by correcting for imperfect score reliability. We introduced two
+novel metrics: $R_1$, describing the fraction of mean true score
+variance in the mean total score variance, therefore mirroring the
+average score reliability coefficient, and $R_2$, describing the
+fraction of true score variance heterogeneity in the total score
+variance heterogeneity. We find that, as long as $R_1^3 < R_2$, an
+attenuation correction will increase ES heterogeneity.
 
--   Find that b) in the majority of cases, the direction of change in ES
-    heterogeneity does not align with assumptions formulated in W&D and
-    H&S. In close to all cases (all cases if we only look at
-    statistically significant differences in ES), the attenuation
-    correction leads to increases estimates of ES heterogeneity. This
-    implies that W&D and H&S generally misunderstand how score
-    reliability heterogeneity affects ESs.
+Since $R_1$ is carrying the power of 3, it implies that the reduction in
+mean score variance is weighted more heavily than the reduction in score
+variance heterogeneity. This is best described through an example: We
+know what an acceptable average score reliability looks like in the area
+of Psychology. Researchers largely target a score reliability of at
+least .7, preferably .8. An average score reliability of .7 implies that
+70% of the variance observed in scores can actually be attributed to
+true underlying differences. From our derived rule, we know that, as
+long as $R_2$ is larger or equal to $.7^3 = .343$, the attenuation
+correction procedure can only increase ES heterogeneity. If we want to
+explain ES heterogeneity through score reliability, even though only 30%
+of the variance observed in score can be attributed to random
+measurement error, at least 65.7%, almost two thirds, of the
+heterogeneity in score variance would need to be attributable to
+differences in the error score variance. In other words, at most 34.3%
+of heterogeneity in score variances may be due to actual differences in
+how the latent variable is distributed (in terms of spread) across the
+administration sites.
 
--   Using analytical arguments, we derived a general rule on under which
-    conditions we can expect an attenuation correction to reduce ES
-    heterogeneity. These conditions depend on how both the mean value
-    and the heterogeneity of score variance is reduced by correction for
-    sore reliability. At the very least, $R_1^3 < R_2$. This means that
-    as long as the reduction in score variance heterogeneity is larger
-    than the reduction in mean score variance, ES heterogeneity will
-    grow as we follow the attenuation correction procedure.
+This also means that ES heterogeneity is best reduced, if average score
+reliability ($R_1$) is substantially large. In such a scenario, the
+$R_2$ is more likely to be low enough for the inequality to no longer
+hold. The larger the average score reliability, the more likely it is
+that the attenuation correction procedure can actually reduce ES
+heterogeneity. However, as the correction would only be rather small in
+such cases, it remains to be seen whether the reduction in ES
+heterogeneity would be sufficient to claim that differences in score
+reliability actually posed a relevant moderator in such a case.
 
--   We know what an acceptable average score reliability looks like in
-    the area of Psychology. Researchers largely target a score
-    reliability of at least .7, preferably .8. An average score
-    reliability of .7 implies that 70% of the variance observed in
-    scores can actually be attributed to true underlying differences.
-    However, from our derived rule, we know that at an average score
-    reliability of .7, the heterogeneity in score variances across
-    administration sites that can be attributed to differences in the
-    true score variance $\sigma^2_T$ may be at most .343 or 34.3%.
-    Accordingly, at least 65.7%, almost two thirds of the score variance
-    heterogeneity, needs to be due to differences in error score
-    variance, differences in the measurement precision.
+In the examples we re-analysed throughout this text, as well as the
+majority of research studies done in the behavioural sciences, no proper
+sampling techniques are employed. Most samples where these instruments
+are applied come to be through convenience sampling, where students
+self-select into studies. Without a valid sampling scheme, we
+essentially have have no basis to assume anything about the true score
+variance. Most importantly, however, we have no reason to assume that
+the true score variance could potentially be homogeneous or stable
+across administration sites. Instead, it is very likely that the
+convenience sampling procedures produce samples that vary extremely
+strongly in how they are put together, leading to large degrees of true
+score variance heterogeneity. At the same time, score reliability is a
+low-hanging fruit for researchers to optimise most researchers are aware
+and trained in assessing score reliability.
 
--   However, in the examples we re-analysed throughout this text, as
-    well as the majority of research studies done in the behavioural
-    sciences, no proper sampling techniques are employed. Most samples
-    where these instruments are applied come to be through convenience
-    sampling, where most often students self-select into studies.
-    Without a valid sampling scheme, we have essentially have no basis
-    to assume anything about the true score variance. Most importantly,
-    however, we have no reason to assume that the true score variance
-    could potentially be homogeneous or stable across administration
-    sites. Instead, it is very likely that the convenience sampling
-    procedures produce samples that vary extremely strongly in how they
-    are put together, leading to large degrees of true score variance
-    heterogeneity. At the same time, most researchers are aware and
-    trained in assessing score reliability.
+Taken together, these facets lead to what we observed throughout this
+text: Reliability coefficients are in an acceptable range, leading to a
+small, but constant reduction in mean score variance if we apply an
+attenuation correction. At the same time, there is substantial variation
+in true score variance, implying that most of the score variance
+heterogeneity can not be attributed to differences in error score
+variance. Since only differences in error score variance can be
+corrected for, the attenuation correction has a very small effect on
+heterogeneity estimates in score variance. Therefore, as indicated by
+our rule, an attenuation correction in these setting can rarely deliver
+a reduction in ES heterogeneity. This also means that, in such settings,
+score reliability does not explain any ES heterogeneity. If anything, it
+masks it to a small degree.
 
--   Taken together, these facets lead to what we observed in the
-    phenomena examined in this text: Score reliability in general is
-    acceptable, leading to a small, but constant reduction in mean score
-    variance if we apply an attenuation correction. At the same time,
-    there are substantial differences in true score variance, implying
-    that most of the score variance heterogeneity can not be attributed
-    to differences in error score variance. Since only differences in
-    error score variance can be corrected for, the attenuation
-    correction has a very small effect on heterogeneity estimates in
-    score variance. Therefore, as indicated by our rule, an attenuation
-    correction in these setting can not deliver a reduction in ES
-    heterogeneity. This also means that, in such settings, score
-    reliability does not explain any ES heterogeneity, if anything, it
-    masks it to a small degree.
-
--   If we, in the space of behavioural sciences, keep making use of
-    convenience samples simply because they are so convenient, we can
-    not expect anything to change. Most likely, ES heterogeneity will
-    remain a substantial factor hampering the interpretability of
-    original and replication studies. We could learn more about
-    standardized effect sizes and why our phenomena vary across
-    settings, populations or continents by not following the current
-    status quo of convenience samples. Until this status quo changes,
-    however, we will keep wasting valuable resources by attempts of
-    discussing ES heterogeneity or assessing uninformative differences
-    in score reliability.
-
-Across twelve exemplary archival datasets, we demonstrated that claims
-made in H&S and W&D do not hold in empirical observations. Even though
-removing the impact of score reliability on ES heterogeneity by means of
-attenuation correction procedures, they do not lead to a reduction in
-heterogeneity as claimed in H&S and W&D. Inferences derived from the
-equation supplied in H&S (ref), @eq-HS, also do not warrant such a
-conclusion. Alternatively, describing standardised effect sizes in terms
-of a ratio distribution and approximating its variance, we demonstrated
-that differences in score reliability may both inflate or deflate
-variance in ES, depending on how the relative heterogeneity in score
-variance changes due to the attenuation correction procedure. The metric
-$R_2$, compared with the metric $R_1$ or the average score reliability,
-informs us in how far score variance heterogeneity decreases due to the
-attenuation correction.
+If we, in the space of behavioural sciences, keep making use of
+convenience samples simply because they are so convenient, we can not
+expect anything to change. Most likely, ES heterogeneity will remain a
+substantial factor hampering the interpretability of original and
+replication studies. We could learn more about standardized effect sizes
+and why our phenomena vary across settings, populations or continents by
+not following the current status quo of convenience samples. Until this
+status quo changes, however, we will keep wasting valuable resources by
+attempts of discussing ES heterogeneity or assessing uninformative
+differences in score reliability.
 
 These results fit in with work recently published/preprinted by
 Olsson-Collentine et al. (2023). In a large simulation scheme, they
@@ -984,61 +988,32 @@ typically deflate heterogeneity in uncorrected correlations. Only as the
 true heterogeneity in correlations grows larger, score reliability
 differences actually inflate heterogeneity as claimed in W&D. While
 correlations and standardized effect sizes are not identical, the way
-score (un)reliability affects these parameters is highly similar. Both
-correlations and ES are deflated by (un)reliability, implying that an
-attenuation correction increases mean values of these parameters, while
-the impact on standard deviations used for standardisation purposes
-needs to be checked via $R_2$.
-
-The analytical arguments presented indicate that an attenuation
-correction procedure, even if no differences between score reliability
-exist, lead to larger ES heterogeneity. It appears that, as the
-meta-analytical mean ES grows larger due to the correction procedure, so
-does the ES heterogeneity, if homogeneity is present. If heterogeneity
-is present on the other hand and $R_2 < R_1^3$, still a reduction in ES
-heterogeneity is not inevitable. It can be argued that, for the
-differences in ES to grow smaller, the reduction in relative
-heterogeneity in score variance needs to be substantially large, so the
-increase in ES heterogeneity due to the larger mean ES can be
-“outpaced”. However, we did not observe this pattern in the 12 phenomena
-that allowed for such an analysis.
+score (un)reliability affects these parameters is highly similar.
 
 Heterogeneity in ES even in direct replications, where experimental
 factors are held as constant as possible, is already substantial
 (Renkewitz, Fünderich, & Beinhauer, 2024). However, so far we have
 demonstrated that in several scenarios, differences in score reliability
-may in fact be masking, or “deflating” ES heterogeneity. This implies
-that the already substantial heterogeneity across direct replications
-may very well be even larger, if ES were corrected for (un)reliability.
-Understanding heterogeneity as an extent to which a theory or phenomenon
-is understood, deflated estimates of heterogeneity imply that the theory
-or phenomenon is understood even worse than initially assumed.
+did not serve as appropriate moderators or explanations of ES
+heterogeneity. Across most phenomena, we failed to reduce ES
+heterogeneity. If anything, we even increased ES heterogeneity, albeit
+to a very small degree. Generally, concerning the multi-site replication
+projects or collaborative research projects, accounting for differences
+in score reliability did not help us gain a better understanding of the
+phenomena.
 
 The empirical arguments presented are based on a rather small number of
 non-representative data-sets. Based on the combination of analytical and
 empirical arguments, we are convinced that these differences in score
-reliability across replications oftentimes mask true heterogeneity. In
-realistic meta-analytic studies of conceptual replications, data stems
-from a variety of sources. Across different populations, different
-research settings or designs are used with varying or adjusted research
-instruments. It is unlikely that, across these replications, we can
-expect either the measuring quality or the true score variance to be
-stable. However, as demonstrated above, differences in score reliability
-and true score variance tend to lead to larger corrected ES
-heterogeneity, implying that observed ES heterogeneity was reduced by
-differences in score reliability. However, whether these results
-actually generalize beyond these data-sets remains to be seen.
-Unfortunately, the behavioural sciences are in dire need of open-data
-that resemble multi-site replications. As the majority of results
-discussed over the last years (in e.g. ManyLabs or Registered
-Replication Reports) employ single-indicator scales as dependent
-measures, score reliability can not be easily estimated in order to
-replicate our analyses.
-
-Paragraph on implications -\> data collected using no specific sampling
-schemes - little surprise that the radomness induced by sampling
-schemes, which manifests itself in true score variance heterogeneity,
-largely surpasses the heterogeneity induced by imperfect measurement.
+reliability across replications in the current state of Psychology and
+the behavioural sciences, do not serve as appropriate explanations of ES
+heterogeneity. However, whether these results actually generalize beyond
+these data-sets remains to be seen. Unfortunately, the behavioural
+sciences are in dire need of open-data that resemble multi-site
+replications. As the majority of results discussed over the last years
+(in e.g. ManyLabs or Registered Replication Reports) employ
+single-indicator scales as dependent measures, score reliability can not
+be easily estimated in order to replicate our analyses.
 
 The analytical arguments presented following Equation 17 rested on the
 use of the delta-method, as Equation 17 contained parameters of the
@@ -1065,7 +1040,12 @@ delta-method is not used to actually derive any estimates, but to
 discuss how an attenuation correction procedure can affect ES
 heterogeneity. Therefore, we believe that the violation of these
 assumptions is defensible in this case, as the analytical arguments
-derived from the inequality should still hold up, nevertheless.
+derived from the inequality should still hold up, nevertheless. \[add to
+appendix?\] Additionally, we used the empirical examples available to
+assess in how far estimates derived using the delta-method
+approximations diverge from estimates derived without it. The
+differences identified are rather miniscule at the third decimal,
+reinforcing our belief that these assumption violations are defensible.
 
 Similarly, all Equations following Equation 10 rest on the assumption
 that mean difference ($MD$) and true or total score variance
@@ -1089,11 +1069,14 @@ The work done by Hunter and Schmidt (2014) was crucial in informing and
 guiding methodology development in the field of meta-analyses.
 Similarly, Wiernik and Dahlke (2020) raise a number of important points
 that have been neglected in the application of meta-analytic research
-over the last decades. We strongly agree with their ideas that
-underappreciated (differences in un-)reliability introduce substantial
-biases in meta-analytic estimates and tests in Psychology, which need to
-be corrected. Future applications of meta-analyses on standardized ES
-need to take score reliability into account to arrive at correct
-estimates and inferences. However, the meta-analyst should not expect
-that correcting ES for score reliability will reduce the extent of
-heterogeneity identified.
+over the last decades. We generally agree with their ideas that
+underappreciated (differences in un-)reliability can introduce
+substantial biases in meta-analytic estimates and tests in Psychology.
+However, based on our findings, we believe that the issues created by
+ignoring random sampling is much more dire and warrants immediate
+attention. Only once we can be sure that the variance in true scores or
+latent factors is actually meaningful for some population, we can turn
+towards imprecise measurements, expecting correction procedures to
+explain unwarranted heterogeneity. In the current state of Psychology,
+meta-analysts should not expect that correcting ES for score reliability
+will actually explain heterogeneity identified.
