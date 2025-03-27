@@ -842,49 +842,52 @@ to Beinhauer et al. (ref.)
 variances, including their heterogeneity and metrics $R_1$ and $R_2$
 across all 12 phenomena. In @tbl-R1R2 we see that for ten out of 12
 phenomena, the $R_2$ metric is larger than the $R_1$ metric.
-Additionally, we observe that across nine phenomena, $R_2$ is larger
+Additionally, we observe that across eight phenomena, $R_2$ is larger
 than .96. This implies that of the heterogeneity observed in score
 variances, 97% or more could not be explained by differences in random
 error introduced by the measuring instrument, but by genuine differences
 in the underlying distribution.
 
-For one of the phenomena, however, we observe a large disparity compared
-to the rest of the results. For the Shnabel_Willingness_Reconcile_RPP
-phenomenon, $R_2$ is very low, below .25. This makes it lower than its
-$R_1^3 = .574$. This would imply that for this phenomenon, the
-conditions for a reduction in ES heterogeneity would be met. However, in
-@tbl-tauES, we find no such reduction. What becomes apparent, however,
-is that for this phenomenon we are working with the low number of 9
-administration sites. Estimation precision for heterogeneity in variance
-components, even more so than for ES, largely depends on the sample
-size. In Beinhauer et al. (ref) we come to the conclusion that at 10
-items, which the Willingness to Reconcile scale consists of, a sample
-size around 33 is required to achieve sufficient power for a statistical
-test of score variance heterogeneity. Most likely, the low sample size
-led to implausible estimates in both true and total score variance
-heterogeneity and subsequently to an implausible estimate of $R_2$.
-Meta-analytic estimates, especially those concerning score variance
-components such as $R_2$, therefore should be interpreted with caution,
-if the sample size was particularly low.
+```{r, echo = FALSE}
+#| label: tbl-R1R2
+#| tbl-cap: Re-analysis concerning metrics $R_1$ and $R_2$
+knitr::kable(read.csv(here("Tables/Variances_analysis.csv")),
+             col.names = c("MASC", 
+                           "$\\hat{\\mu}_{\\sigma^2_X}$", 
+                           "$\\hat{\\mu}_{\\sigma^2_T}$", 
+                           "$\\hat{\\tau}_{\\sigma^2_X}$", 
+                           "$\\hat{\\tau}_{\\sigma^2_T}$", 
+                           "$R_1$", 
+                           "$R_2$"))
+```
 
-Similarly, for the two exceptional phenomena where the attenuation
-correction procedure actually led to an increase in ES heterogeneity
+For the two exceptional phenomena where the attenuation correction
+procedure actually led to an increase in ES heterogeneity
 (Srull_Behavior_Hostility and Shnabel_Willingness_Reconcile_RPP), the
 significance test for the ES heterogeneity was not significant, both
 before and after the correction. The results regarding $R_2$ indicate
 that the majority of score variance heterogeneity was due to differences
-in true score variance $\sigma^2_T$. Both phenomena were examined using
-a rather low number of administration sites (22 and 9 respectively),
-implying that issues of estimation precision might explain the
-inconclusive results. Lastly, for one out of the 12 phenomena, the
-Albarracin_Priming_SAT phenomenon, we find a $\tau_{\sigma^2_X}$ of 0.
-Therefore, the $R_2$ metric could not be computed, as the denominator
-would have been zero. However, we also did not identify statistically
-significant ES heterogeneity in the first place. This phenomenon was
-assessed with a particularly low number of replications (8). As
-discussed, adequate power to detect heterogeneity in score reliability
-and observed score variance requires a larger number of replications
-than adequate power to detect heterogeneity.
+in true score variance $\sigma^2_T$. Since either the heterogeneity was
+so small or the sample size so low that the heterogeneity could not be
+statistically distinguished from zero, we should be cautious in the
+interpretation of a reduction in that estimate. Most likely, the
+reduction in heterogeneity is better explained by imprecise estimation
+than an actual explanation of unexplained heterogeneity.
+
+Lastly, for two out of the 12 phenomena, the Albarracin_Priming_SAT and
+the Shnabel_Willingness_Reconcile_Rev phenomena, we find
+$\tau_{\sigma^2_X}$ of 0. Therefore, the $R_2$ metric could not be
+computed, as the denominator would have been zero. However, we also did
+not identify statistically significant ES heterogeneity in the first
+place. The phenomena were assessed with a particularly low number of
+replications (8 in both cases). Estimation precision for heterogeneity
+in variance components, even more so than for ES, largely depends on the
+sample size. Most likely, the low sample size led to implausible
+estimates in both true and total score variance heterogeneity and
+subsequently to an implausible estimate of $R_2$. Meta-analytic
+estimates, especially those concerning score variance components such as
+$R_2$, therefore should be interpreted with caution, if the sample size
+was particularly low.
 
 Generally, @tbl-tauES implies that for almost all measurements
 concerning these phenomena, the heterogeneity in observed score
@@ -899,18 +902,6 @@ results in @tbl-tauES agree with this conclusion, as no phenomena could
 be identified where statistically significant ES heterogeneity was
 accompanied by a reduction in differences due to the correction.
 
-```{r, echo = FALSE}
-#| label: tbl-R1R2
-#| tbl-cap: Re-analysis concerning metrics $R_1$ and $R_2$
-knitr::kable(read.csv(here("Tables/Variances_analysis.csv")),
-             col.names = c("MASC", 
-                           "$\\hat{\\mu}_{\\sigma^2_X}$", 
-                           "$\\hat{\\mu}_{\\sigma^2_T}$", 
-                           "$\\hat{\\tau}_{\\sigma^2_X}$", 
-                           "$\\hat{\\tau}_{\\sigma^2_T}$", 
-                           "$R_1$", 
-                           "$R_2$"))
-```
 
 ## Discussion
 

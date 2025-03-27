@@ -74,7 +74,7 @@ varE_est.L <- lapply(which(effect_index)[nn_eff_idx], FUN = function(x){
   # sometimes calculation of SE might lead to issues, as negative variances can not be log-transformed
   #  therefore, function is run within a tryCatch-environment, so the script does not crash
   # apply_Bootstrap_SE_Project.specific is the project-specific function
-  tryCatch(apply_Bootstrap_SE_Project.specific(na.omit(data.list[[x]]), component = "E", R = 100),
+  tryCatch(apply_Bootstrap_SE_Project.specific(na.omit(data.list[[x]]), component = "E", R = 3000),
            
            # print error to console
            error = function(e)(cat("ERROR: ", conditionMessage(e), " - ",
@@ -114,7 +114,7 @@ varX_est.L <- lapply(which(effect_index)[nn_eff_idx], FUN = function(x){
   # sometimes calculation of SE might lead to issues, as negative variances can not be log-transformed
   #  therefore, function is run within a tryCatch-environment, so the script does not crash
   # apply_Bootstrap_SE_Project.specific is the project-specific function
-  tryCatch(apply_Bootstrap_SE_Project.specific(na.omit(data.list[[x]]), component = "X", R = 100),
+  tryCatch(apply_Bootstrap_SE_Project.specific(na.omit(data.list[[x]]), component = "X", R = 3000),
            
            # print error to console
            error = function(e)(cat("ERROR: ", conditionMessage(e), " - ",
@@ -162,17 +162,19 @@ vars_rma_df <- do.call(rbind, vars_rma_L) %>%
   mutate(CV_E = sqrt(tau2_E)/mu_E,
          CV_X = sqrt(tau2_X)/mu_X,
          CV_T = sqrt(tau2_T)/mu_T) %>% 
+  mutate(tau_X = sqrt(tau2_X),
+         tau_T = sqrt(tau2_T)) %>% 
   mutate(R1 = mu_T / mu_X,
          R2 = tau2_T / tau2_X) %>% 
   mutate(MASC = ES_rma_df$MASC[ES_rma_df$corr == 0][nn_eff_idx]) %>% 
-  mutate_if(is.numeric, round, 3)
+  mutate_if(is.numeric, round, 3) 
 
 
 
 
 
 write.csv(vars_rma_df %>% 
-            select(MASC, mu_X, mu_T, CV_X, CV_T, R1, R2), here("Tables/Variances_analysis.csv"), row.names = FALSE)
+            select(MASC, mu_X, mu_T, tau_X, tau_T, R1, R2), here("Tables/Variances_analysis.csv"), row.names = FALSE)
 
 
 agg_L <- lapply(agg_L, FUN = function(x){
