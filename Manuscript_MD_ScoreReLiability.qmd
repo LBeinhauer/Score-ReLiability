@@ -296,10 +296,10 @@ the different phenomena and how they were measured can be found at
 To assess whether ES heterogeneity can be reduced by correcting for
 score reliability, estimates of meta-analytic heterogeneity are compared
 across two situations: first, heterogeneity of raw ES, as computed in
-equation 1 is assessed. Secondly, ES are corrected for imperfect
-reliability. Computing the heterogeneity of these corrected ES allows
-for an assessment, whether the heterogeneity did indeed shrink compared
-to the first situation, as predicted in W&D and H&S.
+@eq-d is assessed. Secondly, ES are corrected for imperfect reliability.
+Computing the heterogeneity of these corrected ES allows for an
+assessment, whether the heterogeneity did indeed shrink compared to the
+first situation, as predicted in W&D and H&S.
 
 ### Methods
 
@@ -373,7 +373,7 @@ These procedures are followed separately for each phenomenon. The
 statistical programming language R, Version X.XXX (reference) is used
 for all data manipulation and statistical analysis.
 
-### Results - Wich phenomena pass criterion 3)?
+### Results - Which phenomena pass criterion 3)?
 
 [Equations @eq-d], [-@eq-SEd], [-@eq-dc], and [-@eq-SEdc] were used to
 generate estimates of standardized ES, both uncorrected and corrected,
@@ -644,9 +644,9 @@ heterogeneity found in $\sigma_x$ was reduced. @eq-ratio_d0 essentially
 demonstrates how mean and heterogeneity of MD, paired with mean and
 heterogeneity of total score standard deviation $\sigma_x$ can be used
 to estimate heterogeneity in raw ES $\delta_0$. Similarly, we can adjust
-Equation @eq-ratio_d0 to describe how, instead of total score standard
-deviation, mean and variance in true score standard deviation $\sigma_T$
-affect heterogeneity in corrected ES $\delta$.
+@eq-ratio_d0 to describe how, instead of total score standard deviation,
+mean and variance in true score standard deviation $\sigma_T$ affect
+heterogeneity in corrected ES $\delta$.
 
 $$\tau^2[\delta] \approx \frac{\tau^2[MD]}{\mu[\sigma_T]^2} + \frac{\mu[MD]^2}{\mu[\sigma_T]^4} \tau^2[\sigma_T]$$ {#eq-ratio_d}
 
@@ -848,19 +848,6 @@ variances, 97% or more could not be explained by differences in random
 error introduced by the measuring instrument, but by genuine differences
 in the underlying distribution.
 
-```{r, echo = FALSE}
-#| label: tbl-R1R2
-#| tbl-cap: Re-analysis concerning metrics $R_1$ and $R_2$
-knitr::kable(read.csv(here("Tables/Variances_analysis.csv")),
-             col.names = c("MASC", 
-                           "$\\hat{\\mu}_{\\sigma^2_X}$", 
-                           "$\\hat{\\mu}_{\\sigma^2_T}$", 
-                           "$\\hat{\\tau}_{\\sigma^2_X}$", 
-                           "$\\hat{\\tau}_{\\sigma^2_T}$", 
-                           "$R_1$", 
-                           "$R_2$"))
-```
-
 For the two exceptional phenomena where the attenuation correction
 procedure actually led to an increase in ES heterogeneity
 (Srull_Behavior_Hostility and Shnabel_Willingness_Reconcile_RPP), the
@@ -902,6 +889,18 @@ results in @tbl-tauES agree with this conclusion, as no phenomena could
 be identified where statistically significant ES heterogeneity was
 accompanied by a reduction in differences due to the correction.
 
+```{r, echo = FALSE}
+#| label: tbl-R1R2
+#| tbl-cap: Re-analysis concerning metrics $R_1$ and $R_2$
+knitr::kable(read.csv(here("Tables/Variances_analysis.csv")),
+             col.names = c("MASC", 
+                           "$\\hat{\\mu}_{\\sigma^2_X}$", 
+                           "$\\hat{\\mu}_{\\sigma^2_T}$", 
+                           "$\\hat{\\tau}_{\\sigma^2_X}$", 
+                           "$\\hat{\\tau}_{\\sigma^2_T}$", 
+                           "$R_1$", 
+                           "$R_2$"))
+```
 
 ## Discussion
 
@@ -1014,17 +1013,7 @@ differences actually inflate heterogeneity as claimed in W&D. While
 correlations and standardized effect sizes are not identical, the way
 score (un)reliability affects these parameters is highly similar.
 
-Heterogeneity in ES even in direct replications, where experimental
-factors are held as constant as possible, is already substantial
-(Renkewitz, Fünderich, & Beinhauer, 2024). However, so far we have
-demonstrated that in several scenarios, differences in score reliability
-did not serve as appropriate moderators or explanations of ES
-heterogeneity. Across most phenomena, we failed to reduce ES
-heterogeneity. If anything, we even increased ES heterogeneity, albeit
-to a very small degree. Generally, concerning the multi-site replication
-projects or collaborative research projects, accounting for differences
-in score reliability did not help us gain a better understanding of the
-phenomena.
+### Limitations & constraints on generalizability
 
 The empirical arguments presented are based on a rather small number of
 non-representative data-sets. Based on the combination of analytical and
@@ -1039,55 +1028,60 @@ replications. As the majority of results discussed over the last years
 single-indicator scales as dependent measures, score reliability can not
 be easily estimated in order to replicate our analyses.
 
-The analytical arguments presented following Equation 17 rested on the
-use of the delta-method, as Equation 17 contained parameters of the
-score standard deviations’ distributions, while the $R_1$ and $R_2$
-metrics were designed to discuss score variances. The delta-method rests
-on a number of assumptions: (1) approximations derived from the
-delta-method require for the transformed variable to follow a marginal
-normal distribution (ref). Since the variable under discussion here is
-the standard deviation, which is bounded to be larger than zero and has
-a non-normal sampling distribution (ref), this assumption is most likely
-violated; (2) the derivative of the transformation function needs to be
-available. As the transformation function is essentially just the square
-root, this assumption should hold up; (3) as the delta-method
-approximates the parameters of the transformed variable using the
-first-order Taylor-expansion, this implies that higher-order terms are
-required to be negligible. In practice, this implies that the variance
-of the untransformed variable needs to be small. However, as this entire
-procedure discusses the influence of variance in standard deviations on
-ES heterogeneity, introduced by differences in score reliability, this
-assumption is probably violated as well. The violation of these
-assumptions likely introduce a bias in estimates derived from these
-approximations (ref). However, the inequality derived with use of the
-delta-method is not used to actually derive any estimates, but to
-discuss how an attenuation correction procedure can affect ES
-heterogeneity. Therefore, we believe that the violation of these
-assumptions is defensible in this case, as the analytical arguments
-derived from the inequality should still hold up, nevertheless. \[add to
-appendix!\] Additionally, we used the empirical examples available to
-assess in how far estimates derived using the delta-method
+The analytical arguments leading to @eq-ineq_short rested on the use of
+the delta-method, as @eq-ineq_init contained parameters of the score
+standard deviations’ distributions, while the $R_1$ and $R_2$ metrics
+were designed to discuss score variances. The delta-method rests on a
+number of assumptions, at least one of which is likely violated in our
+analysis: the variance of the variable to be transformed needs to be
+small (ref.). As this entire procedure discusses the influence of
+variance in standard deviations on ES heterogeneity, introduced by
+differences in score reliability, assuming that this assumption holds
+seems somewhat off. Therefore, we used the empirical examples available
+to assess in how far estimates derived using the delta-method
 approximations diverge from estimates derived without it. The
-differences identified are rather miniscule at the third decimal,
-reinforcing our belief that these assumption violations are defensible.
+differences identified are rather miniscule for the majority of
+phenomena, at the third decimal. Only for the PSACR002_behav_init
+phenomenon we find larger differences - therefore, conclusions for this
+phenomenon concerning the relation between $R_1$ and $R_2$ need to be
+drawn with caution. Generally, as the majority of phenomena did not
+display any bias in this assessment and since the delta-method is not
+actually used to generate estimates, we believe its use to be defensible
+nonetheless.
 
-Similarly, all Equations following Equation 10 rest on the assumption
+Similarly, all equations following @eq-XYZ_cov rest on the assumption
 that mean difference ($MD$) and true or total score variance
 ($\sigma^2_T$ and $\sigma^2_X$) are independent. While this assumption
 is in line with assumptions underlying CTT, it is by no means guaranteed
 that it holds in these data-sets. If this assumption was violated,
 whether the relationship was positive or negative, indicated by a
-positive or negative covariance in Equation 10, would most likely have
+positive or negative covariance in @eq-XYZ_cov, would most likely have
 an impact on how strongly ES heterogeneity is affected by the
 attenuation correction procedure, possibly even the direction of how it
 is affected. However, currently we have no reason to assume that there
 is a systematic relationship between mean difference and standard
 deviation. As this relationship would also affect the distribution of ES
 like Cohen’s d itself, strong violations of this assumption would go far
-beyond invalidating the claims we derived in Equation 16. Instead,
-assumptions of the meta-analytic tests concerning the size ES and the
-presence of ES heterogeneity would be violated, making any research on
-change in ES heterogeneity due to attenuation correction obsolete.
+beyond invalidating the claims we derived in @eq-ineq_short. Most
+likely, assumptions of the meta-analytic tests concerning the
+meta-analytic mean size ES and the presence of ES heterogeneity would be
+violated, making any research on change in ES heterogeneity due to
+attenuation correction obsolete.
+
+### Conclusions
+
+Heterogeneity in ES even in direct replications, where experimental
+factors are held as constant as possible, is already substantial
+(Renkewitz, Fünderich, & Beinhauer, 2024). However, so far we have
+demonstrated that in several scenarios, differences in score reliability
+did not serve as appropriate moderators or explanations of ES
+heterogeneity. Across most phenomena, we failed to reduce ES
+heterogeneity. If anything, we even increased ES heterogeneity, albeit
+to a very small degree. Generally, concerning the multi-site replication
+projects or collaborative research projects, accounting for differences
+in score reliability did not help us gain a better understanding of the
+phenomena. We want to reinforce that, in light of uncontrolled variation
+in score variance due to the lack of appropriate sampling schemes,
 
 The work done by Hunter and Schmidt (2014) was crucial in informing and
 guiding methodology development in the field of meta-analyses.
@@ -1104,3 +1098,152 @@ towards imprecise measurements, expecting correction procedures to
 explain unwarranted heterogeneity. In the current state of Psychology,
 meta-analysts should not expect that correcting ES for score reliability
 will actually explain heterogeneity identified.
+
+## Appendix
+
+### A - Rearranging inequality
+
+Both metrics $R_1$ and $R_2$ make use of parameters of the distribution
+of true and total score variance, not standard deviations. This choice
+was made to facilitate the role of score reliability in the subsequent
+discussion, as score reliability itself is defined by variances, not
+standard deviations (see @eq-rel).
+
+Using the metrics $R_1$ and $R_2$, defined in [Equations @eq-R1] and
+[-@eq-R2], we attempt to understand under which circumstances the
+inequality defined in @eq-ineq_init holds true. However, while the
+metrics make use of mean and heterogeneity of the score variances,
+@eq-ineq_init makes use of mean and heterogeneity of the standard
+deviations. In order to incorporate the metrics, it is necessary to
+reparameterise the equation. Using the delta method to approximate mean
+value and heterogeneity of variance from those of the standard
+deviations, we know that (ref):
+$$\mu^2_{\sigma_X} \approx \mu_{\sigma^2_X} \quad \quad  and \quad \quad 
+\tau^2_{\sigma_X} \approx \frac{\tau^2_{\sigma_X^2}}{4\mu_{\sigma^2_X}}$$ {#eq-delta_method}
+
+While @eq-delta_method only explicitly contains parameters for the
+observed score variance/standard deviation, the same can be done using
+the true score variance/standard deviation. Using the approximates
+defined in @eq-delta_method for observed and true score variance, we
+arrive at a new inequality in @eq-ineq_CV.
+
+$$\frac{\tau_{MD}^2}{\mu_{\sigma^2_t}} + \frac{\mu_{MD}^2}{\mu^2_{\sigma_t^2}} \frac{\tau^2_{\sigma_t^2}}{4\mu_{\sigma^2_t}} > \frac{\tau_{MD}^2}{\mu_{\sigma^2_x}} + \frac{\mu_{MD}^2}{\mu^2_{\sigma_x^2}} \frac{\tau^2_{\sigma_x^2}}{4\mu_{\sigma^2_x}}$$ {#eq-ineq_CV}
+
+@eq-ineq_CV describes that the heterogeneity in corrected ES is larger
+than the heterogeneity in uncorrected ES, using parameters of the
+distributions of mean difference MD, true score variance $\sigma^2_T$
+and observed score variance $\sigma^2_X$. By introducing the metrics
+$R_1$ and $R_2$ to this inequality, we can begin to disentangle which
+conditions need to be fulfilled for the inequality to hold. Rearranging
+the terms in [Equations @eq-R1] and [-@eq-R2], and subsequently entering
+these terms into @eq-ineq_CV leads to the following
+$$\frac{\tau_{MD}^2}{R_1 \mu_{\sigma^2_x}} + \frac{\mu_{MD}^2}{R_1^2 \mu^2_{\sigma^2_x}} \frac{R_2 \tau^2_{\sigma_x^2}}{4 R_1 \mu_{\sigma^2_x}} > \frac{\tau_{MD}^2}{\mu_{\sigma^2_x}} + \frac{\mu_{MD}^2}{\mu^2_{\sigma_x^2}} \frac{\tau^2_{\sigma_x^2}}{4\mu_{\sigma^2_x}}$$ {#eq-ineq_R}
+
+@eq-ineq_R, again, describes the inequality that heterogeneity in
+corrected ES is larger than the heterogeneity in uncorrected ES,
+incorporating the metrics $R_1$ and $R_2$. This equation alone is not
+sufficient to identify the relevant circumstances required for the
+inequality to hold. However, rearranging the terms from @eq-ineq_R leads
+to @eq-ineq_fin:
+
+$$ \tau_{MD}^2\left(\frac{1}{R_1} - 1\right) + \mu_{MD}^2 \frac{1}{4} CV^2_{\sigma^2_X} \left(\frac{R_2}{R_1^3}  - 1\right) > 0$$ {#eq-ineq_fin}
+
+The circumstances under which the inequality described in @eq-ineq_fin
+holds, are circumstances where the claims made in W&D and H&S are
+directly contradicted, as in those cases the ES heterogeneity is larger
+after applying an attenuation correction procedure. Concerning the terms
+in @eq-ineq_fin, we know that all terms left-hand of the inequality,
+outside of the brackets ($\tau^2_{MD}$, $\mu^2_{MD}$ and
+$CV^2_{\sigma^2_X}$), are bound to be positive. For the inequality to
+hold, we need the left-hand side of the equation to remain positive,
+larger than zero. We can distill two scenarios, under which this
+equation should hold: (a) one of the terms inside the brackets
+($\frac{1}{R_1} - 1$ and $\frac{R^2_2}{R_1}  - 1$) is positive and large
+enough, so that the second term not containing that same bracket is
+positively dominated by the first term; or (b) both terms inside the
+brackets need to be positive.
+
+Generally, we know that both $R_1$ and $R_2$ are bound to be positive,
+as both contain different, strictly positive parameters of the
+distributions of true and observed score variance. Additionally, we know
+that $R_1$ is equivalent to the average score reliability, and therefore
+bound between $0\le R_1\le1$. Therefore, the term inside the first
+bracket is bound to be positive ($\frac{1}{R_1} – 1$). Similarly, $R_2$,
+as the ratio of true and error score variance heterogeneity, is bound
+between $0\le R_2\le1$. If $R_1^3$ is smaller than $R_2$, then the term
+inside the second bracket turns negative. Generally, this means that the
+inequality can only be violated if the reduction in relative
+heterogeneity of score variance ($R_2$) is larger than the the average
+score reliability to the power of 3. Restated in mathematical terms,
+this leads us to the rule/condition described in @eq-ineq_short, in the
+main text.
+
+### B - Back-transformation log-transformed score variance
+
+Using the methdology underlying the Boot-Err approach (Beinhauer et al.
+ref), we generate estimates of meta-analytic mean and heterogeneity in
+log-transformed total score variance $\sigma^2_X$. To facilitate
+interpretation and allow for computation of the metrics $R_1$ and $R_2$,
+we need to back-transform those estimates to the original scale. Using
+@eq-mu_sigmaX we can generate an estimate of meta-analytic mean score
+variance on the scale of $\sigma^2_X$ and using @eq-tau_sigmaX we get an
+estimate of its heterogeneity.
+
+$$\hat{\mu}_{\sigma^2_X} = exp\left(\hat{\mu}_{ln[\sigma^2_X]} + .5\  \hat{\tau}^2_{ln[\sigma^2_X]}\right)$$ {#eq-mu_sigmaX}
+
+$$\hat{\tau^2}_{\sigma^2_X} = exp\left(\hat{\tau}^2_{ln[\sigma^2_X]} - 1\right) \cdot \exp\left(2\ \hat{\mu}_{ln[\sigma^2_X]} + \hat{\tau}^2_{ln[\sigma^2_X]}\right)$$ {#eq-tau_sigmaX}
+
+In [equations @eq-mu_sigmaX] and [-@eq-tau_sigmaX],
+$\hat{\mu}_{ln[\sigma^2_X]}$ refers to the mean estimate from the
+meta-analysis on log-transformed score variance,
+$\hat{\tau}^2_{ln[\sigma^2_X]}$ refers to the estimate of heterogeneity.
+
+In [equations @eq-mu_sigmaE] and [-@eq-tau_sigmaE] we generate estimates
+of meta-analytic mean and heterogeneity of error score variance
+$\sigma^2_E$. Just like for the total score variance, we make use of the
+estimates of mean and heterogeneity from the meta-analysis on
+log-transformed error score variance.
+
+$$\hat{\mu}_{\sigma^2_E} = exp\left(\hat{\mu}_{ln[\sigma^2_E]} + .5\  \hat{\tau}^2_{ln[\sigma^2_E]}\right)$$ {#eq-mu_sigmaE}
+
+$$\hat{\tau^2}_{\sigma^2_E} = exp\left(\hat{\tau}^2_{ln[\sigma^2_E]} - 1\right) \cdot \exp\left(2\ \hat{\mu}_{ln[\sigma^2_E]} + \hat{\tau}^2_{ln[\sigma^2_E]}\right)$$ {#eq-tau_sigmaE}
+
+### C - Examining bias due to delta-method
+
+To examine whether applying the delta-method to derive the conditions
+under which the inequality @eq-ineq_init holds, we compared estimates of
+mean and heterogeneity of total score standard deviation$\sigma_X$. To
+generate estimates that do not depend on use of the delta-method, we
+used bootstrapping and a log-transformation, similar as detailed in
+@sec-methods2 for the score variances $\sigma^2_X$. Using the natural
+log, we transformed estimates of score standard deviation and using
+bootstrapped samples we derived appropriate standard errors. From a
+random-effects meta-analysis we generated estimates of mean and
+heterogeneity and back-transformed those to the original scale of
+$\sigma_X$. Additionally, we used the delta-method as outlined in
+@eq-delta_method to estimate mean and heterogeneity in $\sigma_X$ from
+estimates derived from meta-analyses on $\sigma^2_X$. The estimates can
+be found in @tbl-delta.
+
+```{r, echo = FALSE}
+#| label: tbl-delta
+#| tbl-cap: Empirical assessment of appropriateness of delta-method
+knitr::kable(read.csv(here("Tables/delta_test.csv")),
+             col.names = c("MASC", 
+                           "$\\hat{\\mu}_{\\sigma_X}$", 
+                           "$\\hat{\\tau}^2_{\\sigma_X}$", 
+                           "$\\hat{\\mu}_{\\Delta \\sigma_X}$", 
+                           "$\\hat{\\tau}^2_{\\Delta \\sigma_X}$"))
+```
+
+Generally, for 11 out of 12 phenomena, we find miniscule differences
+between the two estimation strategies. For all but the
+PSACR002_behav_init phenomenon, the differences occur in the 3rd
+decimal, indicating that violations in the assumptions concerning the
+delta-method are negligible here. Only for the PSACR002_behav_init
+phenomenon we find larger differences. These are large enough to be
+concerning and pertain largely the estimate of heterogeneity.
+Accordingly, inferences regarding this phenomenon need to be interpreted
+with caution. Generally, since for the majority of phenomena we find no
+bias and since the delta-method is not used to generate estimates beyond
+this particular section, we believe its use to be defensible.
