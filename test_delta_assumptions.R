@@ -9,7 +9,7 @@ varX_est.L <- lapply(which(effect_index)[nn_eff_idx], FUN = function(x){
   # sometimes calculation of SE might lead to issues, as negative variances can not be log-transformed
   #  therefore, function is run within a tryCatch-environment, so the script does not crash
   # apply_Bootstrap_SE_Project.specific is the project-specific function
-  tryCatch(apply_Bootstrap_SE_Project.specific(na.omit(data.list[[x]]), component = "X", R = 100),
+  tryCatch(apply_Bootstrap_SE_Project.specific(na.omit(data.list[[x]]), component = "X", R = 3000),
            
            # print error to console
            error = function(e)(cat("ERROR: ", conditionMessage(e), " - ",
@@ -41,6 +41,43 @@ varX_rma.list <- lapply(seq_along(varX_est.L), FUN = function(x){
 })
 
 
+# generate estimates of ln-observed score variance for each sample & projects
+varE_est.L <- lapply(which(effect_index)[nn_eff_idx], FUN = function(x){
+  
+  # sometimes calculation of SE might lead to issues, as negative variances can not be log-transformed
+  #  therefore, function is run within a tryCatch-environment, so the script does not crash
+  # apply_Bootstrap_SE_Project.specific is the project-specific function
+  tryCatch(apply_Bootstrap_SE_Project.specific(na.omit(data.list[[x]]), component = "E", R = 3000),
+           
+           # print error to console
+           error = function(e)(cat("ERROR: ", conditionMessage(e), " - ",
+                                   substr(names(data.list), 
+                                          (regexpr("Project) Data/", names(data.list)) + 14), 
+                                          (nchar(names(data.list))-4))[x], 
+                                   " - ", x, "\n")))
+})
+
+
+
+
+# Perform random-effects meta-analysis on estimates of ln-observed score variance using metafor
+varE_rma.list <- lapply(seq_along(varE_est.L), FUN = function(x){
+  
+  # at times estimates of ln-varX & SE may be NA, as negative estimates can't be transformed
+  #  therefore, function is nested in tryCatch, so it doesn't break down with errors
+  tryCatch(metafor::rma(measure = "GEN", method = "REML", 
+                        yi = varX_est.L[[x]]$var.est, 
+                        sei = varX_est.L[[x]]$SE),
+           
+           # print error to console
+           error = function(e)(cat("ERROR: ", conditionMessage(e), " - ",
+                                   substr(names(data.list), 
+                                          (regexpr("Project) Data/", names(data.list)) + 14), 
+                                          (nchar(names(data.list))-4))[x], 
+                                   " - ", x, "\n")))
+  
+})
+
 
 vars_rma_L <- lapply(1:length(varE_rma.list), FUN = function(x){
   
@@ -57,7 +94,7 @@ vars_rma_L <- lapply(1:length(varE_rma.list), FUN = function(x){
 
 
 
-apply_Bootstrap_SE_Project.specific2 <- function(data, R = 100, component = "E"){
+apply_Bootstrap_SE_Project.specific2 <- function(data, R = 3000, component = "E"){
   
   if(component == "E"){
     stat.f <- bootstrap_SE_varE
@@ -156,7 +193,7 @@ sdX_est.L <- lapply(which(effect_index)[nn_eff_idx], FUN = function(x){
   # sometimes calculation of SE might lead to issues, as negative variances can not be log-transformed
   #  therefore, function is run within a tryCatch-environment, so the script does not crash
   # apply_Bootstrap_SE_Project.specific is the project-specific function
-  tryCatch(apply_Bootstrap_SE_Project.specific2(na.omit(data.list[[x]]), component = "X", R = 100),
+  tryCatch(apply_Bootstrap_SE_Project.specific2(na.omit(data.list[[x]]), component = "X", R = 3000),
            
            # print error to console
            error = function(e)(cat("ERROR: ", conditionMessage(e), " - ",
@@ -205,6 +242,19 @@ abline(a = 0, b = 1)
 
 plot(cbind(.5*(sqrt(vars$tau2_X) / vars$mu_X), (sqrt(sds$tau2_X) / sds$mu_X)))
 abline(a = 0, b = 1)
+
+
+test_df <- data.frame(unique(ES_rma_df$MASC)[nn_eff_idx],
+                      sds,
+                      delta_mu_X = sqrt(vars$mu_X),
+                      delta_tau2_X = vars$tau2_X / (4 * vars$mu_X)) %>%
+  mutate_if(is.numeric, round, 5)
+
+test_df
+
+write.csv(test_df, here("Tables/delta_test.csv"), row.names = FALSE)
+
+round(test_df, 5)
 
 
 

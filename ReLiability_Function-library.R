@@ -290,7 +290,7 @@ forest_plot_rel <- function(rma_df, aggregates, ci.lvl = .975){
           panel.grid.minor = element_line(colour = "transparent"),
           axis.ticks = element_line(colour = "grey"),
           strip.background = element_rect(fill = "transparent"),
-          strip.text = element_text(size = 12)) +
+          axis.text.y = element_text(size = 12)) +
     scale_y_continuous(breaks = c(-3, 1:nrow(aggregates)), labels = c("RMA-estimate", aggregates$source)) +
     labs(x = "Cohen's d",
          y = "Country") 
