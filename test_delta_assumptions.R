@@ -1,3 +1,70 @@
+## Score ReLiability
+
+# E3
+
+# Clean & extract data
+
+
+# library loading and installing as necessary
+
+
+# relevant libraries required for this script
+packages <- c("magrittr", "dplyr", "boot", "here")
+
+# check, whether library already installed or not - install and load as needed:
+apply(as.matrix(packages), MARGIN = 1, FUN = function(x) {
+  
+  pkg_avail <- nzchar(system.file(package = x))   # check if library is installed on system
+  
+  if(pkg_avail){
+    require(x, character.only = TRUE)             # load the library, if already installed
+    
+  }else{
+    install.packages(x)                           # install the library, if missing
+    require(x, character.only = TRUE)             # load after installation
+  }
+})
+
+source(here("ReLiability_Function-library.R"))
+
+
+B_alpha_rma_df <- read.csv(here("Data/Processed/Reliability_analysis.csv"))
+
+ES_rma_df <- read.csv(here("Data/Processed/Aggregates_ES_analysis.csv"))
+
+agg_L <- readRDS(here("Data/Processed/Aggregates_simple.csv"))
+
+MASC_names <- substr(list.files(here("Data/Extracted (Project) Data")), 1, nchar(list.files(here("Data/Extracted (Project) Data")))-4) 
+
+
+
+
+data_files <- list.files(here("Data/Extracted (Project) Data"), full.names = TRUE)
+
+
+data.list <- lapply(data_files, read.csv)
+
+
+data.list[[4]]$source <- substr(data.list[[4]]$source, start = nchar(data.list[[4]]$source) - 2, stop = nchar(data.list[[4]]$source))
+
+
+effect_index <- MASC_names %in% c("Albarracin_Priming_SAT", 
+                                  "Carter_Flag_Priming", "Caruso_Currency_Priming",
+                                  "Dijksterhuis_trivia", "Finkel_Exit_Forgiveness", 
+                                  "Finkel_Neglect_Forgiveness",
+                                  "Giessner_Vertical_Position", "Hart_Criminal_Intentionality",    
+                                  "Hart_Detailed_Processing", "Hart_Intention_Attribution",       
+                                  "Husnu_Imagined_Contact", "Nosek_Explicit_Art",
+                                  "Nosek_Explicit_Math", "PSACR001_anxiety_int", 
+                                  "PSACR001_behav_int", 
+                                  "PSACR002_neg_photo", "Shnabel_Willingness_Reconcile_Rev",
+                                  "Shnabel_Willingness_Reconcile_RPP", "Srull_Behaviour_Hostility",
+                                  "Srull_Ronald_Hostility", "Tversky_Directionality_Similarity1", 
+                                  "Strack_Facial_Feedback", "Zhong_Desirability_Cleaning"
+)
+
+
+nn_eff_idx <- which(ES_rma_df$pval[ES_rma_df$corr == 0] <= .05)
 
 
 
@@ -245,9 +312,10 @@ abline(a = 0, b = 1)
 
 
 test_df <- data.frame(unique(ES_rma_df$MASC)[nn_eff_idx],
-                      sds,
-                      delta_mu_X = sqrt(vars$mu_X),
-                      delta_tau2_X = vars$tau2_X / (4 * vars$mu_X)) %>%
+                      vars$mu_X,
+                      vars$tau2_X,
+                      delta_mu_X = sds$mu_X^2,
+                      delta_tau2_X = 4 * sds$mu_X^2 * sds$tau2_X) %>%
   mutate_if(is.numeric, round, 5)
 
 test_df
