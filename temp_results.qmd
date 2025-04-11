@@ -1,0 +1,223 @@
+---
+title: "temp - Results"
+format: html
+editor: visual
+---
+
+## Resuls
+
+
+
+
+```{r, echo = FALSE}
+# relevant libraries required for this script
+packages <- c("magrittr", "dplyr", "here", "patchwork", "ggplot2")
+
+# check, whether library already installed or not - install and load as needed:
+apply(as.matrix(packages), MARGIN = 1, FUN = function(x) {
+  
+  pkg_avail <- nzchar(system.file(package = x))   # check if library is installed on system
+  
+  if(pkg_avail){
+    require(x, character.only = TRUE)             # load the library, if already installed
+    
+  }else{
+    install.packages(x)                           # install the library, if missing
+    require(x, character.only = TRUE)             # load after installation
+  }
+})
+
+B_alpha_rma_df <- read.csv(here("Data/Processed/Reliability_analysis.csv"))
+
+ES_rma_df <- read.csv(here("Data/Processed/Aggregates_ES_analysis.csv"))
+
+agg_L <- readRDS(here("Data/Processed/Aggregates_simple.csv"))
+
+MASC_names <- substr(list.files(here("Data/Extracted (Project) Data")), 1, nchar(list.files(here("Data/Extracted (Project) Data")))-4) 
+
+forest_plot_rel <- function(rma_df, aggregates, ci.lvl = .975){
+  rma_raw <- rma_df[rma_df$corr == 0,]
+  rma_corr <- rma_df[rma_df$corr == 1,]
+  
+  aggregates %>% 
+    mutate(cil_raw = d_raw - (1-(1-ci.lvl)/2) * (SE_d),
+           ciu_raw = d_raw + (1-(1-ci.lvl)/2) * (SE_d),
+           cil_corr = d_corr - (1-(1-ci.lvl)/2) * (SE_d_corr),
+           ciu_corr = d_corr + (1-(1-ci.lvl)/2) * (SE_d_corr)) %>% 
+    arrange(desc(d_raw)) %>% 
+    ggplot() +
+    # point estimate of raw d
+    geom_point(aes(x = d_raw, y = 1:nrow(aggregates)), colour = "darkgrey") +
+    # CI of point estimate of raw d
+    geom_segment(aes(x = cil_raw, y = 1:nrow(aggregates), xend = ciu_raw, yend = 1:nrow(aggregates)), colour = "darkgrey") +
+    geom_segment(aes(x = cil_raw, xend = cil_raw, y = (1:nrow(aggregates))+.3, yend = (1:nrow(aggregates))-.3), colour = "darkgrey") +
+    geom_segment(aes(x = ciu_raw, xend = ciu_raw, y =( 1:nrow(aggregates))+.3, yend = (1:nrow(aggregates))-.3), colour = "darkgrey") +
+    # point estiamte of corrected d
+    geom_point(aes(x = d_corr, y = 1:nrow(aggregates)), colour = "black") +
+    # CI of point estimate of corrected d
+    geom_segment(aes(x = cil_corr, y = 1:nrow(aggregates), xend = ciu_corr, yend = 1:nrow(aggregates)), colour = "black") +
+    geom_segment(aes(x = cil_corr, xend = cil_corr, y = (1:nrow(aggregates))+.3, yend = (1:nrow(aggregates))-.3), colour = "black") +
+    geom_segment(aes(x = ciu_corr, xend = ciu_corr, y = (1:nrow(aggregates))+.3, yend = (1:nrow(aggregates))-.3), colour = "black") +
+    # solid black line separating RMA-estimates from point estimates
+    geom_abline(slope = 0, intercept = -1, colour = "black") +
+    # adding diamond showing rma-estimate of raw d
+    geom_polygon(data = data.frame(x = c(rma_raw$ci.ub, rma_raw$mu, rma_raw$ci.lb, rma_raw$mu),
+                                   y = c(-3, -3-.7, -3, -3+.7)),
+                 aes(x = x, y = y),
+                 fill = "darkgrey", colour = "darkgrey") +
+    # adding diamond showing rma-estimate of corrected d
+    geom_polygon(data = data.frame(x = c(rma_corr$ci.ub, rma_corr$mu, rma_corr$ci.lb, rma_corr$mu),
+                                   y = c(-3, -3-.7, -3, -3+.7)),
+                 aes(x = x, y = y),
+                 colour = "black", fill = "black") +
+    # defining theme of plot (transparent background etc.)
+    theme(legend.position = "bottom", 
+          panel.background = element_rect(fill = "transparent"), 
+          plot.background = element_rect(fill = "transparent", colour = "transparent"), 
+          panel.grid.major.y = element_line(colour = "transparent"),
+          panel.grid.major.x = element_line(colour = "grey"),
+          panel.grid.minor = element_line(colour = "transparent"),
+          axis.ticks = element_line(colour = "grey"),
+          strip.background = element_rect(fill = "transparent"),
+          strip.text = element_text(size = 12)) +
+    scale_y_continuous(breaks = c(-3, 1:nrow(aggregates)), labels = c("RMA-estimate", aggregates$source)) +
+    labs(x = "Cohen's d",
+         y = "Country") 
+}
+
+```
+
+
+```{r}
+knitr::kable(ES_rma_df)
+```
+
+
+
+Estimating Cohen's d using equations X and XX lead to the estimates displayed in the forest plots found in Figure 1. Both estimates both uncorrected and corrected for imperfect score reliability are generated. The differences in these estimates are shown in the two different colours, where gray dots and confidence intervals represent uncorrected estimates and black dots and confidence intervals represent corrected estimates. Additionally, each forest plot visualises the meta-analytic estimate of mean effect size for both raw and corrected ES, again, differentiated in grey and black colours.
+
+```{r, echo = FALSE}
+plots3 <- lapply((1:length(agg_L)), FUN = function(idx){
+  
+  # name of MASC
+  name <- MASC_names[idx]
+  
+  # get aggregates per sample
+  y <- agg_L[[idx]]
+  
+  # get rma-results separated
+  rma_raw <- ES_rma_df[ES_rma_df$MASC == name & ES_rma_df$corr == 0,]
+  rma_corr <- ES_rma_df[ES_rma_df$MASC == name & ES_rma_df$corr == 1,]
+  
+  forest_plot_rel(ES_rma_df[ES_rma_df$MASC == name,], y)
+  
+})
+
+# combine plots using pathwork-infrastructure
+combined_plot3 <- Reduce('+', plots3) + plot_layout(ncol = 2) &
+  plot_annotation(theme = theme(plot.background = element_rect(fill = "transparent", colour = "transparent")))
+combined_plot3
+```
+
+First and foremost, figure 1 demonstrates how correcting ES for imperfect score reliability consistently affects these estimates. 
+Across all phenomena, for each individual sample, the absolute ES grows larger as we correct for score reliability. 
+Negative ES grow smaller while positive ES grow larger, all ES move farther away from zero. This is consistent with the expectations from equation XX. 
+Correcting for reliability implies that the mean value remains unchanged, but the denominator, pooled standard deviation, can only grow smaller. 
+Therefore the absolute value of ES can only grow larger. 
+From Figure 1, we also see that the confidence intervals grow larger, as we correct for score reliability. 
+This is also consistent and follows from equation XX, as the absolute effect size can only grow larger in the numerator, the standard error is bound to grow. 
+Since correcting for score reliability makes use of an additional uncertain estimate, it is sensible that the standard error grows larger. 
+Similarly, the meta-analytic estimate grows more uncertain, as we correct for imperfect score reliability, highlighted in the wider diamond shape.
+
+While Figure 1 demonstrates the consistency of how reliability attenuation affects individual estimates of ES, as well as its meta-analytic average, it does not inform us about how meta-analytic heterogeneity is affected.
+Figure 2 demonstrates how ES heterogeneity is affected by correcting for imperfect reliability.
+Here, the underlying distribution of ES, implied by the meta-analytic models, are visualised across the four phenomena.
+Similar to Figure 1, in Figure 2 a grey curve represents the distribution for the raw, uncorrected ES. The black cuve represents the distribution of ES, corrected for score reliability.
+ES heterogeneity is essentially the variance (standard deviation) of "true" ES (true in the sense of free from sampling error). 
+In Figure 2, the height and width of the distributions can easily inform the reader on how ES heterogeneity has changed due to the correction procedure.
+A curve with a higher peak and less spread corresponds to a smaller extent of ES heterogeneity. 
+A lower peak with larger spread on the other hand indicates larger ES heterogeneity.
+
+```{r, echo = FALSE}
+
+plots2 <- lapply((1:length(agg_L)), FUN = function(idx){
+  
+  # name of MASC
+  name <- MASC_names[idx]
+  
+  # get aggregates per sample
+  y <- agg_L[[idx]]
+  
+  # get rma-results separated
+  rma_raw <- ES_rma_df[ES_rma_df$MASC == name & ES_rma_df$corr == 0,]
+  rma_corr <- ES_rma_df[ES_rma_df$MASC == name & ES_rma_df$corr == 1,]
+  
+  # get idea of minimum and maximum observations in MASC, to draw the respective distribution
+  minmaxsequence_raw <- seq(from = min(y$d_raw), to = max(y$d_raw), length.out = 100)
+  minmaxsequence_corr <- seq(from = min(y$d_corr), to = max(y$d_corr), length.out = 100)
+  
+  # Freedman-Diacons rule for binwidth:
+  bw_raw <- (2 * IQR(y$d_raw) * (length(y$d_raw)^-(1/3)))
+  bw_corr <- (2 * IQR(y$d_corr) * (length(y$d_corr)^-(1/3)))
+  
+  # make plot
+  p <- ggplot() +
+    scale_shape_identity() +
+    # geom_point(aes(x = y$d_raw, y = 0), colour = "darkgrey", shape = 108, size = 3) +
+    # geom_point(aes(x = y$d_corr, y = 0), colour = "black", shape = 108, size = 3) +
+    # geom_histogram(aes(x = y$d_raw), colour = NULL, fill = "darkgrey", binwidth = bw_raw, alpha = .5) +
+    # geom_histogram(aes(x = y$d_corr), colour = NULL, fill = "black", binwidth = bw_raw, alpha = .5) +
+    # geom_point(aes(x = rma_raw$mu, y = 0), colour = "darkgrey", shape = 108, size = 8) +
+    # geom_point(aes(x = rma_corr$mu, y = 0), colour = "black", shape = 108, size = 8) +
+    geom_line(aes(x = minmaxsequence_raw,
+                  y = dnorm(minmaxsequence_raw, mean = rma_raw$mu, sd = sqrt(rma_raw$tau^2))),
+              linewidth = 1, colour = "darkgrey") +
+    geom_line(aes(x = minmaxsequence_corr,
+                  y = dnorm(minmaxsequence_corr, mean = rma_corr$mu, sd = sqrt(rma_corr$tau^2))),
+              linewidth = 1, colour = "black") +
+    theme(axis.title = element_blank(),
+          axis.ticks.y = element_blank(),
+          axis.text.y = element_blank(),
+          panel.background = element_rect(fill = "transparent"), 
+          plot.background = element_rect(fill = "transparent", colour = "transparent"), 
+          panel.grid.major.y = element_line(colour = "transparent"),
+          panel.grid.major.x = element_line(colour = "grey"),
+          panel.grid.minor = element_line(colour = "transparent"),
+          axis.ticks.x = element_line(colour = "grey"),
+          strip.background = element_rect(fill = "transparent")) +
+    labs(subtitle = name)
+  
+  # this is actually an artefact, we don't need this, heterogeneity is never truly zero in this selection
+  p
+  
+})
+
+# combine plots using pathwork-infrastructure
+combined_plot2 <- Reduce('+', plots2) + plot_layout(ncol = 2) &
+  plot_annotation(theme = theme(plot.background = element_rect(fill = "transparent", colour = "transparent")))
+combined_plot2
+
+```
+
+Figure 2 demonstrates that, across all four phenomana, correcting ES for imperfect score reliability did not reduce heterogeneity. 
+Instead, ES heterogeneity was increased in every single case, albeit the change was rather small in three out of four cases. 
+These results stand in stark contrast with the claims made by Wiernik & Dahlke (ref) and Hunter & Schmidt (ref).
+Correcting ES for imperfect score reliability, thereby implying that score reliability is identical across all samples, does not lead to a reduction in ES heterogeneity.
+
+To assess whether actual differences in score reliability existed, heterogeneity in score reliability is assessed across all four projects, making use of Reliability Generalization Meta-Analysis.
+Table 1 briefly summarises the results concerning differences in score reliability.
+From Cochran's Q-test, a hypothesis test on whether heterogeneity is larger than zero, we can gather that for the scales measuring all four phenomena, score reliability differs across samples.
+The individual heterogeneity in score reliabiliy tau_alpha, is rather low for the phenomena of Nosek, PSACR001 Anxiety, and PSACR002 negative photo.
+This is likely due to the higher levels of score reliability, averaging at least `r round(min(B_alpha_rma_df$mu_alpha[B_alpha_rma_df$mu_alpha >= .7]), 2)`.
+However, even for the phenomenon PSACR001_behav_int, where true mean score reliability is below .7 and the heterogeneity is rather large with tau_alpha = `r round(B_alpha_rma_df$tau_alpha[B_alpha_rma_df$mu_alpha < .7], 2)`, correcting for differences score reliability does not reduce ES heterogeneity.
+The analysis of score reliability highlights that the lack of reduction in corrected ES heterogeneity can not be explained away by a lack of variation in reliability or "insufficiently imperfect" reliability.
+
+
+```{r, echo = FALSE}
+tab_df <- B_alpha_rma_df %>% 
+  select(MASC, mu_alpha, tau_alpha, QE, k, QEp) %>% 
+  mutate(QEp = ifelse(QEp < .001, "<.001", QEp))
+
+knitr::kable(tab_df, digits = 3)
+```
+

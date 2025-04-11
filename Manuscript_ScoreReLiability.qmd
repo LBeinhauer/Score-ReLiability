@@ -1,7 +1,7 @@
 ---
 title: "Score ReLiability? Exploring the role of score reliability for effect size heterogeneity"
 sbutitle: ""
-format: docx
+format: html
 editor: visual
 author: "Beinhauer, L.J., Fünderich, J.H., Renkewitz, F."
 engine: knitr
@@ -75,7 +75,17 @@ Hunter & Schmidt even claim to have derived an equation which demonstrates how h
 
 $$Var(\delta_0) = [E(a)]^2 Var(\delta) + [E(\delta)]^2 Var(a)$$ {#eq-HS}
 
-Here, $\delta_0$ refers to the “true” ES, undistorted by sampling error but not corrected for measuring error, while $\delta$ refers to the “true” ES, undistorted by sampling error and measurement error.
+Here, $\delta_0$ refers to the “true” ES, undistorted by sampling error but not corrected for measuring error, while $\delta$ refers to the “true” ES, undistorted by sampling error and measurement error. 
+
+
+Re-arranging equation [-@eg-HS] leads to the following equation:
+
+$$Var(\delta) = \frac{Var(\delta_0) - [E(\delta)]^2 Var(a)}{E[a^2]}$$ {#eq-HS_r}
+
+where:
+$$E(\delta) = \frac{E(\delta_0)}{E(a)}$$ {#eq-HS_E}
+
+$$
 
 ## Analytical Arguments
 

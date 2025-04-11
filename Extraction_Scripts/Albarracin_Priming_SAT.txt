@@ -1,0 +1,36 @@
+#### Albarracin - Actiom Priming SAT
+
+# data on the albarracin replication project in ML5 is divided over two data files, one containing lab-data, one containing MTurk data
+dtml5 <- as.data.table(read_excel(here("Data/Original Data/ManyLabs5/Albarracin/ML5 Alb 5 Revised Protocol.xlsx")))     # lab-data
+
+# albarracin-experiment consists of responses to 21 SAT-like questions
+#  the lab-data and the mturk-data is ideally combined for further analysis
+ap_df <- data.frame(source = c(dtml5$Location),
+                    group = c(ifelse(dtml5$Condition == "action", 1, 0)),
+                    SAT1 = c(dtml5$SAT1),
+                    SAT2 = c(dtml5$SAT2),
+                    SAT3 = c(dtml5$SAT3),
+                    SAT4 = c(dtml5$SAT4),
+                    SAT5 = c(dtml5$SAT5),
+                    SAT6 = c(dtml5$SAT6),
+                    SAT7 = c(dtml5$SAT7),
+                    SAT8 = c(dtml5$SAT8),
+                    SAT9 = c(dtml5$SAT9),
+                    SAT10 = c(dtml5$SAT10),
+                    SAT11 = c(dtml5$SAT11),
+                    SAT12 = c(dtml5$SAT12),
+                    SAT13 = c(dtml5$SAT13),
+                    SAT14 = c(dtml5$SAT14),
+                    SAT15 = c(dtml5$SAT15),
+                    SAT16 = c(dtml5$SAT16),
+                    SAT17 = c(dtml5$SAT17),
+                    SAT18 = c(dtml5$SAT18),
+                    SAT19 = c(dtml5$SAT19),
+                    SAT20 = c(dtml5$SAT20),
+                    SAT21 = c(dtml5$SAT21)
+)
+
+
+write.csv(ap_df, here("Data/Extracted (Project) Data/Albarracin_Priming_SAT.csv"), row.names = FALSE)
+
+rm(el_df, dtml5, dtmturk)

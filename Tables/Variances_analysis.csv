@@ -1,0 +1,12 @@
+"MASC","mu_X","mu_T","CV_X","CV_T","R1","R2"
+"Albarracin_Priming_SAT",0.024,0.015,0.159,0.257,0.619,0.995
+"Alter_Analytic_Processing",0.166,0.105,0,NA,0.633,-Inf
+"Hart_Criminal_Intentionality",2.206,1.876,0.353,0.409,0.851,0.971
+"Husnu_Imagined_Contact",3.333,2.721,0.147,0.179,0.816,0.988
+"Nosek_Explicit_Art",0.928,0.824,0.211,0.236,0.887,0.993
+"Nosek_Explicit_Math",1.738,1.627,0.065,0.069,0.936,0.984
+"PSACR001_anxiety_int",1.15,1.041,0.219,0.238,0.905,0.966
+"PSACR002_neg_photo",0.603,0.482,0.219,0.272,0.799,0.986
+"Shnabel_Willingness_Reconcile_Rev",1.052,0.875,0.037,0.038,0.832,0.733
+"Shnabel_Willingness_Reconcile_RPP",0.901,0.699,0.22,0.282,0.776,0.99
+"Srull_Ronald_Hostility",1.874,1.384,0.179,0.226,0.739,0.871

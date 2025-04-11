@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Manuscript</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="Manuscript_MD_ScoreReLiability_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Manuscript_MD_ScoreReLiability_files/libs/quarto-html/quarto.js"></script>
+<script src="Manuscript_MD_ScoreReLiability_files/libs/quarto-html/popper.min.js"></script>
+<script src="Manuscript_MD_ScoreReLiability_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Manuscript_MD_ScoreReLiability_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Manuscript_MD_ScoreReLiability_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Manuscript_MD_ScoreReLiability_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Manuscript_MD_ScoreReLiability_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Manuscript_MD_ScoreReLiability_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Manuscript_MD_ScoreReLiability_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Manuscript</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="liability-or-reliability-exploring-the-role-of-effect-size-attenuation-on-meta-analytic-heterogeneity" class="level1">
+<h1>Liability or reliability? Exploring the role of effect size attenuation on meta-analytic heterogeneity</h1>
+<p>Large-scale collaborative replication efforts have sparked discussions surrounding the replicability of psychological phenomena. For attempts to estimate a phenomenon’s replicability or to predict whether a future replication will replicate successfully, heterogeneity is a crucial parameter that needs to be assessed <span class="citation" data-cites="stanley2018">(<a href="#ref-stanley2018" role="doc-biblioref">Stanley, Carter, &amp; Doucouliagos, 2018</a>)</span>. In the meta-analytic context, heterogeneity describes the variation of effect sizes, free of sampling error <span class="citation" data-cites="dersimonian1986 higgins2002 riley2011">(<a href="#ref-dersimonian1986" role="doc-biblioref">DerSimonian &amp; Laird, 1986</a>; <a href="#ref-higgins2002" role="doc-biblioref">Higgins &amp; Thompson, 2002</a>; <a href="#ref-riley2011" role="doc-biblioref">Riley, Higgins, &amp; Deeks, 2011</a>)</span>. Therefore, the presence of heterogeneity can imply that some replications of a single phenomenon may be successful, while others are not. If heterogeneity increases, meaning the phenomenon’s effect size varies more strongly for unexplained reasons, the probability of observing an effect size around zero or even in the negative space grows larger as well <span class="citation" data-cites="kenny2019">(<a href="#ref-kenny2019" role="doc-biblioref">Kenny &amp; Judd, 2019</a>)</span>. If we know the mean size and heterogeneity of a phenomenon’s effect, we would theoretically be able to establish an expected replication rate <span class="citation" data-cites="vu2024">(e.g. <a href="#ref-vu2024" role="doc-biblioref">Vu, 2024</a>)</span>.</p>
+<p>Similarly, it has been argued that heterogeneity in effect sizes is an indicator of the theory’s “completeness” surrounding the phenomenon. Linden and Hönekopp argue that “low (as opposed to high) heterogeneity reflects a more advanced understanding of the subject matter being studied” <span class="citation" data-cites="LindenHönekopp">(<a href="#ref-LindenHönekopp" role="doc-biblioref">2021, p. 2</a>)</span>. Similarly, von Hippel and Schuetze <span class="citation" data-cites="vonHippel2023">(<a href="#ref-vonHippel2023" role="doc-biblioref">2023</a>)</span> argue that heterogeneity in effects is an indicator of a vague, poorly specified theory.</p>
+<p>Large-scale attempts of direct replications, using identical protocols, such as the Many Labs studies or Registered Replication Reports <span class="citation" data-cites="ManyLabs1 RRRHart">(<a href="#ref-RRRHart" role="doc-biblioref">Eerland et al., 2016</a>; e.g. <a href="#ref-ManyLabs1" role="doc-biblioref">Klein et al., 2014</a>)</span>, for the first time allow researchers to estimate heterogeneity undistorted by selection processes like publication bias. In re-analyses of these studies, Olsson-Collentine et al. <span class="citation" data-cites="olsson2020">(<a href="#ref-olsson2020" role="doc-biblioref">2020</a>)</span> identify a positive correlation between a phenomenon’s effect size and its heterogeneity. Similarly, van Erp et al. <span class="citation" data-cites="vanErp2017">(<a href="#ref-vanErp2017" role="doc-biblioref">2017</a>)</span> and Stanley et al. <span class="citation" data-cites="stanley2018">(<a href="#ref-stanley2018" role="doc-biblioref">2018</a>)</span> estimate strong degrees of heterogeneity across conceptual replications in Psychology. In a separate re-analysis of large scale direct replications, Renkewitz et al.&nbsp;(in preparation) identify substantial heterogeneity in almost all projects where a non-zero effect could be identified. This aligns with the correlation found by Olsson-Collentine et al. <span class="citation" data-cites="olsson2020">(<a href="#ref-olsson2020" role="doc-biblioref">2020</a>)</span>.</p>
+<p>One source for this heterogeneity, which is not a typical moderator tied to a specific theory, might be impairments in score reliability which vary in their extent across replications. [This is an argument put forward repeatedly by original researchers and replicators alike (do we actually know of any?).] Hunter and Schmidt <span class="citation" data-cites="hunter2004">(<a href="#ref-hunter2004" role="doc-biblioref">2004</a>)</span> and Wiernik and Dahlke <span class="citation" data-cites="wiernik2020">(<a href="#ref-wiernik2020" role="doc-biblioref">2020</a>)</span>, discussing the role of score reliability for standardized effect sizes, claim that differences in score reliability should inflate, and therefore increase, heterogeneity. This implies that standard corrections for imperfect score reliability, such as attenuation correction procedures, should remove that inflation, reducing heterogeneity in corrected effect sizes. Over the following pages, we assess whether score reliability can in fact be made responsible for heterogeneity identified across phenomena. We find no empirical evidence for the argument that correcting for differences in score reliability reduces effect size heterogeneity. Instead, to our great surprise, we find that heterogeneity might as well be larger after the correction procedure. Therefore, theoretical analyses regarding the relationship between score reliability and heterogeneity need to be false. In the second half of this text we make use of analytical arguments to identify the necessary conditions under which an attenuation correction inevitably leads to an increase in effect size heterogeneity.</p>
+<section id="effect-sizes-and-score-reliability-in-meta-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="effect-sizes-and-score-reliability-in-meta-analysis">Effect sizes and score reliability in meta-analysis</h2>
+<p>In both the initial reports of large scale replication attempts, as well as the re-analyses by Olsson-Collentine et al. <span class="citation" data-cites="olsson2020">(<a href="#ref-olsson2020" role="doc-biblioref">2020</a>)</span>, standardized effect sizes (from here-on abbreviated as ES) such as Cohen’s d or Hedge’s g were used. For the remainder of the article, Cohen’s d, defined in <a href="#eq-d" class="quarto-xref">Equation&nbsp;1</a>, will be used as an exemplary estimate of ES, as it is used across a wide range of contexts and well understood by a broad audience.</p>
+<p><span id="eq-d"><span class="math display">\[d = \frac{MD}{\sigma_X} \tag{1}\]</span></span></p>
+<p>Here, MD refers to the mean difference between two groups of interest, while <span class="math inline">\(\sigma_X\)</span> is the total pooled standard deviation. Since <span class="math inline">\(d\)</span> constitutes an observed effect size it is affected by sampling error. In terms of heterogeneity, we are not interested in the variance of <span class="math inline">\(d\)</span>, but the variance of the true, underlying ES <span class="math inline">\(\delta\)</span>. In a random-effects meta-analytic model, we can use the standard error and an estimate of heterogeneity to understand how far off the individual observed <span class="math inline">\(d\)</span> is from the true <span class="math inline">\(\delta\)</span> in a weighting procedure <span class="citation" data-cites="borenstein2009">(<a href="#ref-borenstein2009" role="doc-biblioref">Borenstein, Hedges, Higgins, &amp; Rothstein, 2009</a>)</span> The standard error of Cohen’s <span class="math inline">\(d\)</span> is computed as defined in <a href="#eq-SEd" class="quarto-xref">Equation&nbsp;2</a>.</p>
+<p><span id="eq-SEd"><span class="math display">\[SE_d=\sqrt{\frac{n_1+n_2}{n_1n_2}+\frac{d^2}{2\left(n_1+n_2\right)}} \tag{2}\]</span></span></p>
+<p>As is widely known, score reliability affects ES <span class="citation" data-cites="hunter2004 wiernik2020">(e.g. <a href="#ref-hunter2004" role="doc-biblioref">Hunter &amp; Schmidt, 2004</a>; <a href="#ref-wiernik2020" role="doc-biblioref">Wiernik &amp; Dahlke, 2020</a>)</span>. In the context of classical test theory (CTT) score reliability <span class="math inline">\(\rho_{XX’}\)</span> is defined as the ratio of true to total score variance <span class="citation" data-cites="lord2008">(<a href="#ref-lord2008" role="doc-biblioref">Lord &amp; Novick, 2008/1986</a>)</span>, as defined in <a href="#eq-rel" class="quarto-xref">Equation&nbsp;3</a>.</p>
+<p><span id="eq-rel"><span class="math display">\[\rho_{XX’} = \frac{\sigma^2_T}{\sigma^2_X}=\frac{\sigma^2_T}{\sigma^2_T + \sigma^2_E} \tag{3}\]</span></span></p>
+<p>In this equation <span class="math inline">\(\sigma_T^2\)</span> refers to the true score variance in the sense of CTT, meaning the actual variance of the variable, undistorted by random measurement error. In the same sense, <span class="math inline">\(\sigma_X^2\)</span> refers to the total variance of scores, including both the true variance and the random error variance <span class="math inline">\(\sigma_E^2\)</span>. This implies that, if true score variance is assumed to be constant across replications, a lower score reliability can only occur due to a larger error score variance. Total score variance would also be larger, therein leading to a smaller ES, as opposed to a similar data-set where a higher score reliability is achieved through a smaller error score variance. However, score reliability is an aspect of a measuring instrument applied to a population <span class="citation" data-cites="lord2008 vacha1998">(<a href="#ref-lord2008" role="doc-biblioref">Lord &amp; Novick, 2008/1986</a>; <a href="#ref-vacha1998" role="doc-biblioref">Vacha-Haase, 1998</a>)</span>. In the meta-analytic context, as studies tend to be replicated in a variety of populations, neither true nor error score variance can be expected to always be identical across replications. This most likely leads to heterogeneity in score reliability, which, as discussed, is bound to affect ES heterogeneity as well.</p>
+<p>Previous discussions of heterogeneity in score reliability have exclusively discussed it as a parameter that inflates heterogeneity in ES, implying that, if score reliability was perfect across all replications, the actual heterogeneity would have been lower. In their discussion, Wiernik and Dahlke claim that „<em>Measurement error variance will impact the results of meta-analyses in three ways: by (a) biasing the mean effect size toward zero, (b) inflating effect-size heterogeneity and confounding moderator effects, and (c) confounding publication-bias and sensitivity analyses</em>” <span class="citation" data-cites="wiernik2020">(p.&nbsp;3, <a href="#ref-wiernik2020" role="doc-biblioref">2020</a>)</span>. Additionally, more clearly, they state that “<em>If the studies included in a meta-analysis differ in their measures’ reliabilities, heterogeneity estimates will be artifactually inflated, erroneously suggesting larger potential moderator effects</em>” <span class="citation" data-cites="wiernik2020">(p.&nbsp;4, <a href="#ref-wiernik2020" role="doc-biblioref">2020</a>)</span>. They base their claims largely on work done by Hunter and Schmidt <span class="citation" data-cites="hunter2004">(<a href="#ref-hunter2004" role="doc-biblioref">2004</a>)</span>, who claim that “<em>Variation in reliability across studies causes variation in the observed effect sizes above and beyond that produced by sampling error.</em>” (p.&nbsp;302). Overall, both references imply that differences in score (un)reliability inevitably lead to an inflated heterogeneity in ES.</p>
+<p>As both sources Hunter and Schmidt <span class="citation" data-cites="hunter2004">(<a href="#ref-hunter2004" role="doc-biblioref">2004</a>)</span> and Wiernik and Dahlke <span class="citation" data-cites="wiernik2020">(<a href="#ref-wiernik2020" role="doc-biblioref">2020</a>)</span> will be referred to repeatedly, we abbreviate these references as H&amp;S and W&amp;D respectively.</p>
+<section id="attenuation-correction" class="level3">
+<h3 class="anchored" data-anchor-id="attenuation-correction">Attenuation correction</h3>
+<p>If information concerning score reliability is available, it is possible to correct the individual ES for its unreliability. This process is also known as attenuation correction and, while not without its criticisms <span class="citation" data-cites="muchinsky1996 schmidt1996 schennach2016">(<a href="#ref-muchinsky1996" role="doc-biblioref">Muchinsky, 1996</a>; <a href="#ref-schennach2016" role="doc-biblioref">Schennach, 2016</a>; <a href="#ref-schmidt1996" role="doc-biblioref">Schmidt &amp; Hunter, 1996</a>)</span>, is a widespread practice in Psychology (reference). <a href="#eq-dc" class="quarto-xref">Equation&nbsp;4</a> describes a simple attenuation correction procedure.</p>
+<p><span id="eq-dc"><span class="math display">\[d_c = \frac{d}{\sqrt{\hat{\rho}_{xx’}}} \tag{4}\]</span></span></p>
+<p>Here, <span class="math inline">\(d_c\)</span> describes the attenuation-corrected estimate of <span class="math inline">\(d\)</span>, which is corrected by dividing it by the estimate of score reliability <span class="math inline">\(\hat{\rho}_{xx’}\)</span>. As described in W&amp;D or Lord &amp; Novick <span class="citation" data-cites="lord2008">(<a href="#ref-lord2008" role="doc-biblioref">2008/1986</a>)</span>, this is essentially the same, as if the corrected estimate of <span class="math inline">\(d_c\)</span> was constructed using an estimate of true score standard deviation, as in <a href="#eq-dct" class="quarto-xref">Equation&nbsp;5</a>.</p>
+<p><span id="eq-dct"><span class="math display">\[d_c = \frac{MD}{\hat{\sigma}_{T}}=\frac{MD}{\sqrt{\hat{\rho}_{xx’} \hat{\sigma}_X^2}} \tag{5}\]</span></span></p>
+<p><span class="math inline">\(\hat{\sigma}_T\)</span> can be estimated by simply rearranging the terms from <a href="#eq-rel" class="quarto-xref">Equation&nbsp;3</a>. Thereby, an estimate of ES is generated, under the premise that score reliability would have been perfect (<span class="math inline">\(\rho_{xx'} = 1\)</span>). As the corrected estimate of Cohen’s <span class="math inline">\(d\)</span> is larger and requires an additional unknown parameter, an estimate of score reliability, the larger uncertainty in this parameter should be reflected in a larger standard error. The standard error for <span class="math inline">\(d_c\)</span> is defined in <a href="#eq-SEdc" class="quarto-xref">Equation&nbsp;6</a>.</p>
+<p><span id="eq-SEdc"><span class="math display">\[SE_{d_c} = \sqrt{SE^2_d \frac{d_c}{d}} \tag{6}\]</span></span></p>
+<p>The claims made in W&amp;D imply that corrections of individual observed ESs for their unreliability should lead to lower estimates of heterogeneity in meta-analyses of corrected ES. If heterogeneity in score reliability adds to ES heterogeneity, attenuation correction procedures should eliminate that additional variation, as all corrected ES come with identical (perfect) score reliability.</p>
+<p>Re-analyses of the collaborative multi-site replication efforts have uncovered differences in score reliability across replications of the same phenomena <span class="citation" data-cites="shaw2020">(<a href="#ref-shaw2020" role="doc-biblioref">Shaw, Cloos, Luong, Elbaz, &amp; Flake, 2020</a>)</span>. The claims made in W&amp;D and H&amp;S imply that the ES heterogeneity uncovered in these projects therefore could potentially be explained by these differences in score reliability. Similarly, attempting to explain the substantial extent of ES heterogeneity identified in psychological phenomena, both the original authors as well as the multi-site replication authors claim that differences in score reliability might be responsible (again, do we actually know of any?).</p>
+<p>Therefore, we assess the extent to which this intuition is supported by empirical evidence in the following section. The re-analysis of archival data serves to shed light on the following research question:</p>
+<ul>
+<li>To what extent can heterogeneity in standardized effect sizes be explained by means of an attenuation correction?</li>
+</ul>
+</section>
+</section>
+<section id="re-analysis-of-archival-data" class="level2">
+<h2 class="anchored" data-anchor-id="re-analysis-of-archival-data">Re-analysis of archival data</h2>
+<p>We have collected a large number of openly available multi-site direct replications on psychological phenomena <span class="citation" data-cites="dripht2024">(<a href="#ref-dripht2024" role="doc-biblioref">Fuenderich, Beinhauer, Frank, Heene, &amp; Renkewitz, 2024</a>)</span>. The data-sets of about 50 phenomena, largely stemming from the efforts of the Many Labs studies, Registered Replication Reports or the Psychological Science Accelerator, are made openly available in a standardised format at [<a href="https://osf.io/7p8rk/" class="uri">https://osf.io/7p8rk/</a>], the DRIPHT repository.</p>
+<section id="data" class="level3">
+<h3 class="anchored" data-anchor-id="data">Data</h3>
+<p>The ManyLabs projects were collaborative efforts to replicate several psychological phenomena across different research sites, employing identical protocols. From five published projects, the data for the first three and the fifth Many Labs projects <span class="citation" data-cites="ManyLabs1 ManyLabs2 ManyLabs3 ManyLabs5">(<a href="#ref-ManyLabs3" role="doc-biblioref">Ebersole et al., 2016</a>, <a href="#ref-ManyLabs5" role="doc-biblioref">2020</a>; <a href="#ref-ManyLabs1" role="doc-biblioref">Klein et al., 2014</a>, <a href="#ref-ManyLabs2" role="doc-biblioref">2018</a>)</span> was harmonized and publicly stored in a standardized format when the DRIPHT repository was set up <span class="citation" data-cites="dripht2024">(<a href="#ref-dripht2024" role="doc-biblioref">Fuenderich et al., 2024</a>)</span>. The Registered Replication Reports are similar collaborative efforts, with the sole distinction that for each report a single phenomenon was replicated several times. The Registered Reports 3-10 were added to the DRIPHT repository, as they employed experimental designs with at least two groups <span class="citation" data-cites="RRRHart RRRSripada RRRFinkel RRRStrack RRRRand RRRDijksterhuis RRRSrull RRRMazar">(<a href="#ref-RRRRand" role="doc-biblioref">Bouwmeester et al., 2017</a>; <a href="#ref-RRRFinkel" role="doc-biblioref">Cheung et al., 2016</a>; <a href="#ref-RRRHart" role="doc-biblioref">Eerland et al., 2016</a>; <a href="#ref-RRRSripada" role="doc-biblioref">Hagger et al., 2016</a>; <a href="#ref-RRRSrull" role="doc-biblioref">McCarthy et al., 2018</a>; <a href="#ref-RRRDijksterhuis" role="doc-biblioref">O’DONNEL et al., 2018</a>; <a href="#ref-RRRMazar" role="doc-biblioref">Verschuere et al., 2018</a>; <a href="#ref-RRRStrack" role="doc-biblioref">Wagenmakers et al., 2016</a>)</span>. Lastly, some projects from the Psychological Science Accelerator were added to the DRIPHT repository, namely PSA006, PSACR001, PSACR002 and PSACR003 <span class="citation" data-cites="PSA006 PSACR001 PSACR002 PSACR003">(<a href="#ref-PSA006" role="doc-biblioref">Bago et al., 2022</a>; <a href="#ref-PSACR003" role="doc-biblioref">Collaboration et al., 2022</a>; <a href="#ref-PSACR002" role="doc-biblioref">Ke Wang, 2021</a>; <a href="#ref-PSACR001" role="doc-biblioref">Wang, Alves, Lins, Pinto, et al., 2022</a>)</span>. In contrast to Many Labs or Registered Replication Projects, these collaborative efforts, while also distributed across the globe, do not formally attempt to perform direct replications, but focus on original research or conceptual replications. However, as each project used the same protocol and participants are distributed across different countries, a data structure similar to that of a multi-site replication study emerges. What makes all these collaborative efforts valuable for this manuscript is the fact that all phenomena collected in the DRIPHT-repository are making use of two-group designs and are therefore easily assessed using standardised mean differences.</p>
+<p>While replication data on a decent number of psychological phenomena is available in the DRIPHT-repository, to demonstrate how incorporating score reliability affects heterogeneity in ES, selected phenomena need to fulfil three conditions: (1) As we focus on the use of ES <span class="math inline">\(d\)</span>, the phenomenon needs to be assessed using a group design consisting of at least two groups. (2) Score reliability estimates can be derived, this implies that the phenomenon needs to be measured using either several indicators forming a single scale or by repeatedly measuring across several timepoints. (3) Score reliability can only attenuate effect sizes that are not zero in the first place. Therefore, we focus on phenomena where meta-analytic mean ES can be statistically distinguished from zero. While the first criterion is fulfilled by all phenomena found in the DRIPHT repository, the second and third criteria still need evaluation.</p>
+<p>As all phenomena in the collection fulfil the first condition, 50 phenomena have been catalogued where the effect is studied by comparing the outcome across two separate groups. From the collection of 50 phenomena, 21 fulfil the second condition, so that estimates of score reliability can be derived. For the 21 phenomena, the dependent variable used to construct the effect size is measured by employing more than a single indicator. The number of indicators per scale varied between 3 and 30. The majority of scales was made up of 3 to 6 items. At the same time, however, this implies that the remaining 29 phenomena did not make use of more than a single indicator to measure the dependent variable. Therefore, for the majority of phenomena it is not possible to assess in how far measurement quality is sufficiently high in terms of e.g. internal consistency or low random error variance.</p>
+<p>From the 21 phenomena that employed more than a single indicator, 19 made use of Likert-style items, where respondents would indicate their agreement to some kind of statement. The scale-length varied from 3 to 10-points. The items measuring the remaining 2 phenomena were coded dichotomously, as responses were right or wrong. While the majority of designs make use of some form of control-treatment manipulation, randomly assigning participants to a condition (19 phenomena), some phenomena refer to the effect of pre-existing differences, e.g. biological sex (2 phenomena). Subsequently, those phenomena need to be identified where the meta-analytic mean effect size is statistically significant different from zero. This will be done as a preliminary step in this manuscript’s analysis procedure. Detailed information concerning the different phenomena and how they were measured can be found at [osf-link], while a brief summary can be found in Table 1.</p>
+<p>To assess whether ES heterogeneity can be reduced by correcting for score reliability, estimates of meta-analytic heterogeneity are compared across two situations: first, heterogeneity of raw ES, as computed in <a href="#eq-d" class="quarto-xref">Equation&nbsp;1</a> is assessed. Secondly, ES are corrected for imperfect reliability. Computing the heterogeneity of these corrected ES allows for an assessment, whether the heterogeneity did indeed shrink compared to the first situation, as predicted in W&amp;D and H&amp;S.</p>
+</section>
+<section id="methods" class="level3">
+<h3 class="anchored" data-anchor-id="methods">Methods</h3>
+<p>For each replication of a phenomenon, Cohen’s <span class="math inline">\(d\)</span> is computed as an estimate of raw ES, according to <a href="#eq-d" class="quarto-xref">Equation&nbsp;1</a>, including its standard error (<a href="#eq-SEd" class="quarto-xref">Equation&nbsp;2</a>). Subsequently, a random-effects meta-analysis is performed using metafor version 4.8-0 <span class="citation" data-cites="metafor">(<a href="#ref-metafor" role="doc-biblioref">Viechtbauer, 2010</a>)</span>. To estimate meta-analytic mean ES and heterogeneity we make use of the REML-estimator, as that estimator tends to perform best across a range of conditions <span class="citation" data-cites="hoenekopp2022">(<a href="#ref-hoenekopp2022" role="doc-biblioref">Hönekopp &amp; Linden, 2022</a>)</span>. To identify which phenomena pass criterion (3), using a Wald-type significance test we assess for which phenomenon the meta-analytic mean ES is significantly different from zero. For this hypothesis test, as all other hypothesis tests in this manuscript, we employ a one-tailed significance level of .05.</p>
+<p>Additionally, estimates of score reliability are derived. While not without criticism (references), Cronbach’s Alpha is used to estimate score reliability. It is often noted that tau-equivalence is an unrealistic assumption to hold against real-world data, implying that other estimates of score reliability, such as McDonald’s Omega <span class="citation" data-cites="mcdonald1999">(<a href="#ref-mcdonald1999" role="doc-biblioref">McDonald, 1999</a>)</span>, Guttman’s Lambda 2 or 4 <span class="citation" data-cites="guttman1945">(<a href="#ref-guttman1945" role="doc-biblioref">Guttman, 1945</a>)</span>, or the Greatest Lower Bound <span class="citation" data-cites="tenBerge2004">(<a href="#ref-tenBerge2004" role="doc-biblioref">Ten Berge &amp; Sočan, 2004</a>)</span> might be better suited. However, all scales employed in this project are scored by computing the simple mean or sum of responses across items for each individual. Computing the mean or sum of several items implicitly assumes tau-equivalence, as each item contributes equally to the individual’s test score. Therefore, Cronbach’s Alpha is the better choice to estimate score reliability, as it avoids a mismatch in assumptions between how the score is computed and how score reliability is estimated. The individual estimates of Cohen’s d are corrected using these estimates of Cronbach’s Alpha, according to <a href="#eq-dc" class="quarto-xref">Equation&nbsp;4</a>, including the corrected standard errors (<a href="#eq-SEdc" class="quarto-xref">Equation&nbsp;6</a>). Thereby, estimates of ES are computed, which are corrected for imperfect reliability. Again, a random-effects meta-analysis is run using metafor, generating an estimate of heterogeneity in corrected ES. Different indicators of heterogeneity are readily available, such as <span class="math inline">\(I^2\)</span>, <span class="math inline">\(H^2\)</span> or the coefficient of variation <span class="math inline">\(CV\)</span><span class="citation" data-cites="borenstein2009 higgins2002">(<a href="#ref-borenstein2009" role="doc-biblioref">Borenstein et al., 2009</a>; <a href="#ref-higgins2002" role="doc-biblioref">Higgins &amp; Thompson, 2002</a>)</span>. However, the descriptions found in H&amp;S and W&amp;D discuss the absolute amount of heterogeneity in terms of variance (<span class="math inline">\(\tau^2\)</span>) or standard deviation (<span class="math inline">\(\tau\)</span>). These parameters discuss the variability of the standardized ES in the population in terms of variance or standard deviation. Therefore, we also make use of absolute heterogeneity here.</p>
+<p>Subsequently, in order to assess whether ES heterogeneity was indeed reduced by the attenuation correction procedure, the estimates of heterogeneity in uncorrected ES and corrected ES are compared. Using Cochran’s <em>Q</em>-test <span class="citation" data-cites="cochran1954">(<a href="#ref-cochran1954" role="doc-biblioref">Cochran, 1954</a>)</span>, we assess whether the estimates of heterogeneity are statistically significantly different from 0. Only for those projects where we have sufficient confidence that the individual estimates of heterogeneity are larger than zero can we actually begin to interpret whether there was any change.</p>
+<p>To identify whether a reduction in ES heterogeneity is indeed accompanied by differences in score reliability, the estimates of score reliability are assessed meta-analytically as well. To do so, a Reliability Generalization Meta-Analysis is performed <span class="citation" data-cites="vacha1998 sanchez2013">(<a href="#ref-sanchez2013" role="doc-biblioref">Sánchez-Meca, López-López, &amp; López-Pina, 2013</a>; <a href="#ref-vacha1998" role="doc-biblioref">Vacha-Haase, 1998</a>)</span>. This entails that individual estimates of score reliability are adequately transformed using Bonett’s transformation: <span class="math inline">\(T_{\hat{\rho}} = ln(1 - \hat{\rho})\)</span>. This transformation has variance-stabilising properties and therefore allows for adequate inferences concerning heterogeneity in score reliability <span class="citation" data-cites="bonett2002">(<a href="#ref-bonett2002" role="doc-biblioref">Bonett, 2002</a>)</span>. Cochran’s Q-test is used to identify statistically significant heterogeneity in transformed score reliability. Estimates derived from a Reliability Generalization Meta-Analysis using these transformations can be back-transformed to the original score reliability scale <span class="citation" data-cites="beinhauer2025">(<a href="#ref-beinhauer2025" role="doc-biblioref">Beinhauer, Fünderich, &amp; Renkewitz, 2025</a>)</span>:</p>
+<p><span id="eq-rel_back_mu"><span class="math display">\[\mu_{\rho{xx'}} \approx 1 - exp(\mu_{T\left[\rho_{XX^\prime}\right]})-\frac{1}{2} exp(\mu_{T\left[\rho_{xx'}\right]})\tau_{T\left[\rho_{XX^\prime}\right]}^2 \tag{7}\]</span></span></p>
+<p><span id="eq-rel_back_tau"><span class="math display">\[\tau_{\rho_{xx'}}^2 \approx exp(\mu_{T\left[\rho_{xx'}\right]})2 \tau_{T\left[\rho_{xx'}\right]}^2+exp(\mu_{T\left[\rho_{xx'}\right]})^2\tau_{T\left[\rho_{xx'}\right]}^4 \tag{8}\]</span></span></p>
+<p>We executed these steps for each phenomenon. The statistical programming language R, Version 4.4.2 <span class="citation" data-cites="RCore">(<a href="#ref-RCore" role="doc-biblioref">R Core Team, 2024</a>)</span> is used for all data manipulation and statistical analysis. Graphics are constructed using the R package <em>ggplot2</em>, version 3.5.1 <span class="citation" data-cites="ggplot2">(<a href="#ref-ggplot2" role="doc-biblioref">Wickham, 2016</a>)</span>.</p>
+</section>
+<section id="results" class="level3">
+<h3 class="anchored" data-anchor-id="results">Results</h3>
+<p><a href="#eq-d" class="quarto-xref">Equations&nbsp;1</a>, <a href="#eq-SEd" class="quarto-xref">2</a>, <a href="#eq-dc" class="quarto-xref">4</a>, and <a href="#eq-SEdc" class="quarto-xref">6</a> were used to generate estimates of standardized ES, both uncorrected and corrected, with their corresponding standard errors. Generally, this leads to larger (absolute) ES and larger standard errors after the correction. As an example from the 21 selected phenomena, the results from this procedure on Nosek’s Explicit Art sex differences phenomenon are displayed in the forest plot in <a href="#fig-forest" class="quarto-xref">Figure&nbsp;1</a>. Here, grey dots represent the uncorrected ES for each sample, while black dots represent the corrected ES in each sample. The bars surrounding these dots show the respective 95%-Cis.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-forest" class="quarto-float quarto-figure quarto-figure-center anchored" width="672">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-forest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Manuscript_MD_ScoreReLiability_files/figure-html/fig-forest-1.png" id="fig-forest" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-forest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In <a href="#fig-forest" class="quarto-xref">Figure&nbsp;1</a> it becomes apparent that the reliability attenuation procedure leads to an increase in the individual absolute effect size, as the black dots are moved further away from zero. Simultaneously, the standard errors grew larger after the attenuation correction, which leads to larger 95%-CIs. This is most easily observed for the mturk-sample, which already had a rather large confidence interval to begin with. Additionally, in the diamond at the bottom of the figure, we can see that the meta-analytic estimate mean ES is also larger after the attenuation correction took place. In <a href="#tbl-meanES" class="quarto-xref">Table&nbsp;1</a>, the estimates and tests on the meta-analytic average ES, both corrected and uncorrected, can be found.</p>
+<section id="which-phenomena-pass-criterion-3" class="level4">
+<h4 class="anchored" data-anchor-id="which-phenomena-pass-criterion-3">Which phenomena pass criterion 3)?</h4>
+<p><a href="#tbl-meanES" class="quarto-xref">Table&nbsp;1</a> demonstrates that what we observed in <a href="#fig-forest" class="quarto-xref">Figure&nbsp;1</a> holds across all 21 phenomena. All meta-analytic effects are larger in their absolute size after applying an attenuation correction procedure. Similarly, the uncertainty quantified in the estimate’s standard error is larger. Additionally, <a href="#tbl-meanES" class="quarto-xref">Table&nbsp;1</a> highlights which phenomena pass criterion (3)—the effect size must be statistically significantly distinguishable from zero. 12 phenomena pass this criterion, highlighted in boldface. It may be remarked that the attenuation correction procedure, in this data, appears to have no influence on whether a phenomenon passes the criterion. The differences in p-value are rather small and lead to no difference in conclusion, regarding a significance level</p>
+<div class="cell">
+<div id="tbl-meanES" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-meanES-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Meta-analytic average ES
+</figcaption>
+<div aria-describedby="tbl-meanES-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 27%">
+<col style="width: 5%">
+<col style="width: 25%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">MASC</th>
+<th style="text-align: left;"><span class="math inline">\(\hat{\mu}_{\delta_0}\)</span> (SE)</th>
+<th style="text-align: left;">p</th>
+<th style="text-align: left;"><span class="math inline">\(\hat{\mu}_{\delta}\)</span> (SE)</th>
+<th style="text-align: left;">p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Albarracin_Priming_SAT</td>
+<td style="text-align: left;">.158 (.068)</td>
+<td style="text-align: left;">.010</td>
+<td style="text-align: left;">.210 (.089)</td>
+<td style="text-align: left;">.009</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Carter_Flag_Priming</td>
+<td style="text-align: left;">.018 (.029)</td>
+<td style="text-align: left;">.269</td>
+<td style="text-align: left;">.026 (.036)</td>
+<td style="text-align: left;">.232</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Caruso_Currency_Priming</td>
+<td style="text-align: left;">-.019 (.026)</td>
+<td style="text-align: left;">.771</td>
+<td style="text-align: left;">-.022 (.029)</td>
+<td style="text-align: left;">.770</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dijksterhuis_trivia</td>
+<td style="text-align: left;">.002 (.030)</td>
+<td style="text-align: left;">.478</td>
+<td style="text-align: left;">-.024 (.040)</td>
+<td style="text-align: left;">.725</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Finkel_Exit_Forgiveness</td>
+<td style="text-align: left;">.050 (.049)</td>
+<td style="text-align: left;">.157</td>
+<td style="text-align: left;">.056 (.056)</td>
+<td style="text-align: left;">.158</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Finkel_Neglect_Forgiveness</td>
+<td style="text-align: left;">.051 (.055)</td>
+<td style="text-align: left;">.178</td>
+<td style="text-align: left;">.059 (.063)</td>
+<td style="text-align: left;">.174</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Giessner_Vertical_Position</td>
+<td style="text-align: left;">.026 (.023)</td>
+<td style="text-align: left;">.124</td>
+<td style="text-align: left;">.027 (.025)</td>
+<td style="text-align: left;">.133</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hart_Criminal_Intentionality</td>
+<td style="text-align: left;">.170 (.078)</td>
+<td style="text-align: left;">.015</td>
+<td style="text-align: left;">.184 (.085)</td>
+<td style="text-align: left;">.015</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hart_Detailed_Processing</td>
+<td style="text-align: left;">.082 (.058)</td>
+<td style="text-align: left;">.078</td>
+<td style="text-align: left;">.096 (.067)</td>
+<td style="text-align: left;">.074</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hart_Intention_Attribution</td>
+<td style="text-align: left;">-.011 (.058)</td>
+<td style="text-align: left;">.572</td>
+<td style="text-align: left;">-.021 (.080)</td>
+<td style="text-align: left;">.603</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Husnu_Imagined_Contact</td>
+<td style="text-align: left;">.116 (.032)</td>
+<td style="text-align: left;">&lt;.001</td>
+<td style="text-align: left;">.129 (.035)</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Nosek_Explicit_Art</td>
+<td style="text-align: left;">.360 (.047)</td>
+<td style="text-align: left;">&lt;.001</td>
+<td style="text-align: left;">.383 (.050)</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nosek_Explicit_Math</td>
+<td style="text-align: left;">.401 (.029)</td>
+<td style="text-align: left;">&lt;.001</td>
+<td style="text-align: left;">.415 (.030)</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PSACR001_anxiety_int</td>
+<td style="text-align: left;">.251 (.022)</td>
+<td style="text-align: left;">&lt;.001</td>
+<td style="text-align: left;">.263 (.023)</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PSACR001_behav_int</td>
+<td style="text-align: left;">.035 (.020)</td>
+<td style="text-align: left;">.040</td>
+<td style="text-align: left;">.040 (.023)</td>
+<td style="text-align: left;">.044</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PSACR002_neg_photo</td>
+<td style="text-align: left;">.663 (.040)</td>
+<td style="text-align: left;">&lt;.001</td>
+<td style="text-align: left;">.747 (.047)</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Shnabel_Willingness_Reconcile_Rev</td>
+<td style="text-align: left;">.533 (.101)</td>
+<td style="text-align: left;">&lt;.001</td>
+<td style="text-align: left;">.582 (.109)</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Shnabel_Willingness_Reconcile_RPP</td>
+<td style="text-align: left;">.585 (.062)</td>
+<td style="text-align: left;">&lt;.001</td>
+<td style="text-align: left;">.655 (.067)</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Srull_Behaviour_Hostility</td>
+<td style="text-align: left;">.051 (.029)</td>
+<td style="text-align: left;">.040</td>
+<td style="text-align: left;">.062 (.034)</td>
+<td style="text-align: left;">.035</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Srull_Ronald_Hostility</td>
+<td style="text-align: left;">.063 (.029)</td>
+<td style="text-align: left;">.014</td>
+<td style="text-align: left;">.074 (.033)</td>
+<td style="text-align: left;">.013</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Zhong_Desirability_Cleaning</td>
+<td style="text-align: left;">-.031 (.024)</td>
+<td style="text-align: left;">.903</td>
+<td style="text-align: left;">-.042 (.036)</td>
+<td style="text-align: left;">.880</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p><em>Note:</em> Since in a meta-analysis, we attempt to estimate mean and variance of the parameter’s true distribution, in this table <span class="math inline">\(\hat{\mu}_{\delta_0}\)</span> represents the meta-analytic estimate of mean uncorrected <span class="math inline">\(d\)</span> and <span class="math inline">\(\hat{\mu}_{\delta}\)</span> represents the estimate of the meta-analytic mean of corrected <span class="math inline">\(d_c\)</span>.</p>
+</section>
+<section id="estimates-of-heterogeneity" class="level4">
+<h4 class="anchored" data-anchor-id="estimates-of-heterogeneity">Estimates of heterogeneity</h4>
+<p><a href="#tbl-tauES" class="quarto-xref">Table&nbsp;2</a> contains the results from performing an RG-MA on the Cronbach’s Alpha coefficients of the scales used to measure the 12 remaining phenomena. Additionally, it contains estimates of heterogeneity for both uncorrected ES (<span class="math inline">\(\delta_0\)</span>) and corrected ES (<span class="math inline">\(\delta\)</span>), which are central to assess the research questions posed in section <em>Attenuation Correction</em>. Most importantly, <a href="#tbl-tauES" class="quarto-xref">Table&nbsp;2</a> demonstrates that for all but one of the phenomena, the attenuation correction procedure barely has an impact on the extent of ES heterogeneity. However, while the heterogeneity for the Srull_Behaviour_Hostility phenomenon seems reduced by about a third of its initial value, the ES heterogeneity for this phenomenon is rather small to begin with. Using a significance test, we can not distinguish this value confidently from zero. This implies that for the majority of phenomena, differences in score reliability can not be made responsible for heterogeneity in standardized effect sizes.</p>
+<div class="cell">
+<div id="tbl-tauES" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-tauES-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Tests for ES Heterogeneity
+</figcaption>
+<div aria-describedby="tbl-tauES-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 13%">
+<col style="width: 6%">
+<col style="width: 3%">
+<col style="width: 12%">
+<col style="width: 6%">
+<col style="width: 3%">
+<col style="width: 11%">
+<col style="width: 6%">
+<col style="width: 3%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">MASC</th>
+<th style="text-align: left;"><span class="math inline">\(\hat{\mu}_{\rho_{XX'}}\)</span> (95%-CI)</th>
+<th style="text-align: right;"><span class="math inline">\(\hat{\tau}_{\rho_{XX'}}\)</span></th>
+<th style="text-align: left;">QE (df)</th>
+<th style="text-align: left;">p</th>
+<th style="text-align: right;"><span class="math inline">\(\hat{\tau}_{\delta_0}\)</span></th>
+<th style="text-align: left;">QE (df)</th>
+<th style="text-align: left;">p</th>
+<th style="text-align: right;"><span class="math inline">\(\hat{\tau}_{\delta}\)</span></th>
+<th style="text-align: left;">QE (df)</th>
+<th style="text-align: left;">p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Albarracin_Priming_SAT</td>
+<td style="text-align: left;">0.585 [0.543:0.623]</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">2.899 (7)</td>
+<td style="text-align: left;">.894</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">5.454 (7)</td>
+<td style="text-align: left;">0.605</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">5.298 (7)</td>
+<td style="text-align: left;">0.624</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hart_Criminal_Intentionality</td>
+<td style="text-align: left;">0.849 [0.811:0.879]</td>
+<td style="text-align: right;">0.054</td>
+<td style="text-align: left;">66.17 (11)</td>
+<td style="text-align: left;">&lt;.001</td>
+<td style="text-align: right;">0.171</td>
+<td style="text-align: left;">18.96 (11)</td>
+<td style="text-align: left;">0.062</td>
+<td style="text-align: right;">0.185</td>
+<td style="text-align: left;">18.81 (11)</td>
+<td style="text-align: left;">0.065</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Husnu_Imagined_Contact</td>
+<td style="text-align: left;">0.814 [0.802:0.825]</td>
+<td style="text-align: right;">0.023</td>
+<td style="text-align: left;">66.389 (35)</td>
+<td style="text-align: left;">.001</td>
+<td style="text-align: right;">0.087</td>
+<td style="text-align: left;">47.581 (35)</td>
+<td style="text-align: left;">0.076</td>
+<td style="text-align: right;">0.094</td>
+<td style="text-align: left;">47.351 (35)</td>
+<td style="text-align: left;">0.079</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Nosek_Explicit_Art</td>
+<td style="text-align: left;">0.881 [0.869:0.891]</td>
+<td style="text-align: right;">0.029</td>
+<td style="text-align: left;">142.551 (35)</td>
+<td style="text-align: left;">&lt;.001</td>
+<td style="text-align: right;">0.178</td>
+<td style="text-align: left;">62.771 (35)</td>
+<td style="text-align: left;">0.003</td>
+<td style="text-align: right;">0.190</td>
+<td style="text-align: left;">63.074 (35)</td>
+<td style="text-align: left;">0.003</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nosek_Explicit_Math</td>
+<td style="text-align: left;">0.936 [0.932:0.939]</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: left;">59.43 (35)</td>
+<td style="text-align: left;">.006</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">39.169 (35)</td>
+<td style="text-align: left;">0.288</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">39.107 (35)</td>
+<td style="text-align: left;">0.29</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PSACR001_anxiety_int</td>
+<td style="text-align: left;">0.903 [0.89:0.914]</td>
+<td style="text-align: right;">0.041</td>
+<td style="text-align: left;">494.822 (48)</td>
+<td style="text-align: left;">&lt;.001</td>
+<td style="text-align: right;">0.085</td>
+<td style="text-align: left;">74.655 (48)</td>
+<td style="text-align: left;">0.008</td>
+<td style="text-align: right;">0.088</td>
+<td style="text-align: left;">74.251 (48)</td>
+<td style="text-align: left;">0.009</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PSACR001_behav_int</td>
+<td style="text-align: left;">0.693 [0.651:0.73]</td>
+<td style="text-align: right;">0.140</td>
+<td style="text-align: left;">853.138 (48)</td>
+<td style="text-align: left;">&lt;.001</td>
+<td style="text-align: right;">0.068</td>
+<td style="text-align: left;">65.204 (48)</td>
+<td style="text-align: left;">0.05</td>
+<td style="text-align: right;">0.077</td>
+<td style="text-align: left;">65.253 (48)</td>
+<td style="text-align: left;">0.049</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PSACR002_neg_photo</td>
+<td style="text-align: left;">0.791 [0.774:0.806]</td>
+<td style="text-align: right;">0.047</td>
+<td style="text-align: left;">350.852 (36)</td>
+<td style="text-align: left;">&lt;.001</td>
+<td style="text-align: right;">0.220</td>
+<td style="text-align: left;">219.709 (36)</td>
+<td style="text-align: left;">&lt;.001</td>
+<td style="text-align: right;">0.260</td>
+<td style="text-align: left;">237.115 (36)</td>
+<td style="text-align: left;">&lt;.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Shnabel_Willingness_Reconcile_Rev</td>
+<td style="text-align: left;">0.832 [0.818:0.845]</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: left;">5.053 (7)</td>
+<td style="text-align: left;">.653</td>
+<td style="text-align: right;">0.233</td>
+<td style="text-align: left;">23.367 (7)</td>
+<td style="text-align: left;">0.001</td>
+<td style="text-align: right;">0.253</td>
+<td style="text-align: left;">23.182 (7)</td>
+<td style="text-align: left;">0.002</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Shnabel_Willingness_Reconcile_RPP</td>
+<td style="text-align: left;">0.768 [0.737:0.796]</td>
+<td style="text-align: right;">0.032</td>
+<td style="text-align: left;">17.535 (7)</td>
+<td style="text-align: left;">.014</td>
+<td style="text-align: right;">0.073</td>
+<td style="text-align: left;">8.472 (7)</td>
+<td style="text-align: left;">0.293</td>
+<td style="text-align: right;">0.071</td>
+<td style="text-align: left;">8.244 (7)</td>
+<td style="text-align: left;">0.312</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Srull_Behaviour_Hostility</td>
+<td style="text-align: left;">0.629 [0.59:0.665]</td>
+<td style="text-align: right;">0.082</td>
+<td style="text-align: left;">123.49 (21)</td>
+<td style="text-align: left;">&lt;.001</td>
+<td style="text-align: right;">0.054</td>
+<td style="text-align: left;">24.493 (21)</td>
+<td style="text-align: left;">0.27</td>
+<td style="text-align: right;">0.034</td>
+<td style="text-align: left;">24.677 (21)</td>
+<td style="text-align: left;">0.261</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Srull_Ronald_Hostility</td>
+<td style="text-align: left;">0.739 [0.716:0.76]</td>
+<td style="text-align: right;">0.047</td>
+<td style="text-align: left;">91.722 (21)</td>
+<td style="text-align: left;">&lt;.001</td>
+<td style="text-align: right;">0.046</td>
+<td style="text-align: left;">24.756 (21)</td>
+<td style="text-align: left;">0.258</td>
+<td style="text-align: right;">0.053</td>
+<td style="text-align: left;">24.593 (21)</td>
+<td style="text-align: left;">0.265</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p><em>Note:</em> <span class="math inline">\(\hat{\mu}_{\rho_{XX'}}\)</span> is the back-transformed meta-analytic estimate of mean score reliability; <span class="math inline">\(\tau{\mu}_{\rho_{XX'}}\)</span> is the back-transformed estimate of heterogeneity in score reliability; Note that, since in a meta-analysis, we attempt to estimate mean and variance of the parameter’s true distribution, in this table <span class="math inline">\(\hat{\tau}_{\delta_0}\)</span> represents the estimate of heterogeneity in uncorrected <span class="math inline">\(d\)</span>; accordingly, <span class="math inline">\(\hat{\tau}_{\delta}\)</span> represents the estimate of the heterogeneity in corrected <span class="math inline">\(d_c\)</span>.</p>
+<p>Secondly, in <a href="#tbl-tauES" class="quarto-xref">Table&nbsp;2</a> we find that for ten out of twelve phenomena, ES heterogeneity grows as a result from the attenuation correction procedure. Even though these differences tend to be small, it is clear that in all those cases, not only did accounting for score reliability not explain any ES heterogeneity, we find even more than initially expected. This is incompatible with claims made in W&amp;D and H&amp;S, the attenuation correction increased ES heterogeneity. Concerning the remaining two phenomena, for the Shnabel_Willingness_Reconcile_RPP, the reduction in heterogeneity is miniscule and the estimate of heterogeneity is not statistically significant in the first place. Most likely, the difference in ES heterogeneity estimates can be explained by issues of estimation, as only eight replications are available. Similarly, only for the Srull_Behaviour_Hostility phenomenon, we find a substantial reduction in heterogeneity due to the attenuation correction procedure. The estimates of ES heterogeneity are not statistically significant, however, which hampers our ability to meaningfully interpret and compare these estimates. For the majority of phenomena it appears that differences in score reliability do not inflate heterogeneity in uncorrected effect sizes. Instead these differences mask ES heterogeneity, that can be unveiled by accounting for score reliability.</p>
+</section>
+</section>
+</section>
+<section id="relationship-between-score-reliability-and-effect-sizes-in-terms-of-heterogeneity" class="level2">
+<h2 class="anchored" data-anchor-id="relationship-between-score-reliability-and-effect-sizes-in-terms-of-heterogeneity">Relationship between score reliability and effect sizes in terms of heterogeneity</h2>
+<p>In the re-analysis of archival data in the previous section we demonstrated that, at least for the multi-site direct replication and PSA-projects, that score reliability does not hold any noteworthy value as a potential moderator explaining ES heterogeneity. Additionally, we demonstrated that claims formulated in W&amp;D and H&amp;S regarding how score reliability increases ES heterogeneity is false. We found a large number of phenomena where, contrary to popular claims, correcting for score reliability increases ES heterogeneity, instead of decreasing it.</p>
+<p>This implies that there is an error in the reasoning or intuition behind claims made in H&amp;S and W&amp;D, as our observations can not be explained by the current literature. Over the following paragraphs, we will briefly explore the intuition that might have led to the previous claims. Subsequently, we will use analytical arguments to clarify how score reliability actually affects ES heterogeneity. Therein, we also identify potential conditions under which an attenuation correction can actually reduce ES heterogeneity - and under which it is more likely to increase it.</p>
+<section id="intuitive-relationship" class="level3">
+<h3 class="anchored" data-anchor-id="intuitive-relationship">Intuitive relationship</h3>
+<p>It might help to think about linear models, when discussing the intuition that might underlie the idea, that controlling for score reliability should reduce ES heterogeneity. Heterogeneity describes unexplained variation in a parameter’s true distribution, that we model using meta-analytical techniques <span class="citation" data-cites="borenstein2009 higgins2002">(<a href="#ref-borenstein2009" role="doc-biblioref">Borenstein et al., 2009</a>; <a href="#ref-higgins2002" role="doc-biblioref">Higgins &amp; Thompson, 2002</a>)</span>. In that way, the idea of heterogeneity is closely related to residual variance, as we observe it in a simple linear model. Both describe variation that could not be explained by the predictive variables in the case of the simple linear model, or not explained by incorporating the Standard Errors in the case of a meta-analytic model.</p>
+<p>For the simple linear model, if we add an additional predictor to the model that we know shares variance with the parameter that we aim to predict, this should reduce the amount of residual variance that we observe across most instances. Generally, removing a source of variance by controlling for it, we expect any unexplained variation to shrink. Similarly, we know that differences in score reliability, by definition, are related to differences in standardized effect sizes. Therefore, intuitively, it seems sensible to expect that controlling for differences in score reliability should reduce the unexplained variance in standardized effect sizes, as described in H&amp;S and W&amp;D.</p>
+<p>Hunter &amp; Schmidt have additionally derived an equation which demonstrates how heterogeneity in score reliability affects heterogeneity in ESs <span class="citation" data-cites="hunter2004">(<a href="#ref-hunter2004" role="doc-biblioref">2004, p. XX</a>)</span>. <a href="#eq-HS" class="quarto-xref">Equation&nbsp;9</a> implies that heterogeneity in <span class="math inline">\(\delta_0\)</span> is essentially a function in which heterogeneity and mean value of <span class="math inline">\(\delta\)</span> are weighted by mean score reliability <span class="math inline">\(\rho_{xx‘}\)</span> and its heterogeneity.</p>
+<p><span id="eq-HS"><span class="math display">\[\tau^2_{\delta_0} = [\mu_{\rho_{xx‘}}]^2 \tau^2_{\delta} + [\mu_{\delta}]^2 \tau^2_{\rho_{xx‘}} \tag{9}\]</span></span></p>
+<p>We adjusted <a href="#eq-HS" class="quarto-xref">Equation&nbsp;9</a> using the notation used throughout this text. Here, <span class="math inline">\(\delta_0\)</span>, carrying a 0 in the index, refers to the uncorrected ES, undistorted by sampling error but not corrected for measuring error. On the other hand <span class="math inline">\(\delta\)</span>, no index, refers to the corrected ES, undistorted by sampling error and measurement error. Lastly, <span class="math inline">\(\rho_{XX'}\)</span> refers to score reliability. Hunter &amp; Schmidt <span class="citation" data-cites="hunter2004">(<a href="#ref-hunter2004" role="doc-biblioref">2004</a>)</span> claim that <a href="#eq-HS" class="quarto-xref">Equation&nbsp;9</a> demonstrates that differences in score reliability inflate ES heterogeneity, which means that an attenuation correction procedure would have to reduce ES heterogeneity. However, it can be easily verified that <a href="#eq-HS" class="quarto-xref">Equation&nbsp;9</a> does not allow for such claims. Depending on both the mean value <span class="math inline">\(\mu_{\rho_{xx‘}}\)</span> and the heterogeneity <span class="math inline">\(\tau^2_{\rho_{xx‘}}\)</span> in score reliability, ES heterogeneity might be increased or decreased by the differences in score reliability.</p>
+<p>Most likely, Hunter and Schmidt did not fully explore the implications of <a href="#eq-HS" class="quarto-xref">Equation&nbsp;9</a>, but followed the general intuition we lined out–“If a source of variation is controlled for, the amount of unexplained variance should be reduced.” Wiernik and Dahlke <span class="citation" data-cites="wiernik2020">(<a href="#ref-wiernik2020" role="doc-biblioref">2020</a>)</span> refer to the work by Hunter &amp; Schmidt <span class="citation" data-cites="wiernik2020">(<a href="#ref-wiernik2020" role="doc-biblioref">2020</a>)</span>, likely following their intuition.</p>
+<p>In the re-analysis of archival data, we have demonstrated that this intuition does not hold for the relationship of ES heterogeneity and score reliability. Instead, we will propose an alternative way that helps us discern, under which conditions we can expect an attenuation correction procedure to lead to an increase in ES heterogeneity.</p>
+</section>
+<section id="describing-es-as-a-random-ratio-variable" class="level3">
+<h3 class="anchored" data-anchor-id="describing-es-as-a-random-ratio-variable">Describing ES as a random ratio variable</h3>
+<p>Realising that an ES, as defined in <a href="#eq-d" class="quarto-xref">Equation&nbsp;1</a>, is actually a ratio, allows for a different analytical description of how differences in score reliability can affect ES heterogeneity. If the phenomenon is heterogeneous and score reliability varies across replications, it seems sensible to assume that both numerator and denominator (MD and <span class="math inline">\(\sigma_X\)</span>) from <a href="#eq-d" class="quarto-xref">Equation&nbsp;1</a> vary across replications. In that case, the ES can be described as a random variable stemming from a ratio distribution. A ratio distribution is a probability distribution constructed by dividing one random variable by a second random variable: <span class="math inline">\(Z = \frac{X}{Y}\)</span>. First order taylor approximation may be used to generate estimates of mean and variance of the ratio variable [irrespective of distribution?] <span class="citation" data-cites="vanKempen1999">(<a href="#ref-vanKempen1999" role="doc-biblioref">Van Kempen &amp; Van Vliet, 1999</a>)</span>. Here we use the Taylor-estimator of the ratio’s variance to demonstrate how differences in score reliability may affect heterogeneity in ES.</p>
+<p><span id="eq-XYZ_cov"><span class="math display">\[\tau^2[Z] \approx \frac{\tau^2[X]}{\mu[Y]^2} - \frac{2\mu[X]}{\mu[Y]^3} cov[X,Y] + \frac{\mu[X]^2}{\mu[Y]^4} \tau^2[Y] \tag{10}\]</span></span></p>
+<p>Assuming that the random variables are uncorrelated, simplifies the equation to</p>
+<p><span id="eq-XYZ"><span class="math display">\[\tau^2[Z] \approx \frac{\tau^2[X]}{\mu[Y]^2} + \frac{\mu[X]^2}{\mu[Y]^4} \tau^2[Y] \tag{11}\]</span></span></p>
+<p>Substituting for ES, unstandardized mean difference MD and pooled standard deviation <span class="math inline">\(\sigma_X\)</span> leads to</p>
+<p><span id="eq-ratio_d0"><span class="math display">\[\tau^2[\delta_0] \approx \frac{\tau^2[MD]}{\mu[\sigma_x]^2} + \frac{\mu[MD]^2}{\mu[\sigma_x]^4} \tau^2[\sigma_x] \tag{12}\]</span></span></p>
+<p>As stated in <a href="#eq-dct" class="quarto-xref">Equation&nbsp;5</a>, correcting ES for score reliability can be described through a correction of the pooled standard deviation: <span class="math inline">\(\sigma_T = \sqrt{\rho_{xx’} \sigma^2_x}\)</span>. Since <span class="math inline">\(\rho_{xx'}\)</span> is always between zero and one, in the case of imperfect score reliability, <span class="math inline">\(\sigma_T\)</span> will always be smaller than total <span class="math inline">\(\sigma_x\)</span>.</p>
+<p>In <a href="#eq-rel" class="quarto-xref">Equation&nbsp;3</a> we see that total standard deviation <span class="math inline">\(\sigma_X\)</span> is constructed only from (the square of the sum of) error score variance <span class="math inline">\(\sigma_E^2\)</span> and true score variance <span class="math inline">\(\sigma_T^2\)</span>. Measurement precision, since this should not pertain the true scores, should only affect the error score variance. Therefore, if the heterogeneity in <span class="math inline">\(\sigma_X\)</span> was introduced purely by differences in measurement precision, an attenuation correction procedure can remove that heterogeneity. Alternatively, the underlying latent variable may not be distributed identically across replications. In that case, true score variance <span class="math inline">\(\sigma^2_T\)</span> would vary across replications and induce heterogeneity in <span class="math inline">\(\sigma_X\)</span>. This heterogeneity would lead to differences in standardized differences ES as well, but it can not be removed by means of an attenuation correction procedure.</p>
+<p>In that case, some heterogeneity in <span class="math inline">\(\sigma_T\)</span> would remain, albeit heterogeneity found in <span class="math inline">\(\sigma_x\)</span> was reduced. <a href="#eq-ratio_d0" class="quarto-xref">Equation&nbsp;12</a> essentially demonstrates how mean and heterogeneity of MD, paired with mean and heterogeneity of total score standard deviation <span class="math inline">\(\sigma_x\)</span> can be used to estimate heterogeneity in raw ES <span class="math inline">\(\delta_0\)</span>. Similarly, we can adjust <a href="#eq-ratio_d0" class="quarto-xref">Equation&nbsp;12</a> to describe how, instead of total score standard deviation, mean and variance in true score standard deviation <span class="math inline">\(\sigma_T\)</span> affect heterogeneity in corrected ES <span class="math inline">\(\delta\)</span>.</p>
+<p><span id="eq-ratio_d"><span class="math display">\[\tau^2[\delta] \approx \frac{\tau^2[MD]}{\mu[\sigma_T]^2} + \frac{\mu[MD]^2}{\mu[\sigma_T]^4} \tau^2[\sigma_T] \tag{13}\]</span></span></p>
+<p>The differences between the two <a href="#eq-ratio_d0" class="quarto-xref">Equations&nbsp;12</a> and <a href="#eq-ratio_d" class="quarto-xref">13</a> demonstrates how ES heterogeneity is affected by an attenuation correction procedure. According to the quotes in H&amp;S and W&amp;D, <a href="#eq-ratio_d0" class="quarto-xref">Equation&nbsp;12</a> should lead to a larger value of <span class="math inline">\(\tau^2\left[\delta_0\right]\)</span>, compared to the estimate of <span class="math inline">\(\tau^2\left[\delta\right]\)</span> from <a href="#eq-ratio_d" class="quarto-xref">Equation&nbsp;13</a>. However, as demonstrated in the re-analysis of archival data, we can already expect that this can not be an implication of these [Equations <a href="#eq-ratio_d0" class="quarto-xref">Equation&nbsp;12</a>] and <a href="#eq-ratio_d" class="quarto-xref">13</a>.</p>
+<p>Instead, what is guaranteed is that the expected value of <span class="math inline">\(\sigma_T\)</span> is smaller than the expected value of <span class="math inline">\(\sigma_X\)</span>. Similarly, the heterogeneity in <span class="math inline">\(\sigma_T\)</span> is guaranteed to be smaller than the uncorrected heterogeneity in <span class="math inline">\(\sigma_X\)</span>. However, since the expected value of either standard deviation is placed in the denominator of the function and the variance of either is placed in the numerator of the function, <a href="#eq-HS" class="quarto-xref">Equation&nbsp;9</a> is not sufficient to explain how heterogeneity in ES changes due to the attenuation correction.</p>
+<p>In this section, we attempt to understand under which circumstances the heterogeneity in ES grows larger as the result of an attenuation correction procedure, contrary to claims made in W&amp;D and H&amp;S. To do so, we propose the following inequality, involving <a href="#eq-ratio_d0" class="quarto-xref">Equations&nbsp;12</a> and <a href="#eq-ratio_d" class="quarto-xref">13</a>.</p>
+<p><span id="eq-ineq_init"><span class="math display">\[\tau^2_{\delta} &gt; \tau^2_{\delta_0} \quad  \quad \quad \quad \quad  \frac{\tau_{MD}^2}{\mu_{\sigma_T}^2} + \frac{\mu_{MD}^2}{\mu_{\sigma_T}^4} \tau^2_{\sigma_T} &gt; \frac{\tau_{MD}^2}{\mu_{\sigma_x}^2} + \frac{\mu_{MD}^2}{\mu_{\sigma_x}^4} \tau^2_{\sigma_x} \tag{14}\]</span></span></p>
+<p>As long as the inequality defined in <a href="#eq-ineq_init" class="quarto-xref">Equation&nbsp;14</a> holds true, an attenuation correction procedure would lead to larger estimates of ES heterogeneity. Conditions under which <a href="#eq-ineq_init" class="quarto-xref">Equation&nbsp;14</a> does not hold are conditions under which the claims made in W&amp;D and H&amp;S are met. Therefore, this inequality is essentially the opposite of the claims made in W&amp;D and H&amp;S. Unfortunately, the inequality in this form does not convey sufficient information about the conditions under which it can potentially hold. In Appendix A, we rearranged <a href="#eq-ineq_init" class="quarto-xref">Equation&nbsp;14</a>, so we end up with a form that we can use to actually derive conditions under which ES heterogeneity can be inflated or deflated by differences in score reliability.</p>
+<p>To do so, we introduce two additional metrics.</p>
+<p><span id="eq-R1"><span class="math display">\[R_1 = \frac{\mu_{\sigma^2_T}}{\mu_{\sigma^2_X}} \tag{15}\]</span></span></p>
+<p><span class="math inline">\(R_1\)</span> describes the relative size of mean true score variance, compared to the mean observed score variance. This informs us, how much of the mean total score variance can be attributed to mean true score variance. Therefore, this metric is close to the average score reliability. Even though formally <span class="math inline">\(R_1\)</span> and the meta-analytic mean score reliability <span class="math inline">\(\mu_{\rho_{xx'}}\)</span> do not share not the same value, in practice we observe little to no differences between the two parameters. Large values indicate that correcting the individual score variances (or standard deviations for that matter) using the attenuation correction procedure should lead to very little change in ES, as most of the variation observed were due to genuine differences in true scores. Small values indicate the opposite, the observed score variance was due to a larger amount of random error score variance, leading to a stronger correction.</p>
+<p><span id="eq-R2"><span class="math display">\[R_2 = \frac{\tau^2_{\sigma^2_T}}{\tau^2_{\sigma^2_X}} \tag{16}\]</span></span></p>
+<p>The metric <span class="math inline">\(R_2\)</span> on the other hand describes in how far the attenuation correction procedure has successfully reduced heterogeneity in score variance <span class="math inline">\(\tau^2_{\sigma^2_X}\)</span>. A value of 1 indicates that the heterogeneity in true score variance <span class="math inline">\(\sigma^2_T\)</span> is essentially just as large as the heterogeneity initially observed. Smaller values indicate how much heterogeneity is “left”, after applying an attenuation correction, relative to the initial heterogeneity. This means that a value of .7 indicates that about 70% of heterogeneity in score variance remains, even after correcting for differences in score reliability. As only 30% of score variance heterogeneity could be removed, this would imply that differences in error score variance <span class="math inline">\(\sigma^2_E\)</span> were responsible for less than a third of the heterogeneity in score variances found. On the contrary, more than two thirds of heterogeneity could be attributed to actual differences in how the underlying true scores are distributed across samples.</p>
+<p>Concerning the re-arranged inequality from Appendix A, we identify one necessary but not sufficient condition or rule described in <a href="#eq-ineq_short" class="quarto-xref">Equation&nbsp;17</a>.</p>
+<p><span id="eq-ineq_short"><span class="math display">\[R_1^3 \leq R_2 \tag{17}\]</span></span></p>
+<p>With necessary but not sufficient we mean that, as long as <a href="#eq-ineq_short" class="quarto-xref">Equation&nbsp;17</a> holds, an attenuation correction will inevitably increase ES heterogeneity. However, if the inequality does not hold, it is not guaranteed that the attenuation correction can decrease ES heterogeneity. Whether ES heterogeneity can be decreased depends on other parameters, that we left out of this short form, but can be found, accompanied by a more detailed description, in <a href="#eq-ineq_fin" class="quarto-xref">Equation&nbsp;25</a>.</p>
+<p>As long as <span class="math inline">\(R_1^3\)</span> is smaller or equal compared to <span class="math inline">\(R_2\)</span>, <a href="#eq-ineq_init" class="quarto-xref">Equation&nbsp;14</a> is bound to hold true. This means that as long as the average score reliability, to the power of 3, does not exceed the relative remaining variance heterogeneity after the attenuation correction, <a href="#eq-ineq_init" class="quarto-xref">Equation&nbsp;14</a> is not violated. For example, assuming average score reliability is about .8, the heterogeneity in <span class="math inline">\(\sigma^2_T\)</span> needs to make up less than 51.2% (<span class="math inline">\(R_2 \geq .8^3 = .512\)</span>) of the heterogeneity in total score variance <span class="math inline">\(\sigma^2_X\)</span>. At <span class="math inline">\(R_1 = .8\)</span>, as long as <span class="math inline">\(R_2 \geq .512\)</span>, the claims made in W&amp;D and H&amp;S can not hold.</p>
+<p><span class="math inline">\(R_1\)</span> essentially describes the relative size of mean score variance after the attenuation correction, and <span class="math inline">\(R_2\)</span> essentially describes the relative size of score variance heterogeneity after the attenuation correction. Therefore, <a href="#eq-ineq_short" class="quarto-xref">Equation&nbsp;17</a> states the following regarding the change in mean value and heterogeneity due to the correction: ES heterogeneity will always be reduced, as long as the remaining heterogeneity in score variance is not substantially smaller than the size of the remaining mean value.</p>
+<p>As long as there are substantial differences in the true score variance across administrations, it is unlikely that an attenuation correction can actually produce such a low <span class="math inline">\(R_2\)</span>. Generally speaking, <span class="math inline">\(R_1\)</span> largely depends on the relative measurement precision. If measurements were made more precisely, average score reliability and <span class="math inline">\(R_1\)</span> would be higher. On the other hand, <span class="math inline">\(R_2\)</span> depends on how different the measurement precision was at the individual administrations, but also how different the individual administrations sites are regarding their true score variance. If the administration sites carry large differences in true score variance <span class="math inline">\(R_2\)</span> is unlikely to be substantially smaller than <span class="math inline">\(R_1\)</span>.</p>
+<p>It is important to reiterate that the condition in <a href="#eq-ineq_short" class="quarto-xref">Equation&nbsp;17</a> only describes under which conditions the inequality is guaranteed to hold, no matter what value other parameters like the mean value of <span class="math inline">\(MD\)</span> or its heterogeneity take on. This means that, if the condition in <a href="#eq-ineq_short" class="quarto-xref">Equation&nbsp;17</a> is violated, it is by no means guaranteed that an attenuation correction procedure would actually reduce heterogeneity in ES. Thereby, inference made from <a href="#eq-ineq_short" class="quarto-xref">Equation&nbsp;17</a> is asymmetrical. While we know, if the inequality holds, heterogeneity in corrected ES will be larger than heterogeneity in uncorrected ES, we can’t be certain that the opposite is true if the inequality does not hold.</p>
+</section>
+<section id="re-analysis-of-archival-data-1" class="level3">
+<h3 class="anchored" data-anchor-id="re-analysis-of-archival-data-1">Re-analysis of archival data</h3>
+<p><a href="#tbl-tauES" class="quarto-xref">Table&nbsp;2</a> showed that for all phenomena, for which we identified statistically significant ES heterogeneity, the heterogeneity was even larger after the attenuation correction procedure. Here, we will re-analyse the data, estimating <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span> for each phenomenon respectively. Therein, we not only show that our claims derived from analytical arguments hold up in empirical assessment, but also demonstrate how the metrics <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span> may be used to inform how score reliability affected ES heterogeneity.</p>
+<section id="sec-methods2" class="level4">
+<h4 class="anchored" data-anchor-id="sec-methods2">Methods</h4>
+<p>Estimation of <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span> requires estimates of meta-analytic mean and heterogeneity of both the total score variance <span class="math inline">\(\sigma^2_X\)</span> and the true score variance <span class="math inline">\(\sigma^2_T\)</span>. Elsewhere, we proposed the method Boot-Err (ref.) as an alternative method to test for and estimate the differences in error score variance <span class="math inline">\(\sigma^2_E\)</span>. Among other things, in Beinhauer et al. <span class="citation" data-cites="beinhauer2025">(<a href="#ref-beinhauer2025" role="doc-biblioref">2025</a>)</span> we deliver detailed instructions on how estimates for mean and heterogeneity of total score variance, and the score variance components can be derived. This means that Boot-Err can be used to generate all estimates required for computation of the metrics <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span>.</p>
+<p>For the following analysis, Boot-Err is used. As Boot-Err makes use of meta-analytic techniques and bootstrap sampling, we perform analyses using the packages <em>metafor</em>, version 4.8-0 <span class="citation" data-cites="metafor">(<a href="#ref-metafor" role="doc-biblioref">Viechtbauer, 2010</a>)</span>, and <em>boot</em>, version 1.3-31 <span class="citation" data-cites="boot">(<a href="#ref-boot" role="doc-biblioref">A. C. Davison &amp; D. V. Hinkley, 1997</a>)</span>, in the statistical programming language <em>R</em>, version 4.4.2 <span class="citation" data-cites="RCore">(<a href="#ref-RCore" role="doc-biblioref">R Core Team, 2024</a>)</span>.</p>
+</section>
+<section id="results-1" class="level4">
+<h4 class="anchored" data-anchor-id="results-1">Results</h4>
+<p><a href="#tbl-R1R2" class="quarto-xref">Table&nbsp;3</a> reports the meta-analytic estimates of observed and true score variances, including their heterogeneity and metrics <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span> across all 12 phenomena. In <a href="#tbl-R1R2" class="quarto-xref">Table&nbsp;3</a> we see that for ten out of 12 phenomena, the <span class="math inline">\(R_2\)</span> metric is larger than the <span class="math inline">\(R_1\)</span> metric. Additionally, we observe that across eight phenomena, <span class="math inline">\(R_2\)</span> is larger than .96. This implies that of the heterogeneity observed in score variances, 97% or more could not be explained by differences in random error introduced by the measuring instrument, but by genuine differences in the underlying distribution.</p>
+<p>For the two exceptions, those phenomena where the attenuation correction procedure actually led to an decrease in ES heterogeneity (Srull_Behavior_Hostility and Shnabel_Willingness_Reconcile_RPP), the significance test for the ES heterogeneity was not significant, both before and after the correction. The results regarding <span class="math inline">\(R_2\)</span> indicate that the majority of score variance heterogeneity was due to differences in true score variance <span class="math inline">\(\sigma^2_T\)</span>. Since either the heterogeneity was so small or the sample size so low that the heterogeneity could not be statistically distinguished from zero, we should be cautious in the interpretation of a reduction in that estimate. Most likely, the reduction in heterogeneity is better explained by imprecise estimation than an actual reduction of heterogeneity.</p>
+<p>Lastly, for two out of the 12 phenomena, the Albarracin_Priming_SAT and the Shnabel_Willingness_Reconcile_Rev phenomena, we find <span class="math inline">\(\tau_{\sigma^2_X}\)</span> of 0. Therefore, the <span class="math inline">\(R_2\)</span> metric could not be computed, as the denominator would have been zero. However, we also did not identify statistically significant ES heterogeneity in the first place. The phenomena were assessed with a particularly low number of replications (8 in both cases). Estimation precision for heterogeneity in variance components, even more so than for ES, largely depends on the sample size. Most likely, the low sample size led to implausible estimates in both true and total score variance heterogeneity and subsequently to an implausible estimate of <span class="math inline">\(R_2\)</span>. Meta-analytic estimates, especially those concerning score variance components such as <span class="math inline">\(R_2\)</span>, therefore should be interpreted with caution, if the sample size was particularly low.</p>
+<p>Generally, <a href="#tbl-R1R2" class="quarto-xref">Table&nbsp;3</a> implies that for all measurements concerning these phenomena, the heterogeneity in observed score variances could not be substantially explained by differences in measurement quality. For all phenomena, <span class="math inline">\(R_2\)</span> was larger than <span class="math inline">\(R_1\)</span>, implying that an attenuation correction procedure could not reduce ES heterogeneity in any of these cases. The results in <a href="#tbl-tauES" class="quarto-xref">Table&nbsp;2</a> agree with this conclusion, as no phenomena could be identified where statistically significant ES heterogeneity was accompanied by a reduction in differences due to the correction.</p>
+<div class="cell">
+<div id="tbl-R1R2" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-R1R2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Re-analysis concerning metrics <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span>
+</figcaption>
+<div aria-describedby="tbl-R1R2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 4%">
+<col style="width: 4%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">MASC</th>
+<th style="text-align: right;"><span class="math inline">\(\hat{\mu}_{\sigma^2_X}\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\hat{\mu}_{\sigma^2_T}\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\hat{\tau}_{\sigma^2_X}\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\hat{\tau}_{\sigma^2_T}\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(R_1\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(R_2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Albarracin_Priming_SAT</td>
+<td style="text-align: right;">0.022</td>
+<td style="text-align: right;">0.013</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.589</td>
+<td style="text-align: right;">-Inf</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hart_Criminal_Intentionality</td>
+<td style="text-align: right;">2.194</td>
+<td style="text-align: right;">1.865</td>
+<td style="text-align: right;">0.757</td>
+<td style="text-align: right;">0.746</td>
+<td style="text-align: right;">0.850</td>
+<td style="text-align: right;">0.970</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Husnu_Imagined_Contact</td>
+<td style="text-align: right;">3.327</td>
+<td style="text-align: right;">2.715</td>
+<td style="text-align: right;">0.501</td>
+<td style="text-align: right;">0.498</td>
+<td style="text-align: right;">0.816</td>
+<td style="text-align: right;">0.989</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Nosek_Explicit_Art</td>
+<td style="text-align: right;">0.927</td>
+<td style="text-align: right;">0.822</td>
+<td style="text-align: right;">0.198</td>
+<td style="text-align: right;">0.197</td>
+<td style="text-align: right;">0.886</td>
+<td style="text-align: right;">0.993</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nosek_Explicit_Math</td>
+<td style="text-align: right;">1.741</td>
+<td style="text-align: right;">1.628</td>
+<td style="text-align: right;">0.104</td>
+<td style="text-align: right;">0.103</td>
+<td style="text-align: right;">0.936</td>
+<td style="text-align: right;">0.981</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PSACR001_anxiety_int</td>
+<td style="text-align: right;">1.149</td>
+<td style="text-align: right;">1.040</td>
+<td style="text-align: right;">0.253</td>
+<td style="text-align: right;">0.248</td>
+<td style="text-align: right;">0.905</td>
+<td style="text-align: right;">0.966</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PSACR001_behav_int</td>
+<td style="text-align: right;">0.688</td>
+<td style="text-align: right;">0.515</td>
+<td style="text-align: right;">0.526</td>
+<td style="text-align: right;">0.516</td>
+<td style="text-align: right;">0.748</td>
+<td style="text-align: right;">0.964</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PSACR002_neg_photo</td>
+<td style="text-align: right;">0.603</td>
+<td style="text-align: right;">0.482</td>
+<td style="text-align: right;">0.131</td>
+<td style="text-align: right;">0.131</td>
+<td style="text-align: right;">0.799</td>
+<td style="text-align: right;">0.986</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Shnabel_Willingness_Reconcile_Rev</td>
+<td style="text-align: right;">1.051</td>
+<td style="text-align: right;">0.874</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.832</td>
+<td style="text-align: right;">-Inf</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Shnabel_Willingness_Reconcile_RPP</td>
+<td style="text-align: right;">0.899</td>
+<td style="text-align: right;">0.698</td>
+<td style="text-align: right;">0.194</td>
+<td style="text-align: right;">0.193</td>
+<td style="text-align: right;">0.776</td>
+<td style="text-align: right;">0.989</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Srull_Behaviour_Hostility</td>
+<td style="text-align: right;">2.727</td>
+<td style="text-align: right;">1.736</td>
+<td style="text-align: right;">0.405</td>
+<td style="text-align: right;">0.361</td>
+<td style="text-align: right;">0.637</td>
+<td style="text-align: right;">0.795</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Srull_Ronald_Hostility</td>
+<td style="text-align: right;">1.875</td>
+<td style="text-align: right;">1.385</td>
+<td style="text-align: right;">0.338</td>
+<td style="text-align: right;">0.316</td>
+<td style="text-align: right;">0.739</td>
+<td style="text-align: right;">0.873</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="discussion" class="level2">
+<h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
+<p>We have examined meta-analytic heterogeneity in standardized mean differences. Since score reliability is often discussed as a source for such heterogeneity, we estimated the heterogeneity before and after correcting for differences in reliability coefficients using an attenuation correction procedure. We found that a) in the majority of cases, the change in ES heterogeneity is small to non-existent. This implies that, across the data-sets we got to examine, differences in score reliability do not serve as an appropriate explanation for ES heterogeneity. We also found that b) in the majority of cases, the direction of change in ES heterogeneity does not align with assumptions formulated in W&amp;D and H&amp;S. In almost all cases (every single case, if we restrict ourself to phenomena where we found statistically significant differences in ES), the attenuation correction led to increased estimates of ES heterogeneity. This means that the claims found in W&amp;D and H&amp;S, implying that an attenuation correction can reduce ES heterogeneity, stem from a general misunderstanding of how score reliability can affect ESs.</p>
+<p>Using analytical arguments, we derived a broad rule, outlining under which conditions we can expect an attenuation correction to increase ES heterogeneity. In general, score reliability affects ESs by inflating the score variance, as the (square root of the) score variance is used to standardize the mean difference. The conditions we found depend on how both the mean value and the heterogeneity of score variance are reduced by correcting for imperfect score reliability. We introduced two novel metrics: <span class="math inline">\(R_1\)</span>, describing the fraction of mean true score variance in the mean total score variance, therefore mirroring the average score reliability coefficient, and <span class="math inline">\(R_2\)</span>, describing the fraction of true score variance heterogeneity in the total score variance heterogeneity. We find that, as long as <span class="math inline">\(R_1^3 &lt; R_2\)</span>, an attenuation correction will increase ES heterogeneity.</p>
+<p>Since <span class="math inline">\(R_1\)</span> is carrying the exponent of 3, it implies that the reduction in mean score variance is affecting the ES heterogeneity more strongly than the reduction in score variance heterogeneity. This is best described through an example: We know what an acceptable average score reliability looks like in the area of Psychology. Researchers largely target a score reliability of at least .7, preferably .8. An average score reliability of .7 implies that 70% of the variance observed in scores can actually be attributed to true underlying differences. From our derived rule, we know that, as long as <span class="math inline">\(R_2\)</span> is larger or equal to <span class="math inline">\(.7^3 = .343\)</span>, the attenuation correction procedure can only increase ES heterogeneity. If we want to explain ES heterogeneity through score reliability, even though only 30% of the variance observed in score can be attributed to random measurement error, at least 65.7%, almost two thirds, of the heterogeneity in score variance would need to be attributable to differences in the error score variance. In other words, at most 34.3% of heterogeneity in score variances may be due to actual differences in how the latent variable is distributed (in terms of spread) across the administration sites.</p>
+<p>In the examples we re-analysed throughout this text, as well as the majority of research studies done in the behavioural sciences <span class="citation" data-cites="hultsch2002 bornstein2013">(<a href="#ref-bornstein2013" role="doc-biblioref">Bornstein, Jager, &amp; Putnick, 2013</a>; <a href="#ref-hultsch2002" role="doc-biblioref">Hultsch, MacDonald, Hunter, Maitland, &amp; Dixon, 2002</a>)</span>, no proper sampling techniques are employed. Most samples where these instruments are applied come to be through convenience sampling, where students self-select into studies. Without a valid sampling scheme, we essentially have have no basis to assume anything about the true score variance <span class="citation" data-cites="hultsch2002">(<a href="#ref-hultsch2002" role="doc-biblioref">Hultsch et al., 2002</a>)</span>. Most importantly, however, we have no reason to assume that the true score variance could potentially be homogeneous or stable across administration sites. Instead, it is very likely that the convenience sampling procedures produce samples that vary extremely strongly in how they are put together, leading to large degrees of true score variance heterogeneity. At the same time, score reliability is a low-hanging fruit to optimise as most researchers are aware and trained in assessing score reliability <span class="citation" data-cites="hussey2025">(<a href="#ref-hussey2025" role="doc-biblioref">Hussey, Alsalti, Bosco, Elson, &amp; Arslan, 2025</a>)</span>.</p>
+<p>The combination of these aspects can explain what we observed throughout this text: Reliability coefficients are in an acceptable range, leading to a small, but constant reduction in mean score variance if we apply an attenuation correction. At the same time, there is substantial variation in true score variance, implying that most of the score variance heterogeneity can not be attributed to differences in error score variance. Since only differences in error score variance can be corrected for, the attenuation correction has a very small effect on heterogeneity estimates in score variance. Therefore, as indicated by our inequality, an attenuation correction is likely to have very little impact on ES heterogeneity. If anything, it most likely increases it. This also means that, in such settings, score reliability does not serve as a moderator explaining ES heterogeneity.</p>
+<p>If we, in the field of Psychology and other social or behavioural sciences, keep making use of convenience samples simply because they are so convenient, we can not expect anything to change. Most likely, ES heterogeneity will remain a substantial factor hampering the interpretability of original and replication studies. Instead, we should focus our data collection efforts on the generation of samples, where we know that the variance in the sample means something. This is most easily achieved by proper sampling techniques, which ensure that the sample is representative for some population. In such cases, it might be that the true score variance varies less strongly than what we currently observe. And should the heterogeneity in true score variance remain as large, than we know that this is meaningful information from which we can draw meaningful inferences. Therein, we could learn more about standardized effect sizes and why our phenomena vary across settings, populations or continents by not following the current status quo of convenience samples. Until this status quo changes, however, we will keep wasting valuable resources by attempts of discussing ES heterogeneity or assessing uninformative differences in score reliability.</p>
+<p>Our results fit in well with recent work by Olsson-Collentine et al. <span class="citation" data-cites="olsson2023">(<a href="#ref-olsson2023" role="doc-biblioref">Olsson-Collentine, Bakker, &amp; Wicherts, 2023</a>)</span>. In a large simulation scheme, they demonstrate that differences in score reliability across administrations typically deflate heterogeneity in uncorrected correlations. In such cases, an attenuation correction would increase correlation coefficient heterogeneity, as we observe for standardized mean differences. Only as the true heterogeneity in correlations grows larger would the correction procedure reduce heterogeneity as implied in W&amp;D. While correlations and standardized effect sizes are not identical, the way score (un)reliability affects these parameters is highly similar.</p>
+<section id="limitations-constraints-on-generalizability" class="level3">
+<h3 class="anchored" data-anchor-id="limitations-constraints-on-generalizability">Limitations &amp; constraints on generalizability</h3>
+<p>The empirical arguments presented are based on a rather small number of non-representative data-sets. Based on the combination of analytical and empirical arguments, we are convinced that differences in score reliability across replications in the current state of Psychology and the behavioural sciences, do not serve as appropriate explanations of ES heterogeneity. However, whether these results actually generalize beyond these data-sets remains to be seen. Unfortunately, the behavioural sciences are in dire need of open-data that resemble multi-site replications. As the majority of results discussed over the last years (in e.g.&nbsp;ManyLabs or Registered Replication Reports) employ single-indicator scales as dependent measures, score reliability can not be easily estimated in order to replicate our analyses.</p>
+<p>The analytical arguments, detailed in <em>Appendix A</em>, leading to <a href="#eq-ineq_short" class="quarto-xref">Equation&nbsp;17</a>, rest on the use of the delta-method. <a href="#eq-ineq_init" class="quarto-xref">Equation&nbsp;14</a> contains parameters of the score standard deviations’ distributions, while the <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span> metrics were designed to discuss score variances. The delta-method rests on a number of assumptions, at least one of which is likely violated in our analysis: the variance of the variable to be transformed needs to be small <span class="citation" data-cites="cramer1999">(<a href="#ref-cramer1999" role="doc-biblioref">Cramér, 1999</a>)</span>. This entire procedure discusses the influence of variance in standard deviations on ES heterogeneity, introduced by differences in score reliability. Therefore, assuming that this assumption holds seems naive. In the <em>Appendix C</em>, we explore the archival data, to understand in how far employing the delta-method on meta-analyses of standard deviations lead to biased results than the meta-analyses on score variances we performed using the Boot-Err technique. The differences identified are rather miniscule for the majority of phenomena, at the third decimal. Only for the PSACR002_behav_init phenomenon we find larger differences - therefore, conclusions for this phenomenon concerning the relation between <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span> need to be drawn with caution. Generally, as the majority of phenomena did not display any bias in this assessment and since the delta-method is not actually used to generate estimates, we believe its use to be defensible nonetheless.</p>
+<p>Similarly, all equations following <a href="#eq-XYZ_cov" class="quarto-xref">Equation&nbsp;10</a> rest on the assumption that mean difference (<span class="math inline">\(MD\)</span>) and true or total score variance (<span class="math inline">\(\sigma^2_T\)</span> and <span class="math inline">\(\sigma^2_X\)</span>) are independent. While this assumption is in line with assumptions underlying CTT, it is by no means guaranteed that it holds in these data-sets. If this assumption was violated, whether the relationship was positive or negative, indicated by a positive or negative covariance in <a href="#eq-XYZ_cov" class="quarto-xref">Equation&nbsp;10</a>, would most likely have an impact on how strongly ES heterogeneity is affected by the attenuation correction procedure, possibly even the direction of how it is affected. However, currently we have no reason to assume that there is a systematic relationship between mean difference and standard deviation. As this relationship would also affect the distribution of ES like Cohen’s d itself, strong violations of this assumption would go far beyond invalidating the claims we derived in <a href="#eq-ineq_short" class="quarto-xref">Equation&nbsp;17</a>. Most likely, assumptions of the meta-analytic tests concerning the meta-analytic mean size ES and the presence of ES heterogeneity would be violated, making any research on change in ES heterogeneity due to attenuation correction obsolete.</p>
+</section>
+<section id="conclusions" class="level3">
+<h3 class="anchored" data-anchor-id="conclusions">Conclusions</h3>
+<p>Heterogeneity in ES even in direct replications, where experimental factors are held as constant as possible, is already substantial (Renkewitz, Fünderich, &amp; Beinhauer, in preparation). However, so far we have demonstrated that in several scenarios, differences in score reliability did not serve as appropriate moderators or explanations of ES heterogeneity. Across most phenomena, we failed to reduce ES heterogeneity. If anything, we even increased ES heterogeneity, albeit to a very small degree. Generally, concerning the multi-site replication projects or collaborative research projects, accounting for differences in score reliability did not help us gain a better understanding of the phenomena.</p>
+<p>The work done by Hunter and Schmidt <span class="citation" data-cites="hunter2004">(<a href="#ref-hunter2004" role="doc-biblioref">2004</a>)</span> was crucial in informing and guiding methodology development in the field of meta-analyses. Similarly, Wiernik and Dahlke <span class="citation" data-cites="wiernik2020">(<a href="#ref-wiernik2020" role="doc-biblioref">2020</a>)</span> raise a number of important points that go far beyond attenuation correction and have been neglected in the application of meta-analytic research over the last decades. We generally agree with their ideas that underappreciated (differences in un-)reliability can introduce substantial biases in meta-analytic estimates and tests in Psychology. However, based on our findings, we believe that the issues created by ignoring random sampling is much more dire and warrants immediate attention. Only once we can be sure that the variance in true scores or latent factors is actually meaningful for some population, we can turn towards imprecise measurements, expecting correction procedures to explain unwarranted heterogeneity. In the current state of Psychology, meta-analysts should not expect that correcting ES for score reliability will actually explain heterogeneity identified.</p>
+</section>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-boot" class="csl-entry" role="listitem">
+A. C. Davison, &amp; D. V. Hinkley. (1997). <em>Bootstrap methods and their applications</em>. Cambridge: Cambridge University Press. Retrieved from <a href="https://doi:10.1017/CBO9780511802843">doi:10.1017/CBO9780511802843</a>
+</div>
+<div id="ref-PSA006" class="csl-entry" role="listitem">
+Bago, B., Kovacs, M., Protzko, J., Nagy, T., Kekecs, Z., Palfi, B., … Aczel, B. (2022). Situational factors shape moral judgements in the trolley dilemma in eastern, southern and western countries in a culturally diverse sample. <em>Nat. Hum. Behav.</em>, <em>6</em>(6), 880–895. <a href="https://doi.org/10.1038/s41562-022-01319-5">https://doi.org/10.1038/s41562-022-01319-5</a>
+</div>
+<div id="ref-beinhauer2025" class="csl-entry" role="listitem">
+Beinhauer, L. J., Fünderich, J. H., &amp; Renkewitz, F. (2025). Erroneous generalization—exploring random error variance in reliability generalizations of psychological measurements. <em>Psychological Methods</em>. <a href="https://doi.org/10.1037/met0000740">https://doi.org/10.1037/met0000740</a>
+</div>
+<div id="ref-bonett2002" class="csl-entry" role="listitem">
+Bonett, D. G. (2002). Sample size requirements for testing and estimating coefficient alpha. <em>Journal of Educational and Behavioral Statistics</em>, <em>27</em>(4), 335–340. <a href="https://doi.org/10.3102/10769986027004335">https://doi.org/10.3102/10769986027004335</a>
+</div>
+<div id="ref-borenstein2009" class="csl-entry" role="listitem">
+Borenstein, M., Hedges, L. V., Higgins, J. P., &amp; Rothstein, H. R. (2009). <em>Introduction to meta-analysis</em>. John wiley &amp; sons.
+</div>
+<div id="ref-bornstein2013" class="csl-entry" role="listitem">
+Bornstein, M. H., Jager, J., &amp; Putnick, D. L. (2013). Sampling in developmental science: Situations, shortcomings, solutions, and standards. <em>Developmental Review</em>, <em>33</em>(4), 357–370. <a href="https://doi.org/10.1016/j.dr.2013.08.003">https://doi.org/10.1016/j.dr.2013.08.003</a>
+</div>
+<div id="ref-RRRRand" class="csl-entry" role="listitem">
+Bouwmeester, S., Verkoeijen, P. P., Aczel, B., Barbosa, F., Bègue, L., Brañas-Garza, P., et al.others. (2017). Registered replication report: Rand, greene, and nowak (2012). <em>Perspectives on Psychological Science</em>, <em>12</em>(3), 527–542. <a href="https://doi.org/10.1177/1745691617693624">https://doi.org/10.1177/1745691617693624</a>
+</div>
+<div id="ref-RRRFinkel" class="csl-entry" role="listitem">
+Cheung, I., Campbell, L., LeBel, E. P., Ackerman, R. A., Aykutoğlu, B., Bahnı́k, Š., et al.others. (2016). Registered replication report: Study 1 from finkel, rusbult, kumashiro, &amp; hannon (2002). <em>Perspectives on Psychological Science</em>, <em>11</em>(5), 750–764. <a href="https://doi.org/10.1177/1745691616664694">https://doi.org/10.1177/1745691616664694</a>
+</div>
+<div id="ref-cochran1954" class="csl-entry" role="listitem">
+Cochran, W. G. (1954). The combination of estimates from different experiments. <em>Biometrics</em>, <em>10</em>(1), 101–129. <a href="https://doi.org/10.2307/3001666">https://doi.org/10.2307/3001666</a>
+</div>
+<div id="ref-PSACR003" class="csl-entry" role="listitem">
+Collaboration, P. S. A. S.-D. T., Legate, N., Nguyen, T., Weinstein, N., Moller, A., Legault, L., … Primbs, M. A. (2022). A global experiment on motivating social distancing during the COVID-19 pandemic. <em>Proceedings of the National Academy of Sciences</em>, <em>119</em>(22), e2111091119. <a href="https://doi.org/10.1073/pnas.2111091119">https://doi.org/10.1073/pnas.2111091119</a>
+</div>
+<div id="ref-cramer1999" class="csl-entry" role="listitem">
+Cramér, H. (1999). <em>Mathematical methods of statistics</em> (Vol. 9). Princeton university press.
+</div>
+<div id="ref-dersimonian1986" class="csl-entry" role="listitem">
+DerSimonian, R., &amp; Laird, N. (1986). Meta-analysis in clinical trials. <em>Controlled Clinical Trials</em>, <em>7</em>(3), 177–188.
+</div>
+<div id="ref-ManyLabs3" class="csl-entry" role="listitem">
+Ebersole, C. R., Atherton, O. E., Belanger, A. L., Skulborstad, H. M., Allen, J. M., Banks, J. B., et al.others. (2016). Many labs 3: Evaluating participant pool quality across the academic semester via replication. <em>Journal of Experimental Social Psychology</em>, <em>67</em>, 68–82. <a href="https://doi.org/10.1016/j.jesp.2015.10.012">https://doi.org/10.1016/j.jesp.2015.10.012</a>
+</div>
+<div id="ref-ManyLabs5" class="csl-entry" role="listitem">
+Ebersole, C. R., Mathur, M. B., Baranski, E., Bart-Plange, D.-J., Buttrick, N. R., Chartier, C. R., et al.others. (2020). Many labs 5: Testing pre-data-collection peer review as an intervention to increase replicability. <em>Advances in Methods and Practices in Psychological Science</em>, <em>3</em>(3), 309–331. <a href="https://doi.org/10.1177/2515245920958687">https://doi.org/10.1177/2515245920958687</a>
+</div>
+<div id="ref-RRRHart" class="csl-entry" role="listitem">
+Eerland, A., Sherrill, A. M., Magliano, J. P., Zwaan, R. A., Arnal, J. D., Aucoin, P., et al.others. (2016). Registered replication report: Hart &amp; albarrac<span>ı́</span>n (2011). <em>Perspectives on Psychological Science</em>, <em>11</em>(1), 158–171. <a href="https://doi.org/10.1177/1745691615605826">https://doi.org/10.1177/1745691615605826</a>
+</div>
+<div id="ref-dripht2024" class="csl-entry" role="listitem">
+Fuenderich, J. H., Beinhauer, L. J., Frank, M., Heene, M., &amp; Renkewitz, F. (2024). <em>DRIPHT repository</em>. Retrieved from <a href="https://osf.io/g2fzq/">https://osf.io/g2fzq/</a>
+</div>
+<div id="ref-guttman1945" class="csl-entry" role="listitem">
+Guttman, L. (1945). A basis for analyzing test-retest reliability. <em>Psychometrika</em>, <em>10</em>(4), 255–282. <a href="https://doi.org/10.1007/BF02288892">https://doi.org/10.1007/BF02288892</a>
+</div>
+<div id="ref-RRRSripada" class="csl-entry" role="listitem">
+Hagger, M. S., Chatzisarantis, N. L., Alberts, H., Anggono, C. O., Batailler, C., Birt, A. R., et al.others. (2016). A multilab preregistered replication of the ego-depletion effect. <em>Perspectives on Psychological Science</em>, <em>11</em>(4), 546–573. <a href="https://doi.org/10.1177/1745691616652873">https://doi.org/10.1177/1745691616652873</a>
+</div>
+<div id="ref-higgins2002" class="csl-entry" role="listitem">
+Higgins, J. P., &amp; Thompson, S. G. (2002). Quantifying heterogeneity in a meta-analysis. <em>Statistics in Medicine</em>, <em>21</em>(11), 1539–1558. <a href="https://doi.org/10.1002/sim.1186">https://doi.org/10.1002/sim.1186</a>
+</div>
+<div id="ref-vonHippel2023" class="csl-entry" role="listitem">
+Hippel, P. von, &amp; Schuetze, B. A. (2023). <em>How not to fool ourselves about heterogeneity of treatment effects</em>. <a href="https://doi.org/10.31234/osf.io/zg8hv">https://doi.org/10.31234/osf.io/zg8hv</a>
+</div>
+<div id="ref-hoenekopp2022" class="csl-entry" role="listitem">
+Hönekopp, J., &amp; Linden, A. H. (2022). Heterogeneity estimates in a biased world. <em>PloS One</em>, <em>17</em>(2), e0262809. <a href="https://doi.org/10.1371/journal.pone.0262809">https://doi.org/10.1371/journal.pone.0262809</a>
+</div>
+<div id="ref-hultsch2002" class="csl-entry" role="listitem">
+Hultsch, D. F., MacDonald, S. W., Hunter, M. A., Maitland, S. B., &amp; Dixon, R. A. (2002). Sampling and generalisability in developmental research: Comparison of random and convenience samples of older adults. <em>International Journal of Behavioral Development</em>, <em>26</em>(4), 345–359. <a href="https://doi.org/10.1080/01650250143000247">https://doi.org/10.1080/01650250143000247</a>
+</div>
+<div id="ref-hunter2004" class="csl-entry" role="listitem">
+Hunter, J. E., &amp; Schmidt, F. L. (2004). <em>Methods of meta-analysis: Correcting error and bias in research findings</em>. Sage.
+</div>
+<div id="ref-hussey2025" class="csl-entry" role="listitem">
+Hussey, I., Alsalti, T., Bosco, F., Elson, M., &amp; Arslan, R. (2025). An aberrant abundance of cronbach’s alpha values at. 70. <em>Advances in Methods and Practices in Psychological Science</em>, <em>8</em>(1), 1–18. <a href="https://doi.org/10.1177/25152459241287123">https://doi.org/10.1177/25152459241287123</a>
+</div>
+<div id="ref-PSACR002" class="csl-entry" role="listitem">
+Ke Wang, C. A. D., Amit Goldenberg. (2021). A multi-country test of brief reappraisal interventions on emotions during the COVID-19 pandemic. <em>Nature Human Behaviour</em>, <em>5</em>, 1089–1110. <a href="https://doi.org/10.1038/s41562-021-01173-x">https://doi.org/10.1038/s41562-021-01173-x</a>
+</div>
+<div id="ref-kenny2019" class="csl-entry" role="listitem">
+Kenny, D. A., &amp; Judd, C. M. (2019). The unappreciated heterogeneity of effect sizes: Implications for power, precision, planning of research, and replication. <em>Psychological Methods</em>, <em>24</em>(5), 578.
+</div>
+<div id="ref-ManyLabs1" class="csl-entry" role="listitem">
+Klein, R. A., Ratliff, K. A., Vianello, M., Adams Jr, R. B., Bahnı́k, Š., Bernstein, M. J., et al.others. (2014). Investigating variation in replicability. <em>Social Psychology</em>. <a href="https://doi.org/10.1027/1864-9335/a000178">https://doi.org/10.1027/1864-9335/a000178</a>
+</div>
+<div id="ref-ManyLabs2" class="csl-entry" role="listitem">
+Klein, R. A., Vianello, M., Hasselman, F., Adams, B. G., Adams Jr, R. B., Alper, S., et al.others. (2018). Many labs 2: Investigating variation in replicability across samples and settings. <em>Advances in Methods and Practices in Psychological Science</em>, <em>1</em>(4), 443–490. <a href="https://doi.org/10.1177/2515245918810225">https://doi.org/10.1177/2515245918810225</a>
+</div>
+<div id="ref-LindenHönekopp" class="csl-entry" role="listitem">
+Linden, A. H., &amp; Hönekopp, J. (2021). Heterogeneity of research results: A new perspective from which to assess and promote progress in psychological science. <em>Perspectives on Psychological Science</em>, <em>16</em>(2), 358–376. <a href="https://doi.org/10.1177/1745691620964193">https://doi.org/10.1177/1745691620964193</a>
+</div>
+<div id="ref-lord2008" class="csl-entry" role="listitem">
+Lord, F. M., &amp; Novick, M. R. (2008/1986). <em>Statistical theories of mental test scores</em>. IAP.
+</div>
+<div id="ref-RRRSrull" class="csl-entry" role="listitem">
+McCarthy, R. J., Skowronski, J. J., Verschuere, B., Meijer, E. H., Jim, A., Hoogesteyn, K., et al.others. (2018). Registered replication report on srull and wyer (1979). <em>Advances in Methods and Practices in Psychological Science</em>, <em>1</em>(3), 321–336. <a href="https://doi.org/10.1177/2515245918777487">https://doi.org/10.1177/2515245918777487</a>
+</div>
+<div id="ref-mcdonald1999" class="csl-entry" role="listitem">
+McDonald, R. P. (1999). <em>Test theory: A unified treatment</em>. New York: Lawrence Erlbaum Associates Publishers. <a href="https://doi.org/10.4324/9781410601087">https://doi.org/10.4324/9781410601087</a>
+</div>
+<div id="ref-muchinsky1996" class="csl-entry" role="listitem">
+Muchinsky, P. M. (1996). The correction for attenuation. <em>Educational and Psychological Measurement</em>, <em>56</em>(1), 63–75. <a href="https://doi.org/10.1177/0013164496056001004">https://doi.org/10.1177/0013164496056001004</a>
+</div>
+<div id="ref-RRRDijksterhuis" class="csl-entry" role="listitem">
+O’DONNEL, M., NELSON, L., ACKERMANN, E., ACZEL, B., TONG, Y. Y., et al. (2018). Registered replication report: Dijksterhuis &amp; van knippenberg (1998). <em>Perspectives on Psychological Science</em>, 268. <a href="https://doi.org/10.1177/1745691618755704">https://doi.org/10.1177/1745691618755704</a>
+</div>
+<div id="ref-olsson2023" class="csl-entry" role="listitem">
+Olsson-Collentine, A., Bakker, M., &amp; Wicherts, J. (2023). Unreliable heterogeneity: How measurement error obscures heterogeneity in meta-analyses in psychology. <em>OSF Preprint</em>, <em>10</em>. <a href="https://doi.org/osf.io/tg68">https://doi.org/osf.io/tg68</a>
+</div>
+<div id="ref-olsson2020" class="csl-entry" role="listitem">
+Olsson-Collentine, A., Wicherts, J. M., &amp; Van Assen, M. A. (2020). Heterogeneity in direct replications in psychology and its association with effect size. <em>Psychological Bulletin</em>, <em>146</em>(10), 922. <a href="https://doi.org/10.1037/bul0000294">https://doi.org/10.1037/bul0000294</a>
+</div>
+<div id="ref-RCore" class="csl-entry" role="listitem">
+R Core Team. (2024). <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing. Retrieved from <a href="https://www.R-project.org/">https://www.R-project.org/</a>
+</div>
+<div id="ref-riley2011" class="csl-entry" role="listitem">
+Riley, R. D., Higgins, J. P., &amp; Deeks, J. J. (2011). Interpretation of random effects meta-analyses. <em>Bmj</em>, <em>342</em>.
+</div>
+<div id="ref-sanchez2013" class="csl-entry" role="listitem">
+Sánchez-Meca, J., López-López, J. A., &amp; López-Pina, J. A. (2013). Some recommended statistical analytic practices when reliability generalization studies are conducted. <em>British Journal of Mathematical and Statistical Psychology</em>, <em>66</em>(3), 402–425. <a href="https://doi.org/10.1111/j.2044-8317.2012.02057.x">https://doi.org/10.1111/j.2044-8317.2012.02057.x</a>
+</div>
+<div id="ref-schennach2016" class="csl-entry" role="listitem">
+Schennach, S. M. (2016). Recent advances in the measurement error literature. <em>Annual Review of Economics</em>, <em>8</em>(1), 341–377. <a href="https://doi.org/10.1146/annurev-economics-080315-015058">https://doi.org/10.1146/annurev-economics-080315-015058</a>
+</div>
+<div id="ref-schmidt1996" class="csl-entry" role="listitem">
+Schmidt, F. L., &amp; Hunter, J. E. (1996). Measurement error in psychological research: Lessons from 26 research scenarios. <em>Psychological Methods</em>, <em>1</em>(2), 199. <a href="https://doi.org/10.1037/1082-989X.1.2.199">https://doi.org/10.1037/1082-989X.1.2.199</a>
+</div>
+<div id="ref-shaw2020" class="csl-entry" role="listitem">
+Shaw, M., Cloos, L. J., Luong, R., Elbaz, S., &amp; Flake, J. K. (2020). Measurement practices in large-scale replications: Insights from many labs 2. <em>Canadian Psychology/Psychologie Canadienne</em>, <em>61</em>(4), 289. <a href="https://doi.org/10.1037/cap0000220">https://doi.org/10.1037/cap0000220</a>
+</div>
+<div id="ref-stanley2018" class="csl-entry" role="listitem">
+Stanley, T. D., Carter, E. C., &amp; Doucouliagos, H. (2018). What meta-analyses reveal about the replicability of psychological research. <em>Psychological Bulletin</em>, <em>144</em>(12), 1325. <a href="https://doi.org/10.1037/bul0000169">https://doi.org/10.1037/bul0000169</a>
+</div>
+<div id="ref-tenBerge2004" class="csl-entry" role="listitem">
+Ten Berge, J. M., &amp; Sočan, G. (2004). The greatest lower bound to the reliability of a test and the hypothesis of unidimensionality. <em>Psychometrika</em>, <em>69</em>(4), 613–625. <a href="https://doi.org/10.1007/BF02289858 ">https://doi.org/10.1007/BF02289858 </a>
+</div>
+<div id="ref-vacha1998" class="csl-entry" role="listitem">
+Vacha-Haase, T. (1998). Reliability generalization: Exploring variance in measurement error affecting score reliability across studies. <em>Educational and Psychological Measurement</em>, <em>58</em>(1), 6–20. <a href="https://doi.org/10.1177/0013164498058001002">https://doi.org/10.1177/0013164498058001002</a>
+</div>
+<div id="ref-vanErp2017" class="csl-entry" role="listitem">
+Van Erp, S., Verhagen, J., Grasman, R. P., &amp; Wagenmakers, E.-J. (2017). Estimates of between-study heterogeneity for 705 meta-analyses reported in psychological bulletin from 1990-2013. <em>Journal of Open Psychology Data</em>, <em>5</em>(1). <a href="https://doi.org/10.5334/jopd.33">https://doi.org/10.5334/jopd.33</a>
+</div>
+<div id="ref-vanKempen1999" class="csl-entry" role="listitem">
+Van Kempen, G., &amp; Van Vliet, L. (1999). Mean and variance of ratio estimators used in fluorescence ratio imaging. <em>Cytometry: The Journal of the International Society for Analytical Cytology</em>, <em>39</em>(4), 300–305. <a href="https://doi.org/10.1002/(SICI)1097-0320(20000401)39:4<300::AID-CYTO8>3.0.CO;2-O">https://doi.org/10.1002/(SICI)1097-0320(20000401)39:4&lt;300::AID-CYTO8&gt;3.0.CO;2-O</a>
+</div>
+<div id="ref-RRRMazar" class="csl-entry" role="listitem">
+Verschuere, B., Meijer, E. H., Jim, A., Hoogesteyn, K., Orthey, R., McCarthy, R. J., … Yıldız, E. (2018). Registered replication report on mazar, amir, and ariely (2008). <em>Advances in Methods and Practices in Psychological Science</em>, <em>1</em>(3), 299–317. <a href="https://doi.org/10.1177/2515245918781032">https://doi.org/10.1177/2515245918781032</a>
+</div>
+<div id="ref-metafor" class="csl-entry" role="listitem">
+Viechtbauer, W. (2010). Conducting meta-analyses in <span>R</span> with the <span class="nocase">metafor</span> package. <em>Journal of Statistical Software</em>, <em>36</em>(3), 1–48. <a href="https://doi.org/10.18637/jss.v036.i03">https://doi.org/10.18637/jss.v036.i03</a>
+</div>
+<div id="ref-vu2024" class="csl-entry" role="listitem">
+Vu, P. (2024). Why are replication rates so low? <em>Journal of Econometrics</em>, <em>245</em>(1-2), 105868.
+</div>
+<div id="ref-RRRStrack" class="csl-entry" role="listitem">
+Wagenmakers, E.-J., Beek, T., Dijkhoff, L., Gronau, Q. F., Acosta, A., Adams Jr, R., et al.others. (2016). Registered replication report: Strack, martin, &amp; stepper (1988). <em>Perspectives on Psychological Science</em>, <em>11</em>(6), 917–928. <a href="https://doi.org/10.1177/1745691616674458">https://doi.org/10.1177/1745691616674458</a>
+</div>
+<div id="ref-PSACR001" class="csl-entry" role="listitem">
+Wang, K., Alves, S. G., Lins, S., Pinto, I. R., et al. (2022). <em>In COVID-19 health messaging, loss framing increases anxiety with little-to-no concomitant benefits: Experimental evidence from 84 countries</em>. <em>3</em>, 577–602. <a href="https://doi.org/10.1007/s42761-022-00128-3">https://doi.org/10.1007/s42761-022-00128-3</a>
+</div>
+<div id="ref-ggplot2" class="csl-entry" role="listitem">
+Wickham, H. (2016). <em>ggplot2: Elegant graphics for data analysis</em>. Springer-Verlag New York. Retrieved from <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>
+</div>
+<div id="ref-wiernik2020" class="csl-entry" role="listitem">
+Wiernik, B. M., &amp; Dahlke, J. A. (2020). Obtaining unbiased results in meta-analysis: The importance of correcting for statistical artifacts. <em>Advances in Methods and Practices in Psychological Science</em>, <em>3</em>(1), 94–123. <a href="https://doi.org/10.1177/2515245919885611">https://doi.org/10.1177/2515245919885611</a>
+</div>
+</div>
+</section>
+<section id="appendix" class="level2">
+<h2 class="anchored" data-anchor-id="appendix">Appendix</h2>
+<section id="a---rearranging-inequality" class="level3">
+<h3 class="anchored" data-anchor-id="a---rearranging-inequality">A - Rearranging inequality</h3>
+<p>Both metrics <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span> make use of parameters of the distribution of true and total score variance, not standard deviations. This choice was made to facilitate the role of score reliability in the subsequent discussion, as score reliability itself is defined by variances, not standard deviations (see <a href="#eq-rel" class="quarto-xref">Equation&nbsp;3</a>).</p>
+<p>Using the metrics <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span>, defined in <a href="#eq-R1" class="quarto-xref">Equations&nbsp;15</a> and <a href="#eq-R2" class="quarto-xref">16</a>, we attempt to understand under which circumstances the inequality defined in <a href="#eq-ineq_init" class="quarto-xref">Equation&nbsp;14</a> holds true. However, while the metrics make use of mean and heterogeneity of the score variances, <a href="#eq-ineq_init" class="quarto-xref">Equation&nbsp;14</a> makes use of mean and heterogeneity of the standard deviations. In order to incorporate the metrics, it is necessary to reparameterise the equation. Using the delta method to approximate mean value and heterogeneity of variance from those of the standard deviations, we know that (ref): <span id="eq-delta_method"><span class="math display">\[\mu^2_{\sigma_X} \approx \mu_{\sigma^2_X} \quad \quad  and \quad \quad
+\tau^2_{\sigma_X} \approx \frac{\tau^2_{\sigma_X^2}}{4\mu_{\sigma^2_X}} \tag{18}\]</span></span></p>
+<p>While <a href="#eq-delta_method" class="quarto-xref">Equation&nbsp;18</a> only explicitly contains parameters for the observed score variance/standard deviation, the same can be done using the true score variance/standard deviation. Using the approximates defined in <a href="#eq-delta_method" class="quarto-xref">Equation&nbsp;18</a> for observed and true score variance, we arrive at a new inequality in <a href="#eq-ineq_CV" class="quarto-xref">Equation&nbsp;19</a>.</p>
+<p><span id="eq-ineq_CV"><span class="math display">\[\frac{\tau_{MD}^2}{\mu_{\sigma^2_t}} + \frac{\mu_{MD}^2}{\mu^2_{\sigma_t^2}} \frac{\tau^2_{\sigma_t^2}}{4\mu_{\sigma^2_t}} &gt; \frac{\tau_{MD}^2}{\mu_{\sigma^2_x}} + \frac{\mu_{MD}^2}{\mu^2_{\sigma_x^2}} \frac{\tau^2_{\sigma_x^2}}{4\mu_{\sigma^2_x}} \tag{19}\]</span></span></p>
+<p><a href="#eq-ineq_CV" class="quarto-xref">Equation&nbsp;19</a> describes that the heterogeneity in corrected ES is larger than the heterogeneity in uncorrected ES, using parameters of the distributions of mean difference MD, true score variance <span class="math inline">\(\sigma^2_T\)</span> and observed score variance <span class="math inline">\(\sigma^2_X\)</span>. By introducing the metrics <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span> to this inequality, we can begin to disentangle which conditions need to be fulfilled for the inequality to hold. Rearranging the terms in <a href="#eq-R1" class="quarto-xref">Equations&nbsp;15</a> and <a href="#eq-R2" class="quarto-xref">16</a>, and subsequently entering these terms into <a href="#eq-ineq_CV" class="quarto-xref">Equation&nbsp;19</a> leads to the following <span id="eq-ineq_R"><span class="math display">\[\frac{\tau_{MD}^2}{R_1 \mu_{\sigma^2_x}} + \frac{\mu_{MD}^2}{R_1^2 \mu^2_{\sigma^2_x}} \frac{R_2 \tau^2_{\sigma_x^2}}{4 R_1 \mu_{\sigma^2_x}} &gt; \frac{\tau_{MD}^2}{\mu_{\sigma^2_x}} + \frac{\mu_{MD}^2}{\mu^2_{\sigma_x^2}} \frac{\tau^2_{\sigma_x^2}}{4\mu_{\sigma^2_x}} \tag{20}\]</span></span></p>
+<p><a href="#eq-ineq_R" class="quarto-xref">Equation&nbsp;20</a>, again, describes the inequality that heterogeneity in corrected ES is larger than the heterogeneity in uncorrected ES, incorporating the metrics <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span>. This equation alone is not sufficient to identify the relevant circumstances required for the inequality to hold. In a series of steps, we will rearrange <a href="#eq-ineq_R" class="quarto-xref">Equation&nbsp;20</a> to facilitate interpretation.</p>
+<p>Firstly, for <a href="#eq-ineq_rearr1" class="quarto-xref">Equation&nbsp;21</a> we pulled all terms onto the left side of the inequality.</p>
+<p><span id="eq-ineq_rearr1"><span class="math display">\[\frac{\tau_{MD}^2}{R_1 \mu_{\sigma^2_x}} - \frac{\tau_{MD}^2}{\mu_{\sigma^2_x}} + \frac{\mu_{MD}^2}{R_1^2 \mu^2_{\sigma^2_x}} \frac{R_2 \tau^2_{\sigma_x^2}}{4 R_1 \mu_{\sigma^2_x}} - \frac{\mu_{MD}^2}{\mu^2_{\sigma_x^2}} \frac{\tau^2_{\sigma_x^2}}{4\mu_{\sigma^2_x}} &gt;  0 \tag{21}\]</span></span></p>
+<p>Secondly, as all terms contain <span class="math inline">\(\mu_{\sigma^2_x}\)</span> in the denominator, to arrive at <a href="#eq-ineq_rearr2" class="quarto-xref">Equation&nbsp;22</a> we divided by <span class="math inline">\(\mu_{\sigma^2_x}\)</span>.</p>
+<p><span id="eq-ineq_rearr2"><span class="math display">\[\frac{\tau_{MD}^2}{R_1} - \tau_{MD}^2 + \frac{\mu_{MD}^2}{R_1^2 \mu^2_{\sigma^2_x}} \frac{R_2 \tau^2_{\sigma_x^2}}{4 R_1} - \frac{\mu_{MD}^2}{\mu^2_{\sigma_x^2}} \frac{\tau^2_{\sigma_x^2}}{4} &gt;  0 \tag{22}\]</span></span></p>
+<p>For <a href="#eq-ineq_rearr3" class="quarto-xref">Equation&nbsp;23</a> we properly combined the multiplied fractions.</p>
+<p><span id="eq-ineq_rearr3"><span class="math display">\[\frac{\tau_{MD}^2}{R_1} - \tau_{MD}^2 + \frac{\mu_{MD}^2 R_2 \tau^2_{\sigma_x^2}}{4R_1^3 \mu^2_{\sigma^2_x}} - \frac{\mu_{MD}^2\tau^2_{\sigma_x^2}}{4\mu^2_{\sigma_x^2}}  &gt;  0 \tag{23}\]</span></span></p>
+<p>Taking <span class="math inline">\(\frac{\tau_{\sigma^2_x}}{\tau_{\sigma^2_x}} = CV{\sigma^2_x}\)</span> allows to simplify for <a href="#eq-ineq_rearr4" class="quarto-xref">Equation&nbsp;24</a>.</p>
+<p><span id="eq-ineq_rearr4"><span class="math display">\[\frac{\tau_{MD}^2}{R_1} - \tau_{MD}^2 + \frac{\mu_{MD}^2 R_2}{4R_1^3}CV{\sigma^2_x} - \frac{\mu_{MD}^2}{4}CV{\sigma^2_x}  &gt;  0 \tag{24}\]</span></span></p>
+<p>As a last step, factoring out finalizes rearranging the terms from <a href="#eq-ineq_R" class="quarto-xref">Equation&nbsp;20</a> to <a href="#eq-ineq_fin" class="quarto-xref">Equation&nbsp;25</a>:</p>
+<p><span id="eq-ineq_fin"><span class="math display">\[ \tau_{MD}^2\left(\frac{1}{R_1} - 1\right) + \frac{\mu_{MD}^2 CV^2_{\sigma^2_X}}{4} \left(\frac{R_2}{R_1^3}  - 1\right) &gt; 0 \tag{25}\]</span></span></p>
+<p>The circumstances under which the inequality described in <a href="#eq-ineq_fin" class="quarto-xref">Equation&nbsp;25</a> holds, are circumstances where the claims made in W&amp;D and H&amp;S are directly contradicted, as in those cases the ES heterogeneity is larger after applying an attenuation correction procedure. Concerning the terms in <a href="#eq-ineq_fin" class="quarto-xref">Equation&nbsp;25</a>, we know that all terms left-hand of the inequality, outside of the brackets (<span class="math inline">\(\tau^2_{MD}\)</span>, <span class="math inline">\(\mu^2_{MD}\)</span> and <span class="math inline">\(CV^2_{\sigma^2_X}\)</span>), are bound to be positive. For the inequality to hold, we need the left-hand side of the equation to remain positive, larger than zero. We can distill two scenarios, under which this equation should hold: (a) one of the terms inside the brackets (<span class="math inline">\(\frac{1}{R_1} - 1\)</span> or <span class="math inline">\(\frac{R_2}{R^3_1}  - 1\)</span>) is positive and large enough, so that the second term not containing that same bracket is positively dominated by the first term, meaning it is sufficiently large that the positive term cancels out the negative term; or (b) both terms inside the brackets need to be positive.</p>
+<p>Generally, we know that both <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span> are bound to be positive, as both contain different, strictly positive parameters of the distributions of true and observed score variance. Additionally, we know that <span class="math inline">\(R_1\)</span> is equivalent to the average score reliability, and therefore bound between <span class="math inline">\(0\le R_1\le1\)</span>. Therefore, the term inside the first bracket is bound to be positive (<span class="math inline">\(\frac{1}{R_1} – 1\)</span>). Similarly, <span class="math inline">\(R_2\)</span>, as the ratio of true and error score variance heterogeneity, is bound between <span class="math inline">\(0\le R_2\le1\)</span>. If <span class="math inline">\(R_1^3\)</span> is larger than <span class="math inline">\(R_2\)</span>, then the term inside the second bracket turns negative. Generally, this means that the inequality can only be violated if the relative remaining heterogeneity of score variance (<span class="math inline">\(R_2\)</span>) is smaller than the the average score reliability to the power of 3. Restated in mathematical terms, this leads us to the rule/condition described in <a href="#eq-ineq_short" class="quarto-xref">Equation&nbsp;17</a>, in the main text.</p>
+<p>However, it is crucial to note that violation of <span class="math inline">\(R_1^3 \leq R_2\)</span> is just a necessary, but not sufficient condition for the inequality not to hold anymore. Should <span class="math inline">\(R_1^3 \leq R_2\)</span> not hold, the negative term in <a href="#eq-ineq_fin" class="quarto-xref">Equation&nbsp;25</a> still needs to be sufficiently large, that it can negatively dominate the positive term. That would mean that the combination of parameters <span class="math inline">\(\mu_{MD}\)</span>, <span class="math inline">\(\tau_{MD}\)</span> and <span class="math inline">\(CV_{\sigma^2_x}\)</span> need to take on values, that allow for such a scenario. Since we do not want to make any claims regarding the unstandardized mean difference and how it relates to the coefficient of variation of score variance, we can not distill a scenario in which it is guaranteed, that <a href="#eq-ineq_fin" class="quarto-xref">Equation&nbsp;25</a> is violated. Therefore <span class="math inline">\(R_1^3 \leq R_2\)</span> only describes a condition, under which it is guaranteed that <a href="#eq-ineq_fin" class="quarto-xref">Equation&nbsp;25</a> holds. If <span class="math inline">\(R_1^3 \leq R_2\)</span> is violated, it is a first necessary condition for the entire inequality to be violated, but it is not sufficient as it still depends on other parameters.</p>
+</section>
+<section id="b---back-transformation-log-transformed-score-variance" class="level3">
+<h3 class="anchored" data-anchor-id="b---back-transformation-log-transformed-score-variance">B - Back-transformation log-transformed score variance</h3>
+<p>Using the methdology underlying the Boot-Err approach (Beinhauer et al. ref), we generate estimates of meta-analytic mean and heterogeneity in log-transformed total score variance <span class="math inline">\(\sigma^2_X\)</span>. To facilitate interpretation and allow for computation of the metrics <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span>, we need to back-transform those estimates to the original scale. Using <a href="#eq-mu_sigmaX" class="quarto-xref">Equation&nbsp;26</a> we can generate an estimate of meta-analytic mean score variance on the scale of <span class="math inline">\(\sigma^2_X\)</span> and using <a href="#eq-tau_sigmaX" class="quarto-xref">Equation&nbsp;27</a> we get an estimate of its heterogeneity.</p>
+<p><span id="eq-mu_sigmaX"><span class="math display">\[\hat{\mu}_{\sigma^2_X} = exp\left(\hat{\mu}_{ln[\sigma^2_X]} + .5\  \hat{\tau}^2_{ln[\sigma^2_X]}\right) \tag{26}\]</span></span></p>
+<p><span id="eq-tau_sigmaX"><span class="math display">\[\hat{\tau^2}_{\sigma^2_X} = exp\left(\hat{\tau}^2_{ln[\sigma^2_X]} - 1\right) \cdot \exp\left(2\ \hat{\mu}_{ln[\sigma^2_X]} + \hat{\tau}^2_{ln[\sigma^2_X]}\right) \tag{27}\]</span></span></p>
+<p>In <a href="#eq-mu_sigmaX" class="quarto-xref">equations&nbsp;26</a> and <a href="#eq-tau_sigmaX" class="quarto-xref">27</a>, <span class="math inline">\(\hat{\mu}_{ln[\sigma^2_X]}\)</span> refers to the mean estimate from the meta-analysis on log-transformed score variance, <span class="math inline">\(\hat{\tau}^2_{ln[\sigma^2_X]}\)</span> refers to the estimate of heterogeneity.</p>
+<p>In <a href="#eq-mu_sigmaE" class="quarto-xref">equations&nbsp;28</a> and <a href="#eq-tau_sigmaE" class="quarto-xref">29</a> we generate estimates of meta-analytic mean and heterogeneity of error score variance <span class="math inline">\(\sigma^2_E\)</span>. Just like for the total score variance, we make use of the estimates of mean and heterogeneity from the meta-analysis on log-transformed error score variance.</p>
+<p><span id="eq-mu_sigmaE"><span class="math display">\[\hat{\mu}_{\sigma^2_E} = exp\left(\hat{\mu}_{ln[\sigma^2_E]} + .5\  \hat{\tau}^2_{ln[\sigma^2_E]}\right) \tag{28}\]</span></span></p>
+<p><span id="eq-tau_sigmaE"><span class="math display">\[\hat{\tau^2}_{\sigma^2_E} = exp\left(\hat{\tau}^2_{ln[\sigma^2_E]} - 1\right) \cdot \exp\left(2\ \hat{\mu}_{ln[\sigma^2_E]} + \hat{\tau}^2_{ln[\sigma^2_E]}\right) \tag{29}\]</span></span></p>
+</section>
+<section id="c---examining-bias-due-to-delta-method" class="level3">
+<h3 class="anchored" data-anchor-id="c---examining-bias-due-to-delta-method">C - Examining bias due to delta-method</h3>
+<p>We want to examine whether applying the delta-method sufficiently approximates the moments of the distribution of score variance to derive the conditions under which the inequality <a href="#eq-ineq_init" class="quarto-xref">Equation&nbsp;14</a> holds. To do so, we compared estimates of mean and heterogeneity of total score variance <span class="math inline">\(\sigma^2_X\)</span> derived using Boot-Err, and by running a meta-analysis on total score standard deviation <span class="math inline">\(\sigma_x\)</span> and subsequently applying the delta-method to estimate mean and heterogeneity of <span class="math inline">\(\sigma^2_X\)</span> . Therein, we generated two sets of estimates of <span class="math inline">\(\mu_{\sigma^2_x}\)</span> and <span class="math inline">\(\tau^2_{\sigma^2_x}\)</span>, one via Boot-Err and one via the delta-method. If there are systematic differences between the sets, this points towards bias in the delta-method approximation. The estimates can be found in <a href="#tbl-delta" class="quarto-xref">Table&nbsp;4</a>.</p>
+<div class="cell">
+<div id="tbl-delta" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-delta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4: Empirical assessment of appropriateness of delta-method
+</figcaption>
+<div aria-describedby="tbl-delta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 16%">
+<col style="width: 18%">
+<col style="width: 20%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">MASC</th>
+<th style="text-align: right;"><span class="math inline">\(\hat{\mu}_{\sigma^2_X}\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\hat{\tau}^2_{\sigma^2_X}\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\hat{\mu}_{\Delta \sigma^2_X}\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\hat{\tau}^2_{\Delta \sigma^2_X}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Albarracin_Priming_SAT</td>
+<td style="text-align: right;">0.02214</td>
+<td style="text-align: right;">0.00000</td>
+<td style="text-align: right;">0.02211</td>
+<td style="text-align: right;">0.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hart_Criminal_Intentionality</td>
+<td style="text-align: right;">2.19483</td>
+<td style="text-align: right;">0.56833</td>
+<td style="text-align: right;">2.13366</td>
+<td style="text-align: right;">0.52262</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Husnu_Imagined_Contact</td>
+<td style="text-align: right;">3.32803</td>
+<td style="text-align: right;">0.24742</td>
+<td style="text-align: right;">3.31090</td>
+<td style="text-align: right;">0.24094</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Nosek_Explicit_Art</td>
+<td style="text-align: right;">0.92651</td>
+<td style="text-align: right;">0.03857</td>
+<td style="text-align: right;">0.92471</td>
+<td style="text-align: right;">0.03780</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nosek_Explicit_Math</td>
+<td style="text-align: right;">1.74253</td>
+<td style="text-align: right;">0.01034</td>
+<td style="text-align: right;">1.73892</td>
+<td style="text-align: right;">0.01070</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PSACR001_anxiety_int</td>
+<td style="text-align: right;">1.14942</td>
+<td style="text-align: right;">0.06358</td>
+<td style="text-align: right;">1.13575</td>
+<td style="text-align: right;">0.06116</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PSACR001_behav_int</td>
+<td style="text-align: right;">0.68787</td>
+<td style="text-align: right;">0.27616</td>
+<td style="text-align: right;">0.61335</td>
+<td style="text-align: right;">0.18278</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PSACR002_neg_photo</td>
+<td style="text-align: right;">0.60267</td>
+<td style="text-align: right;">0.01729</td>
+<td style="text-align: right;">0.59565</td>
+<td style="text-align: right;">0.01658</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Shnabel_Willingness_Reconcile_Rev</td>
+<td style="text-align: right;">1.05032</td>
+<td style="text-align: right;">0.00016</td>
+<td style="text-align: right;">1.05096</td>
+<td style="text-align: right;">0.00000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Shnabel_Willingness_Reconcile_RPP</td>
+<td style="text-align: right;">0.90056</td>
+<td style="text-align: right;">0.03773</td>
+<td style="text-align: right;">0.88998</td>
+<td style="text-align: right;">0.03619</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Srull_Behaviour_Hostility</td>
+<td style="text-align: right;">2.72870</td>
+<td style="text-align: right;">0.16563</td>
+<td style="text-align: right;">2.71410</td>
+<td style="text-align: right;">0.16325</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Srull_Ronald_Hostility</td>
+<td style="text-align: right;">1.87585</td>
+<td style="text-align: right;">0.11477</td>
+<td style="text-align: right;">1.86129</td>
+<td style="text-align: right;">0.11168</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Generally, for 11 out of 12 phenomena, we find miniscule, but mostly negative, differences between the two estimation strategies. This means that there is a slight downward bias in the estimates from the delta-method. However, for the majority of phenomena, the differences occur in the 2nd decimal, indicating that violations in the assumptions concerning the delta-method are negligible here. Only for the PSACR002_behav_init phenomenon we find larger differences. These are large enough to be concerning and pertain largely the estimate of heterogeneity. Accordingly, inferences regarding this phenomenon need to be interpreted with caution. Generally, since for the majority of phenomena we find very little bias and as the delta-method is not used to generate estimates beyond this particular section, we believe its use to be defensible.</p>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

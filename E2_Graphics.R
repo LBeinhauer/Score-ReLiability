@@ -151,11 +151,11 @@ forest_plot_rel <- function(rma.fit_raw, rma.fit_cor, rma.data, ci.lvl = .975){
     arrange(desc(d_raw)) %>% 
     ggplot() +
     # point estimate of raw d
-    geom_point(aes(x = d_raw, y = 1:nrow(rma.data)), colour = "darkgrey") +
+    geom_point(aes(x = d_raw, y = 1:nrow(rma.data)-.3), colour = "darkgrey") +
     # CI of point estimate of raw d
-    geom_segment(aes(x = cil_raw, y = 1:nrow(rma.data), xend = ciu_raw, yend = 1:nrow(rma.data)), colour = "darkgrey") +
-    geom_segment(aes(x = cil_raw, xend = cil_raw, y = (1:nrow(rma.data))+.3, yend = (1:nrow(rma.data))-.3), colour = "darkgrey") +
-    geom_segment(aes(x = ciu_raw, xend = ciu_raw, y =( 1:nrow(rma.data))+.3, yend = (1:nrow(rma.data))-.3), colour = "darkgrey") +
+    geom_segment(aes(x = cil_raw, y = 1:nrow(rma.data)-.3, xend = ciu_raw, yend = 1:nrow(rma.data)-.3), colour = "darkgrey") +
+    geom_segment(aes(x = cil_raw, xend = cil_raw, y = (1:nrow(rma.data))+.3-.3, yend = (1:nrow(rma.data))-.3-.3), colour = "darkgrey") +
+    geom_segment(aes(x = ciu_raw, xend = ciu_raw, y =( 1:nrow(rma.data))+.3-.3, yend = (1:nrow(rma.data))-.3-.3), colour = "darkgrey") +
     # point estiamte of corrected d
     geom_point(aes(x = d_cor, y = 1:nrow(rma.data)), colour = "black") +
     # CI of point estimate of corrected d
@@ -166,7 +166,7 @@ forest_plot_rel <- function(rma.fit_raw, rma.fit_cor, rma.data, ci.lvl = .975){
     geom_abline(slope = 0, intercept = -1, colour = "black") +
     # adding diamond showing rma-estimate of raw d
     geom_polygon(data = data.frame(x = c(rma.fit_raw$ci.ub, rma.fit_raw$b[1], rma.fit_raw$ci.lb, rma.fit_raw$b[1]),
-                                   y = c(-3, -3-.7, -3, -3+.7)),
+                                   y = c(-3, -3-.7, -3, -3+.7)-.3),
                  aes(x = x, y = y),
                  fill = "darkgrey", colour = "darkgrey") +
     # adding diamond showing rma-estimate of corrected d
