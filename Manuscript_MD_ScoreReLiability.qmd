@@ -354,14 +354,14 @@ using metafor version 4.8-0 [@metafor]. To estimate meta-analytic mean
 ES and heterogeneity we make use of the REML-estimator, as that
 estimator tends to perform best across a range of conditions
 [@hoenekopp2022]. To identify which phenomena pass criterion (3) we use
-a Wald-type significance test we assess for which phenomenon the
+a Wald-type significance test, assessing for which phenomenon the
 meta-analytic mean ES is significantly different from zero. For this
 hypothesis test, as all other hypothesis tests in this manuscript, we
 employ a one-tailed significance level of .05.
 
 Additionally, estimates of score reliability are derived. While not
-without criticism (references), Cronbach’s Alpha is used to estimate
-score reliability. It is often noted that tau-equivalence is an
+without criticism [e.g. @sijtsma2009], Cronbach’s Alpha is used to
+estimate score reliability. It is often noted that tau-equivalence is an
 unrealistic assumption to hold against real-world data, implying that
 other estimates of score reliability, such as McDonald’s Omega
 [@mcdonald1999], Guttman’s Lambda 2 or 4 [@guttman1945], or the Greatest
@@ -373,18 +373,17 @@ contributes equally to the individual’s test score. Therefore,
 Cronbach’s Alpha is the better choice to estimate score reliability, as
 it avoids a mismatch in assumptions between how the score is computed
 and how score reliability is estimated. The individual estimates of
-Cohen’s d are corrected using these estimates of Cronbach's Alpha,
-according to @eq-dc, including the corrected standard errors (@eq-SEdc).
-Thereby, estimates of ES are computed, which are corrected for imperfect
+Cohen’s $d$ are corrected using estimates of Cronbach's Alpha, according
+to @eq-dc, including the corrected standard errors (@eq-SEdc). Thereby,
+estimates of ES are computed, which are corrected for imperfect
 reliability. Again, a random-effects meta-analysis is run using metafor,
 generating an estimate of heterogeneity in corrected ES. Different
 indicators of heterogeneity are readily available, such as $I^2$, $H^2$
 or the coefficient of variation $CV$[@borenstein2009; @higgins2002].
 However, the descriptions found in H&S and W&D discuss the absolute
 amount of heterogeneity in terms of variance ($\tau^2$) or standard
-deviation ($\tau$). These parameters discuss the variability of the
-standardized ES in the population in terms of variance or standard
-deviation. Therefore, we also make use of absolute heterogeneity here.
+deviation ($\tau$). Therefore, we also make use of absolute
+heterogeneity here.
 
 Subsequently, in order to assess whether ES heterogeneity was indeed
 reduced by the attenuation correction procedure, the estimates of
@@ -393,7 +392,9 @@ Cochran’s *Q*-test [@cochran1954], we assess whether the estimates of
 heterogeneity are statistically significantly different from 0. Only for
 those projects where we have sufficient confidence that the individual
 estimates of heterogeneity are larger than zero can we actually begin to
-interpret whether there was any change.
+interpret whether there was any change. \[Short paragraph discussing
+that a test for difference in heterogeneity would be more informative?
+Maybe move it to the discussion section - hint at it here?\]
 
 To identify whether a reduction in ES heterogeneity is indeed
 accompanied by differences in score reliability, the estimates of score
@@ -401,14 +402,16 @@ reliability are assessed meta-analytically as well. To do so, a
 Reliability Generalization Meta-Analysis is performed [@vacha1998;
 @sanchez2013]. This entails that individual estimates of score
 reliability are adequately transformed using Bonett’s transformation:
-$T_{\hat{\rho}} = ln(1 - \hat{\rho})$. This transformation has
-variance-stabilising properties and therefore allows for adequate
-inferences concerning heterogeneity in score reliability [@bonett2002].
-Cochran’s Q-test is used to identify statistically significant
-heterogeneity in transformed score reliability. Estimates derived from a
-Reliability Generalization Meta-Analysis using these transformations can
-be back-transformed to the original score reliability scale
-[@beinhauer2025]:
+
+$$T_{\hat{\rho}} = ln(1 - \hat{\rho})$$ {#eq-Bonett}
+
+The transformation in @eq-Bonett has variance-stabilising properties and
+therefore allows for adequate inferences concerning heterogeneity in
+score reliability [@bonett2002]. Cochran’s Q-test is used to identify
+statistically significant heterogeneity in transformed score
+reliability. Estimates derived from a Reliability Generalization
+Meta-Analysis using these transformations can be back-transformed to the
+original score reliability scale [@beinhauer2025]:
 
 $$\mu_{\rho{xx'}} \approx 1 - exp(\mu_{T\left[\rho_{XX^\prime}\right]})-\frac{1}{2} exp(\mu_{T\left[\rho_{xx'}\right]})\tau_{T\left[\rho_{XX^\prime}\right]}^2$$ {#eq-rel_back_mu}
 
@@ -426,7 +429,7 @@ generate estimates of standardized ES, both uncorrected and corrected,
 with their corresponding standard errors. Generally, this leads to
 larger (absolute) ES and larger standard errors after the correction. As
 an example from the 21 selected phenomena, the results from this
-procedure on replications on Nosek’s study on sex differences in
+procedure on replications of Nosek’s study on sex differences in
 preferences for the subject of Arts is displayed in the forest plot in
 @fig-forest. Here, grey dots represent the uncorrected ES for each
 sample, while black dots represent the corrected ES in each sample. The
@@ -434,21 +437,20 @@ bars surrounding these dots show the respective 95%-Cis.
 
 ```{r, echo = FALSE, fig.height = 6}
 #| label: fig-forest 
-#| fig-cap: Forest Plot ML1 - Nosek (Art)
+#| fig-cap: Forest Plot ML1 - replications of Nosek's studz on sex differences in subject preferences (Arts)
 forest_plot_rel(ES_rma_df[which(ES_rma_df$MASC == "Nosek_Explicit_Art"),], agg_L[[which(MASC_names == "Nosek_Explicit_Art")]])
 ```
 
 In @fig-forest it becomes apparent that the reliability attenuation
 procedure leads to an increase in the individual absolute effect size,
-as the black dots are moved further away from zero. Simultaneously, the
+as the black dots are moved further from zero. Simultaneously, the
 standard errors grew larger after the attenuation correction, which
 leads to larger 95%-CIs. This is most easily observed for the
-mturk-sample, which already had a rather large confidence interval to
-begin with. Additionally, in the diamond at the bottom of the figure, we
-can see that the meta-analytic estimate mean ES is also larger after the
-attenuation correction took place. In @tbl-meanES, the estimates and
-tests on the meta-analytic average ES, both corrected and uncorrected,
-can be found.
+MTurk-sample, which had a rather large confidence interval to begin
+with. Additionally, in the diamond at the bottom of the figure, we can
+see that the meta-analytic mean ES is also larger after the attenuation
+correction took place. @tbl-meanES contains estimates and test results
+for all phenomena, both corrected and uncorrected.
 
 #### Which phenomena pass criterion 3)?
 
@@ -472,9 +474,11 @@ lead to no difference in conclusion, regarding a significance level of
 gt::gt(read.csv(here("Tables/Mean_ES.csv")) %>% 
          arrange(MASC)) %>% 
   gt::cols_label(MASC = "MASC",
-                 mu_str_raw = gt::md("$\\hat{\\mu}_{\\delta_0}$ (SE)"),
+                 #mu_str_raw = gt::md("$\\hat{\\mu}_{\\delta_0}$ (SE)"),
+                 mu_str_raw = gt::md("Mean $d$ (SE)"),
                  pval_raw = "p",
-                 mu_str_cor = gt::md("$\\hat{\\mu}_{\\delta}$ (SE)"),
+                 #mu_str_cor = gt::md("$\\hat{\\mu}_{\\delta}$ (SE)"),
+                 mu_str_cor = gt::md("Mean $d_c$ (SE)"),
                  pval_cor = "p") %>% 
   gt::tab_options(table.width = gt::pct(100),
                   column_labels.font.weight = "bold") # %>% 
@@ -482,10 +486,8 @@ gt::gt(read.csv(here("Tables/Mean_ES.csv")) %>%
   #                pval_cor ~ gt::px(40))
 ```
 
-*Note:* Since in a meta-analysis, we attempt to estimate mean and
-variance of the parameter's true distribution, in this table
-$\hat{\mu}_{\delta_0}$ represents the meta-analytic estimate of mean
-uncorrected $d$ and $\hat{\mu}_{\delta}$ represents the estimate of the
+*Note:* In this table *Mean* $d$ represents the meta-analytic estimate
+of mean uncorrected $d$ and *Mean* $d_c$ represents the estimate of the
 meta-analytic mean of corrected $d_c$.
 
 #### Estimates of heterogeneity
