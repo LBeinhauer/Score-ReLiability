@@ -345,6 +345,14 @@ standard error. The standard error for $d_c$ is defined in @eq-SEdc.
 
 $$SE_{d_c} = \sqrt{SE^2_d \frac{d_c}{d}}$$ {#eq-SEdc}
 
+The estimates concerning the meta-analytic mean and heterogeneity of
+these standardized effect sizes attempt to describe their population
+distribution. Therefore, over the following paragraphs, whenever we
+refer to estimates derived by means of random effects meta-analysis, we
+will use the Greek letter $\delta_0$ to denote estimates of uncorrected
+$d$'s population distribution and $\delta$ to denote estimates of
+corrected $d_c$'s population distribution.
+
 ### Methods
 
 For each replication of a phenomenon, Cohen’s $d$ is computed as an
@@ -414,6 +422,11 @@ Meta-Analysis using these transformations can be back-transformed to the
 original score reliability scale [@beinhauer2025]:
 
 $$\mu_{\rho{xx'}} \approx 1 - exp(\mu_{T\left[\rho_{XX^\prime}\right]})-\frac{1}{2} exp(\mu_{T\left[\rho_{xx'}\right]})\tau_{T\left[\rho_{XX^\prime}\right]}^2$$ {#eq-rel_back_mu}
+
+In @eq-rel_back_mu, $\mu_{\rho_{XX'}}$ is the back-transformed
+meta-analytic mean score reliability - on the original coefficient's
+scale between 0 and 1. Similarly, $\tau_{\mu_{\rho_{XX'}}}$ is the
+back-transformed heterogeneity in score reliability:
 
 $$\tau_{\rho_{xx'}}^2 \approx exp(\mu_{T\left[\rho_{xx'}\right]})2 \tau_{T\left[\rho_{xx'}\right]}^2+exp(\mu_{T\left[\rho_{xx'}\right]})^2\tau_{T\left[\rho_{xx'}\right]}^4$$ {#eq-rel_back_tau}
 
@@ -496,17 +509,17 @@ meta-analytic mean of corrected $d_c$.
 Cronbach's Alpha coefficients of the scales used to measure the 12
 remaining phenomena. Additionally, it contains estimates of
 heterogeneity for both uncorrected ES ($\delta_0$) and corrected ES
-($\delta$), which are central to assess the research questions posed in
+($\delta$), which are central to assess the research question posed in
 section *Attenuation Correction*. Most importantly, @tbl-tauES
 demonstrates that for all but one of the phenomena, the attenuation
 correction procedure barely has an impact on the extent of ES
 heterogeneity. However, while the heterogeneity for the phenomenon from
-RRR9 (Behaviour) seems reduced by about a third of its initial value,
-the ES heterogeneity for this phenomenon is rather small to begin with.
-Using a significance test, we can not distinguish this value confidently
-from zero. This implies that for the majority of phenomena, differences
-in score reliability can not be made responsible for heterogeneity in
-standardized effect sizes.
+RRR9 (Behaviour) seems to be reduced by about a third of its initial
+value, the ES heterogeneity for this phenomenon is rather small to begin
+with. Using a significance test, we can not distinguish this value
+confidently from zero. This implies that for the majority of phenomena,
+differences in score reliability can not be made responsible for
+heterogeneity in standardized effect sizes.
 
 ```{r, echo = FALSE}
 #| label: tbl-tauES
@@ -556,21 +569,26 @@ gt::gt(tab_both  %>%
 ```
 
 *Note:* $\hat{\mu}_{\rho_{XX'}}$ is the back-transformed meta-analytic
-estimate of mean score reliability; $\tau{\mu}_{\rho_{XX'}}$ is the
-back-transformed estimate of heterogeneity in score reliability; Note
-that, since in a meta-analysis, we attempt to estimate mean and variance
-of the parameter's true distribution, in this table
+estimate of mean score reliability; $\tau_{\mu_{\rho_{XX'}}}$ is the
+back-transformed estimate of heterogeneity in score reliability;
 $\hat{\tau}_{\delta_0}$ represents the estimate of heterogeneity in
-uncorrected $d$; accordingly, $\hat{\tau}_{\delta}$ represents the
-estimate of the heterogeneity in corrected $d_c$.
+uncorrected $d$; $\hat{\tau}_{\delta}$ represents the estimate of the
+heterogeneity in corrected $d_c$.
 
 Secondly, in @tbl-tauES we find that for ten out of twelve phenomena, ES
 heterogeneity grows as a result from the attenuation correction
-procedure. Even though these differences tend to be small, it is clear
-that in all those cases, not only did accounting for score reliability
-not explain any ES heterogeneity, we find even more than initially
-expected. This is incompatible with claims made in W&D and H&S, the
-attenuation correction increased ES heterogeneity. Concerning the
+procedure. However, it needs to be noted that these differences are small
+and could not be distinguished from sampling uncertainty in a statistical
+test. For this reason, we do not mean to interpret these differences, while 
+we note that the direction of differences are clearly inconsistent with
+expectations formulated in the literature discussed so far.
+These results are incompatible with claims made in W&D and H&S. 
+
+Besides the direction of these differences, it is noteworthy that considering
+differences in score reliability barely affects heterogeneity in standardized
+effect sizes. [ausführen, oder kommt das noch einmal wieder?]
+
+Concerning the
 remaining two phenomena, for the phenomenon described in ML5 - Shnabel
 (RPP), the reduction in heterogeneity is miniscule and the estimate of
 heterogeneity is not statistically significant in the first place. Most
@@ -586,14 +604,14 @@ inflate heterogeneity in uncorrected effect sizes. Instead these
 differences mask ES heterogeneity, that can be unveiled by accounting
 for score reliability.
 
-## Relationship between score reliability and effect sizes in terms of heterogeneity
+## Relationship between score reliability and effect size heterogeneity
 
 In the re-analysis of archival data in the previous section we
 demonstrated that, at least for the multi-site direct replication and
 PSA-projects, score reliability does not hold any noteworthy value as a
 potential moderator explaining ES heterogeneity. Additionally, we
 demonstrated that claims formulated in W&D and H&S regarding how score
-reliability increases ES heterogeneity are false. We found a large
+reliability heterogeneity increases ES heterogeneity are false. We found a large
 number of phenomena where, contrary to popular claims, correcting for
 score reliability increases ES heterogeneity, instead of decreasing it.
 
@@ -609,21 +627,21 @@ decrease it.
 
 ### Intuitive relationship
 
+
 It might help to think about linear models, when discussing the
-intuition that might underlie the idea, that controlling for score
+intuitive idea that controlling for score
 reliability should reduce ES heterogeneity. Heterogeneity describes
 unexplained variation in a parameter's true distribution, that we model
 using meta-analytical techniques [@borenstein2009; @higgins2002]. In
 that way, the idea of heterogeneity is closely related to residual
 variance, as we observe it in a simple linear model. Both describe
-variation that could not be explained by the predictive variables in the
-case of the simple linear model, or not explained by incorporating the
-Standard Errors in the case of a meta-analytic model.
+variation that could not be explained by the model specifications, be it a model that 
+employs predictive variables like a simple linear model or a meta-analytic
+model incorporating uncertainty in terms of standard errors.
 
-For the simple linear model, if we add an additional predictor to the
-model that we know shares variance with the parameter that we aim to
-predict, this should reduce the amount of residual variance that we
-observe across most instances. Generally, removing a source of variance
+The residual variance that remains in a simple linear model will be reduced
+in all instances, where we use a predictor that we know shares 
+variance with the predicted parameter. Generally, removing a source of variance
 by controlling for it, we expect any unexplained variation to shrink.
 Similarly, we know that differences in score reliability, by definition,
 are related to differences in standardized effect sizes. Therefore,
@@ -642,8 +660,8 @@ $$\tau^2_{\delta_0} = [\mu_{\rho_{xx‘}}]^2 \tau^2_{\delta} + [\mu_{\delta}]^2 
 
 We adjusted @eq-HS using the notation used throughout this text. Here,
 $\delta_0$, carrying a 0 in the index, refers to the uncorrected ES,
-undistorted by sampling error but not corrected for measuring error. On
-the other hand $\delta$, no index, refers to the corrected ES,
+undistorted by sampling error but not corrected for measuring error. Without an 
+index, $\delta$, on the other hand, refers to the corrected ES,
 undistorted by sampling error and measurement error. Lastly,
 $\rho_{XX'}$ refers to score reliability. Hunter & Schmidt
 [-@hunter2004] claim that @eq-HS demonstrates that differences in score
@@ -684,7 +702,7 @@ generate estimates of mean and variance of the ratio variable
 assumptions regarding the distribution form, but that the variable (here
 a ratio) is a) differentiable, b) has existing moments and that c) its
 higher-order moments are negligible (e.g. limited variability and
-monotonicity) (still need a good reference here). Here we use the
+monotonicity) (Asymptotic statistics, A.W. van der Vaart - find book online). Here we use the
 Taylor-estimator of the ratio’s variance to demonstrate how differences
 in score reliability may affect heterogeneity in ES.
 
@@ -707,9 +725,9 @@ between zero and one, in the case of imperfect score reliability,
 $\sigma_T$ will always be smaller than total $\sigma_x$.
 
 In @eq-rel we see that total standard deviation $\sigma_X$ is
-constructed only from (the square of the sum of) error score variance
+constructed only from error score variance
 $\sigma_E^2$ and true score variance $\sigma_T^2$. Measurement
-precision, since this should not pertain the true scores, should only
+precision should generally only
 affect the error score variance. Therefore, if the heterogeneity in
 $\sigma_X$ was introduced purely by differences in measurement
 precision, an attenuation correction procedure can remove that
@@ -738,12 +756,11 @@ W&D, @eq-ratio_d0 should lead to a larger value of
 $\tau^2\left[\delta_0\right]$, compared to the estimate of
 $\tau^2\left[\delta\right]$ from @eq-ratio_d. However, as demonstrated
 in the re-analysis of archival data, we can already expect that this can
-not be an implication of these \[Equations @eq-ratio_d0\] and
-[-@eq-ratio_d].
+not be an implication of these Equations.
 
 Instead, what is guaranteed is that the expected value of $\sigma_T$ is
-smaller than the expected value of $\sigma_X$. Similarly, the
-heterogeneity in $\sigma_T$ is guaranteed to be smaller than the
+smaller than or equal to the expected value of $\sigma_X$. Similarly, the
+heterogeneity in $\sigma_T$ is guaranteed to be smaller than or equal to the
 uncorrected heterogeneity in $\sigma_X$. However, since the expected
 value of either standard deviation is placed in the denominator of the
 function and the variance of either is placed in the numerator of the
@@ -762,8 +779,7 @@ As long as the inequality defined in @eq-ineq_init holds true, an
 attenuation correction procedure would lead to larger estimates of ES
 heterogeneity. Conditions under which @eq-ineq_init does not hold are
 conditions under which the claims made in W&D and H&S are met.
-Therefore, this inequality is essentially the opposite of the claims
-made in W&D and H&S. Unfortunately, the inequality in this form does not
+Unfortunately, the inequality in this form does not
 convey sufficient information about the conditions under which it can
 potentially hold. In Appendix A, we rearranged @eq-ineq_init, so we end
 up with a form that we can use to actually derive conditions under which
@@ -780,21 +796,21 @@ mean total score variance can be attributed to mean true score variance.
 Therefore, this metric is close to the average score reliability. Even
 though formally $R_1$ and the meta-analytic mean score reliability
 $\mu_{\rho_{xx'}}$ do not share not the same value, in practice we
-observe little to no differences between the two parameters. Large
+observe little to no differences between the two parameters. [add to appendix]. Large
 values indicate that correcting the individual score variances (or
 standard deviations for that matter) using the attenuation correction
 procedure should lead to very little change in ES, as most of the
 variation observed were due to genuine differences in true scores. Small
 values indicate the opposite, the observed score variance was due to a
 larger amount of random error score variance, leading to a stronger
-correction.
+correction. The metric $R_2$ on the other hand describes in how far the attenuation
+correction procedure has successfully reduced heterogeneity in score
+variance $\tau^2_{\sigma^2_X}$. 
 
 $$R_2 = \frac{\tau^2_{\sigma^2_T}}{\tau^2_{\sigma^2_X}}$$ {#eq-R2}
 
-The metric $R_2$ on the other hand describes in how far the attenuation
-correction procedure has successfully reduced heterogeneity in score
-variance $\tau^2_{\sigma^2_X}$. A value of 1 indicates that the
-heterogeneity in true score variance $\sigma^2_T$ is essentially just as
+A value of 1 indicates that the
+heterogeneity in true score variance $\sigma^2_T$ is exactly as
 large as the heterogeneity initially observed. Smaller values indicate
 how much heterogeneity is "left", after applying an attenuation
 correction, relative to the initial heterogeneity. This means that a
@@ -808,18 +824,18 @@ could be attributed to actual differences in how the underlying true
 scores are distributed across samples.
 
 Concerning the re-arranged inequality from Appendix A, we identify one
-necessary but not sufficient condition or rule described in
+sufficient but not necessary condition or rule described in
 @eq-ineq_short.
 
 $$R_1^3 \leq R_2$$ {#eq-ineq_short}
 
-With necessary but not sufficient we mean that, as long as
+With sufficient but not necessary we mean that, as long as
 @eq-ineq_short holds, an attenuation correction will inevitably increase
 ES heterogeneity. However, if the inequality does not hold, it is not
 guaranteed that the attenuation correction can decrease ES
 heterogeneity. Whether ES heterogeneity can be decreased depends on
-other parameters, that we left out of this short form, but can be found,
-accompanied by a more detailed description, in @eq-ineq_fin.
+additional parameters, that we left out of this short form, but can be found,
+accompanied by a more detailed description, in @eq-ineq_fin, Appendix A.
 
 As long as $R_1^3$ is smaller or equal compared to $R_2$, @eq-ineq_init
 is bound to hold true. This means that as long as the average score
@@ -836,9 +852,9 @@ after the attenuation correction, and $R_2$ essentially describes the
 relative size of score variance heterogeneity after the attenuation
 correction. Therefore, @eq-ineq_short states the following regarding the
 change in mean value and heterogeneity due to the correction: ES
-heterogeneity will always be reduced, as long as the remaining
+heterogeneity will always be increased, as long as the remaining proportion of
 heterogeneity in score variance is not substantially smaller than the
-size of the remaining mean value.
+remaining proportion of its mean value.
 
 As long as there are substantial differences in the true score variance
 across administrations, it is unlikely that an attenuation correction
@@ -849,7 +865,7 @@ the other hand, $R_2$ depends on how different the measurement precision
 was at the individual administrations, but also how different the
 individual administrations sites are regarding their true score
 variance. If the administration sites carry large differences in true
-score variance $R_2$ is unlikely to be substantially smaller than $R_1$.
+score variance $R_2$ is unlikely to be substantially smaller than $R_1$. [Na ja, eine Reliabilität von .9 bedeutet erstmal, dass es 9mal so viel wahre Varianz wie Fehlervarianz gibt. In diesem Fall müsste R2 unter 0.73 liegen. Das impliziert in der Heterogenität ein Verhältnis von ungefähr 3 : 1. Die 9mal größere wahre Varianz müsste also für weniger als ¾ der Heterogenität verantwortlich sein. In Deinem Textbeispiel (Reliabilität von .8) müsste die 4mal größere wahre Varianz für weniger als die Hälfte der Heterogenität verantwortlich sein. – Das erscheint mir beides per se ziemlich unplausibel… Also auch dann, wenn die „administration sites do NOT carry large differences in true score variance”. – In anderen Worten: Die Frage ist, ob die absolute Größe der Varianz überhaupt irgendeine Rolle spielt oder ob alles lediglich an den Verhältnissen hängt, die durch die Reliabilität vorgegeben sind. Ich habe dazu aber auch keine eindeutige Antwort… Wenn ich überzeugt wäre, dass sich *homogene* true score variances durch planvolle, kontrollierte Stichprobenziehung herstellen lassen, wäre das ein Gegenargument.]
 
 It is important to reiterate that the condition in @eq-ineq_short only
 describes under which conditions the inequality is guaranteed to hold,
@@ -870,8 +886,8 @@ larger after the attenuation correction procedure. Here, we will
 re-analyse the data, estimating $R_1$ and $R_2$ for each phenomenon
 respectively. Therein, we not only show that our claims derived from
 analytical arguments hold up in empirical assessment, but also
-demonstrate how the metrics $R_1$ and $R_2$ may be used to inform how
-score reliability affected ES heterogeneity.
+demonstrate how the metrics $R_1$ and $R_2$ help understand how
+score reliability affected ES heterogeneity in practice.
 
 #### Methods {#sec-methods2}
 
@@ -886,7 +902,7 @@ variance, and the score variance components can be derived. This means
 that Boot-Err can be used to generate all estimates required for
 computation of the metrics $R_1$ and $R_2$.
 
-For the following analysis, Boot-Err is used. As Boot-Err makes use of
+As Boot-Err makes use of
 meta-analytic techniques and bootstrap sampling, we perform analyses
 using the packages *metafor*, version 4.8-0 [@metafor], and *boot*,
 version 1.3-31 [@boot], in the statistical programming language *R*,
@@ -896,7 +912,7 @@ version 4.4.2 [@RCore].
 
 @tbl-R1R2 reports the meta-analytic estimates of observed and true score
 variances, including their heterogeneity and metrics $R_1$ and $R_2$
-across all 12 phenomena. In @tbl-R1R2 we see that for ten out of 12
+across all 12 phenomena. We see that for ten out of 12
 phenomena, the $R_2$ metric is larger than the $R_1$ metric.
 Additionally, we observe that across eight phenomena, $R_2$ is larger
 than .96. This implies that of the heterogeneity observed in score
@@ -904,36 +920,43 @@ variances, 97% or more could not be explained by differences in random
 error introduced by the measuring instrument, but by genuine differences
 in the underlying distribution.
 
-For the two exceptions, those phenomena where the attenuation correction
+For the two exceptions in @tbl-tauES, those phenomena where the attenuation correction
 procedure actually led to a decrease in ES heterogeneity (RRR9
-(Behaviour) and ML5 - Shnabel (RPP)), the significance test for the ES
+(Behaviour) and ML5 - Shnabel (RPP)), we find that $R_2$ is larger than $R_1$.
+This clearly contradicts our interpretation of @eq-ineq_int. As long as $R_2$ is
+larger than $R_1^3$, we expect a correction procedure to increase effect 
+size heterogeneity. However, we recommend to be cautious when interpreting both the change and
+the direction of said change for these two projects. 
+The significance test for the ES
 heterogeneity was not significant, both before and after the correction.
-The results regarding $R_2$ indicate that the majority of score variance
-heterogeneity was due to differences in true score variance
-$\sigma^2_T$. Since either the heterogeneity was so small or the sample
+Since either the heterogeneity was so small or the sample
 size so low that the heterogeneity could not be statistically
-distinguished from zero, we should be cautious in the interpretation of
-a reduction in that estimate. Most likely, the reduction in
+distinguished from zero, most likely, the reduction in
 heterogeneity is better explained by imprecise estimation than an actual
 reduction of heterogeneity.
 
-Lastly, for two out of the 12 phenomena, the one described in ML5 -
-Albarracin and the other described in ML5 - Shnabel (Rev), we find
+Lastly, for two out of the 12 phenomena, ML5 -
+Albarracin and ML5 - Shnabel (Rev), we find
 $\tau_{\sigma^2_X}$ of 0. Therefore, the $R_2$ metric could not be
 computed, as the denominator would have been zero. However, we also did
-not identify statistically significant ES heterogeneity in the first
-place. The phenomena were assessed with a particularly low number of
+not identify statistically significant heterogeneity in score reliability
+across replications, nor ES heterogeneity. The phenomena were assessed with a 
+particularly low number of
 replications (9 and 8 respectively). Estimation precision for
 heterogeneity in variance components, even more so than for ES, largely
-depends on the sample size. Most likely, the low sample size led to
+depends on the sample size. Two alternative explanations for this observation
+are available: either, there is no heterogeneity in score variances across 
+replications. In that case, there is also no heterogeneity that could be
+broken down into true and error score variance heterogeneity. Alternatively,
+the low sample size led to
 implausible estimates in both true and total score variance
 heterogeneity and subsequently to an implausible estimate of $R_2$.
 Meta-analytic estimates, especially those concerning score variance
-components such as $R_2$, therefore should be interpreted with caution,
+components such as $R_2$, should generally be interpreted with caution,
 if the sample size was particularly low.
 
-Generally, @tbl-R1R2 implies that for all measurements concerning these
-phenomena, the heterogeneity in observed score variances could not be
+Generally, @tbl-R1R2 implies that for none of the measurements concerning these
+phenomena, the heterogeneity in observed score variances could be
 substantially explained by differences in measurement quality. For all
 phenomena, $R_2$ was larger than $R_1$, implying that an attenuation
 correction procedure could not reduce ES heterogeneity in any of these
@@ -973,9 +996,15 @@ We have examined meta-analytic heterogeneity in standardized mean
 differences. Since score reliability is often discussed as a source for
 such heterogeneity, we estimated the heterogeneity before and after
 correcting for differences in reliability coefficients using an
-attenuation correction procedure. We found that a) in the majority of
-cases, the change in ES heterogeneity is small to non-existent. This
-implies that, across the data-sets we got to examine, differences in
+attenuation correction procedure. While we initially observed heterogeneity
+in score reliability across almost all measuring scales, the extent of this
+heterogeneity was very small across all scales. This initial finding already
+implies that differences in score reliability can only have a tiny impact
+on ES heterogeneity, if any. 
+
+This implication fits our subsequent finding, as we found that a) in the majority of
+cases, the change in ES heterogeneity is small to non-existent. Across the 
+data-sets we got to examine, differences in
 score reliability do not serve as an appropriate explanation for ES
 heterogeneity. We also found that b) in the majority of cases, the
 direction of change in ES heterogeneity does not align with assumptions
@@ -983,7 +1012,7 @@ formulated in W&D and H&S. In almost all cases (every single case, if we
 restrict ourselves to phenomena where we found statistically significant
 differences in ES), the attenuation correction led to increased
 estimates of ES heterogeneity. This means that the claims found in W&D
-and H&S, implying that an attenuation correction can reduce ES
+and H&S, implying that an attenuation correction will reduce ES
 heterogeneity, stem from a general misunderstanding of how score
 reliability can affect ESs.
 
@@ -1018,14 +1047,16 @@ thirds, of the heterogeneity in score variance would need to be
 attributable to differences in the error score variance. In other words,
 at most 34.3% of heterogeneity in score variances may be due to actual
 differences in how the latent variable is distributed (in terms of
-spread) across the administration sites.
+spread) across the administration sites. This disparity grows even larger, 
+the higher the average score reliability is. 
 
-In the examples we re-analysed throughout this text, as well as the
-majority of research studies done in the behavioural sciences
-[@hultsch2002; @bornstein2013], no proper sampling techniques are
-employed. Most samples where these instruments are applied come to be
+In the 
+majority of research studies done in the social and behavioural sciences
+[@hultsch2002; @bornstein2013; @ashraf2017; @sears1986; @zhao2021], no 
+proper sampling techniques beyond convenience sampling are
+employed. Most samples re-analysed throughout this text came to be
 through convenience sampling, where students self-select into studies.
-Without a valid sampling scheme, we essentially have have no basis to
+Without a valid sampling scheme, we essentially have no basis to
 assume anything about the true score variance [@hultsch2002]. Most
 importantly, however, we have no reason to assume that the true score
 variance could potentially be homogeneous or stable across
@@ -1044,31 +1075,11 @@ in true score variance, implying that most of the score variance
 heterogeneity can not be attributed to differences in error score
 variance. Since only differences in error score variance can be
 corrected for, the attenuation correction has a very small effect on
-heterogeneity estimates in score variance. Therefore, as indicated by
-our inequality, an attenuation correction is likely to have very little
+heterogeneity estimates in score variance. Therefore, an attenuation 
+correction is likely to have very little
 impact on ES heterogeneity. If anything, it most likely increases it.
 This also means that, in such settings, score reliability does not serve
 as a moderator explaining ES heterogeneity.
-
-If we, in the field of Psychology and other social or behavioural
-sciences, keep making use of convenience samples simply because they are
-so convenient, we can not expect anything to change. Most likely, ES
-heterogeneity will remain a substantial factor hampering the
-interpretability of original and replication studies. Instead, we should
-focus our data collection efforts on the generation of samples, where we
-know that the variance in the sample means something. This is most
-easily achieved by proper sampling techniques, which ensure that the
-sample is representative for some population. In such cases, it might be
-that the true score variance varies less strongly than what we currently
-observe. And should the heterogeneity in true score variance remain as
-large, than we know that this is meaningful information from which we
-can draw meaningful inferences. Therein, we could learn more about
-standardized effect sizes and why our phenomena vary across settings,
-populations or continents by not following the current status quo of
-convenience samples. Until this status quo changes, however, we will
-keep wasting valuable resources by attempts of discussing ES
-heterogeneity or assessing uninformative differences in score
-reliability.
 
 Our results fit in well with recent work by Olsson-Collentine et al.
 [@olsson2023]. In a large simulation scheme, they demonstrate that
@@ -1137,11 +1148,11 @@ meta-analytic mean size ES and the presence of ES heterogeneity would be
 violated, making any research on change in ES heterogeneity due to
 attenuation correction obsolete.
 
-### Conclusions
+## Conclusions
 
 Heterogeneity in ES even in direct replications, where experimental
-factors are held as constant as possible, is already substantial
-(Renkewitz, Fünderich & Beinhauer, in preparation). However, so far we
+factors are held as constant as possible, is substantial
+(Renkewitz, Fünderich & Beinhauer, in preparation). However, we
 have demonstrated that in several scenarios, differences in score
 reliability did not serve as appropriate moderators or explanations of
 ES heterogeneity. Across most phenomena, we failed to reduce ES
@@ -1150,6 +1161,45 @@ to a very small degree. Generally, concerning the multi-site replication
 projects or collaborative research projects, accounting for differences
 in score reliability did not help us gain a better understanding of the
 phenomena.
+
+### Where to go from here
+
+This manuscript has demonstrated that, even though differences in
+measurement precision are present across most phenomena we could re-analyse, 
+these are strongly outweighed by the differences in true score variance.
+However, what a true score variance actually means, strongly depends on 
+how that number came to be. A sample that is very diverse in its composition
+likely comes with a large true score variance. On the other hand, a sample
+that is highly homogeneous in its composition comes with a smaller true score
+variance. Importantly, the same is not true for random measurement error. 
+Error variance should always be the same size, if the errors are truly random,
+no matter how the sample is put together. Unfortunately, 
+most phenomena we re-analysed here came to be through means of convenience sampling. 
+Therefore, it is not clear what the large differences in true score variance 
+actually imply - are they expressions of
+genuine differences between the populations, or just expressions of different
+self-selection procedures across the samples? As the variance observed in
+a convenience sample is not representative to some *specificied* population, 
+we simply can not know.
+
+Issues of generalizability
+due to the lack of sampling techniques have been, and are still, repeatedly
+called out for the same reasons. Our findings therein reiterate these calls. 
+We believe that we should
+focus our data collection efforts on the generation of samples, where we
+know that the variance in a sample is actually meaningful. This is most
+easily achieved by proper sampling techniques, which ensure that the
+sample is representative for some specified population. In such cases, it might be
+that the true score variance varies less strongly than what we currently
+observe. And should the heterogeneity in true score variance remain as
+large, than we know that this is crucial information from which we
+can draw meaningful inferences. We could learn more about
+standardized effect sizes and why our phenomena vary across settings, 
+populations or continents. We strongly believe that the valuable resources 
+invested into
+research output could be put towards more informative use than what seems
+to be the status quo by ensuring that the variances observed in different
+samples are representative for specified populations.
 
 The work done by Hunter and Schmidt [-@hunter2004] was crucial in
 informing and guiding methodology development in the field of
@@ -1160,7 +1210,7 @@ the last decades. We generally agree with their ideas that
 underappreciated (differences in un-)reliability can introduce
 substantial biases in meta-analytic estimates and tests in Psychology.
 However, based on our findings, we believe that the issues created by
-ignoring random sampling is much more dire and warrants immediate
+ignoring random sampling are much more dire and warrant immediate
 attention. Only once we can be sure that the variance in true scores or
 latent factors is actually meaningful for some population, we can turn
 towards imprecise measurements, expecting correction procedures to
