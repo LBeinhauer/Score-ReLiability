@@ -2,7 +2,7 @@
 title: "Differences in score reliability do not explain meta-analytic heterogeneity in standardised effect sizes"
 bibliography: ReLiability_references.bib
 csl: styles/apa-7th-edition.csl
-format: docx
+format: pdf
 editor: 
   markdown: 
     wrap: 72
@@ -52,7 +52,7 @@ https://orcid.org/0000-0001-8072-6802
 
 #### Abstract
 
-Heterogeneity in standardized effect sizes, such as Cohen’s d, is
+Heterogeneity in standardised effect sizes, such as Cohen’s d, is
 informative because it indicates that a psychological phenomenon is not
 yet fully understood. Prior work by Hunter and Schmidt as well as
 Wiernik and Dahlke has argued that such heterogeneity partly reflects
@@ -61,7 +61,7 @@ differences using attenuation correction should therefore reduce
 heterogeneity. We reanalyze data from large-scale collaborative
 projects, including the ManyLabs studies, Registered Replication
 Reports, and the Psychological Science Accelerator, and demonstrate that
-this assumption does not hold universally. Treating standardized effect
+this assumption does not hold universally. Treating standardised effect
 sizes as ratio variables, we offer an alternative account of how
 differences in measurement precision relate to observed heterogeneity.
 Across many psychological research contexts, score reliability tends to
@@ -144,7 +144,7 @@ typical moderator tied to a specific theory, might be impairments in
 score reliability which vary in their extent across replications
 [@olsson2020]. Hunter and Schmidt [-@hunter2004] and Wiernik and Dahlke
 [-@wiernik2020], discussing the role of score reliability for
-standardized effect sizes, claim that differences in score reliability
+standardised effect sizes, claim that differences in score reliability
 should inflate, and therefore increase, heterogeneity. This implies that
 standard corrections for imperfect score reliability, such as
 attenuation correction procedures, should remove that inflation,
@@ -166,7 +166,7 @@ increase in effect size heterogeneity.
 
 In both the initial reports of large scale replication attempts, as well
 as the re-analyses by Olsson-Collentine et al. [-@olsson2020],
-standardized effect sizes (from here-on abbreviated as ES) such as
+standardised effect sizes (from here-on abbreviated as ES) such as
 Cohen’s d or Hedge’s g were used. For the remainder of the article,
 Cohen’s d, defined in @eq-d, will be used as an exemplary estimate of
 ES, as it is used across a wide range of contexts and well understood by
@@ -268,7 +268,7 @@ Therefore, we assess the extent to which this intuition is supported by
 empirical evidence in the following section. The re-analysis of archival
 data serves to shed light on the following research question:
 
--   To what extent can heterogeneity in standardized effect sizes be
+-   To what extent can heterogeneity in standardised effect sizes be
     reduced by means of an attenuation correction?
 
 ## Re-analysis of archival data
@@ -290,7 +290,7 @@ psychological phenomena across different research sites, employing
 identical protocols. From five published projects, the data for the
 first three and the fifth Many Labs projects [@ManyLabs1; @ManyLabs2;
 @ManyLabs3; @ManyLabs5] were harmonized and publicly stored in a
-standardized format when the DRIPHT repository was set up [@dripht2024].
+standardised format when the DRIPHT repository was set up [@dripht2024].
 The Registered Replication Reports are similar collaborative efforts,
 with the sole distinction that for each report a single phenomenon was
 replicated several times. The Registered Reports 3-10 were added to the
@@ -377,7 +377,7 @@ estimate from the observed variability in the effect size estimates, we
 can generate an estimate of its heterogeneity - how strongly the effect
 sizes vary beyond their pooled sampling uncertainty.
 
-For the standardized mean difference $d$, we can compute the standard
+For the standardised mean difference $d$, we can compute the standard
 error as an estimate of its sampling uncertainty. The standard error of
 Cohen’s $d$ is computed as defined in @eq-SEd.
 
@@ -391,7 +391,7 @@ standard error. The standard error for $d_c$ is defined in @eq-SEdc.
 $$SE_{d_c} = \sqrt{SE^2_d \frac{d_c}{d}}$$ {#eq-SEdc}
 
 The estimates concerning the meta-analytic mean and heterogeneity of
-these standardized effect sizes attempt to describe their population
+these standardised effect sizes attempt to describe their population
 distribution. Therefore, over the following paragraphs, whenever we
 refer to estimates derived by means of random effects meta-analysis, we
 will use the Greek letter $\delta$ to denote estimates of uncorrected
@@ -482,7 +482,7 @@ statistical analysis. Graphics are constructed using the R package
 ### Results
 
 [Equations @eq-d], [-@eq-dc], [-@eq-SEd], and [-@eq-SEdc] were used to
-generate estimates of standardized ES, both uncorrected and corrected,
+generate estimates of standardised ES, both uncorrected and corrected,
 with their corresponding standard errors. Generally, this leads to
 larger (absolute) ES and larger standard errors after the correction. As
 an example from the 21 selected phenomena, the results from this
@@ -570,7 +570,7 @@ reduced by about a third of its initial value, the ES heterogeneity for
 this phenomenon is rather small to begin with. Using a significance
 test, we can not distinguish this value confidently from zero. This
 implies that for none of phenomena, differences in score reliability can
-be made responsible for heterogeneity in standardized effect sizes.
+be made responsible for heterogeneity in standardised effect sizes.
 
 ```{r, echo = FALSE}
 #| label: tbl-tauES
@@ -620,8 +620,8 @@ gt::gt(tab_both  %>%
 ```
 
 *Note:* $\hat{\mu}_{\rho_{XX'}}$ is the back-transformed meta-analytic
-estimate of mean score reliability; $\hat{\tau}_{\mu_{\rho_{XX'}}}$ is
-the back-transformed estimate of heterogeneity in score reliability;
+estimate of mean score reliability; $\hat{\tau}_{\rho_{XX'}}$ is the
+back-transformed estimate of heterogeneity in score reliability;
 $\hat{\tau}_{d}$ represents the estimate of heterogeneity in uncorrected
 $d$; $\hat{\tau}_{d_c}$ represents the estimate of the heterogeneity in
 corrected $d_c$.
@@ -696,10 +696,10 @@ in all instances, where we use a predictor that we know shares variance
 with the predicted parameter. Generally, removing a source of variance
 by controlling for it, we expect any unexplained variation to shrink.
 Similarly, we know that differences in score reliability, by definition,
-are related to differences in standardized effect sizes. Therefore,
+are related to differences in standardised effect sizes. Therefore,
 intuitively, it seems sensible to expect that controlling for
 differences in score reliability should reduce the unexplained variance
-in standardized effect sizes, as described in H&S and W&D.
+in standardised effect sizes, as described in H&S and W&D.
 
 Hunter & Schmidt have additionally derived an equation which
 demonstrates how heterogeneity in score reliability affects
@@ -765,7 +765,7 @@ equation to
 
 $$\tau^2[Z] \approx \frac{\tau^2[X]}{\mu[Y]^2} + \frac{\mu[X]^2}{\mu[Y]^4} \tau^2[Y]$$ {#eq-XYZ}
 
-Substituting for ES, unstandardized mean difference MD and pooled
+Substituting for ES, unstandardised mean difference MD and pooled
 standard deviation $\sigma_X$ leads to
 
 $$\tau^2[\delta] \approx \frac{\tau^2[MD]}{\mu[\sigma_x]^2} + \frac{\mu[MD]^2}{\mu[\sigma_x]^4} \tau^2[\sigma_x]$$ {#eq-ratio_d0}
@@ -786,7 +786,7 @@ heterogeneity. Alternatively, the underlying latent variable may not be
 distributed identically across replications. In that case, true score
 variance $\sigma^2_T$ would vary across replications and induce
 heterogeneity in $\sigma_X$. This heterogeneity would lead to
-differences in standardized differences ES as well, but it can not be
+differences in standardised differences ES as well, but it can not be
 removed by means of an attenuation correction procedure.
 
 In that case, some heterogeneity in $\sigma_T$ would remain, albeit
@@ -1052,7 +1052,7 @@ the estimate of heterogeneity in true score variance.
 
 ## Discussion
 
-We have examined meta-analytic heterogeneity in standardized mean
+We have examined meta-analytic heterogeneity in standardised mean
 differences. Since score reliability is often discussed as a source for
 such heterogeneity, we estimated the heterogeneity before and after
 correcting for differences in reliability coefficients using an
@@ -1144,10 +1144,10 @@ Our results fit in well with recent work by Olsson-Collentine et al.
 differences in score reliability across administrations typically
 deflate heterogeneity in uncorrected correlations. In such cases, an
 attenuation correction would increase correlation coefficient
-heterogeneity, as we observe for standardized mean differences. Only as
+heterogeneity, as we observe for standardised mean differences. Only as
 the true heterogeneity in correlations grows larger would the correction
 procedure reduce heterogeneity as implied in W&D. While correlations and
-standardized effect sizes are not identical, the way score
+standardised effect sizes are not identical, the way score
 (un)reliability affects these parameters is highly similar.
 
 ### Limitations & constraints on generalizability
@@ -1240,7 +1240,7 @@ it might be that the true score variance varies less strongly than what
 we currently observe. And should the heterogeneity in true score
 variance remain as large, than we know that this is crucial information
 from which we can draw meaningful inferences. We could learn more about
-standardized effect sizes and why our phenomena vary across settings,
+standardised effect sizes and why our phenomena vary across settings,
 populations or continents. We strongly believe that the valuable
 resources invested into research output could be put towards more
 informative use than what seems to be the status quo by ensuring that
