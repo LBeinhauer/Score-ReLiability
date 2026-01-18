@@ -32,6 +32,29 @@ B_alpha_rma_df <- read.csv(here("Data/Processed/Reliability_analysis.csv"))
 
 ES_rma_df <- read.csv(here("Data/Processed/Aggregates_ES_analysis.csv"))
 
+ES_rma_df$MASC <- c("ML5 - Albarracin",
+                    "ML1 - Carter",
+                    "ML1 - Caruso",
+                    "RRR8",
+                    "RRR5 (Exit)",
+                    "RRR5 (Neglect)",
+                    "ML2 - Giessner",
+                    "RRR3 (Criminal)",
+                    "RRR3 (Processing)",
+                    "RRR3 (Attribution)",
+                    "ML1 - Husnu",
+                    "ML1 - Nosek (Art)",
+                    "ML1 - Nosek ( Math)",
+                    "PSACR001 (Anxiety)",
+                    "PSACR001 (Behaviour)",
+                    "PSACR001 (Photo)",
+                    "ML5 - Shnabel (Rev.)",
+                    "ML5 - Schnabel (RPP)",
+                    "RRR9 (Behaviour)",
+                    "RRR9 (Ronald)",
+                    "Strack",
+                    "ML2 - Zhong")
+
 agg_L <- readRDS(here("Data/Processed/Aggregates_simple.csv"))
 
 MASC_names <- substr(list.files(here("Data/Extracted (Project) Data")), 1, nchar(list.files(here("Data/Extracted (Project) Data")))-4) 

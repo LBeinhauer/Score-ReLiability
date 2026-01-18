@@ -170,7 +170,18 @@ vars_rma_df <- do.call(rbind, vars_rma_L) %>%
   mutate_if(is.numeric, round, 3) 
 
 
-
+vars_rma_df$MASC <- c("ML5 - Albarracin",
+                      "RRR3 (Criminal)",
+                      "ML1 - Husnu",
+                      "ML1 - Nosek (Art)",
+                      "ML1 - Nosek ( Math)",
+                      "PSACR001 (Anxiety)",
+                      "PSACR001 (Behaviour)",
+                      "PSACR001 (Photo)",
+                      "ML5 - Shnabel (Rev.)",
+                      "ML5 - Schnabel (RPP)",
+                      "RRR9 (Behaviour)",
+                      "RRR9 (Ronald)")
 
 
 write.csv(vars_rma_df %>% 

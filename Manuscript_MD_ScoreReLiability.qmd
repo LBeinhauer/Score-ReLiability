@@ -1,8 +1,8 @@
 ---
 title: "Differences in score reliability do not explain meta-analytic heterogeneity in standardised effect sizes"
 bibliography: ReLiability_references.bib
-csl: styles/apa-7th-edition.csl
-format: pdf
+csl: styles/american-medical-association.csl
+format: docx
 editor: 
   markdown: 
     wrap: 72
@@ -53,51 +53,74 @@ https://orcid.org/0000-0001-8072-6802
 #### Abstract
 
 Heterogeneity in standardised effect sizes, such as Cohen’s d, is
-informative because it indicates that a psychological phenomenon is not
-yet fully understood. Prior work by Hunter and Schmidt as well as
-Wiernik and Dahlke has argued that such heterogeneity partly reflects
-differences in measurement precision and that correcting for these
-differences using attenuation correction should therefore reduce
-heterogeneity. We reanalyze data from large-scale collaborative
-projects, including the ManyLabs studies, Registered Replication
-Reports, and the Psychological Science Accelerator, and demonstrate that
-this assumption does not hold universally. Treating standardised effect
-sizes as ratio variables, we offer an alternative account of how
-differences in measurement precision relate to observed heterogeneity.
-Across many psychological research contexts, score reliability tends to
-be high and measurement error relatively stable. Under these conditions,
-when samples differ substantially in their composition or diversity,
-attenuation correction procedures are more likely to increase rather
-than decrease heterogeneity. We conclude by discussing the limited
-relevance of random measurement error for explaining effect size
-heterogeneity in the context of convenience sampling.
+informative because it is often interpreted as evidence that a
+phenomenon varies across contexts or populations. In research synthesis,
+one influential explanation for such variation is that it arises from
+differences in measurement precision across studies, implying that
+correcting effect sizes for attenuation due to score unreliability
+should reduce between-study variability. We reanalyse data on a wide
+range of phenomena from large-scale collaborative projects, including
+the ManyLabs studies, Registered Replication Reports, and the
+Psychological Science Accelerator. We apply conventional attenuation
+correction procedures and propose an alternative framework that treats
+standardised effect sizes as ratio variables to examine how differences
+in score reliability relate to heterogeneity. Across datasets,
+differences in score reliability are small and can not explain effect
+size heterogeneity, contrary to prevailing expectations. For most
+phenomena, attenuation correction procedures increased heterogeneity,
+rather than decreasing it. We attribute this to between-study
+differences in underlying score distributions that dominate the
+comparatively small variation in random measurement error. These
+findings imply that unreliability is unlikely to be a major driver of
+effect size heterogeneity for phenomena comparable to the ones
+reanalysed here. More broadly, the results suggest that meta-analysts
+should not expect that effect size heterogeneity can be reduced or
+explained by controlling for differences in random measurement error.
+Our results call for greater attention to substantive sources of
+heterogeneity, such as sampling practices or population differences,
+when synthesising empirical research and interpreting heterogeneity in
+meta-analytic models across studies and disciplines.
 
-#### Non-technical abstract
+#### Highlights
 
-Researchers often find that studies on the same psychological effect
-report different results, known as differences in effect sizes. Such
-variation suggests that the phenomenon is not yet fully understood. Some
-have argued that part of this variation comes from differences in
-measurement precision—how reliably a study’s tools or tests measure what
-they intend to measure. Based on this reasoning, it has been suggested
-that adjusting or “correcting” for these differences should make results
-more consistent across studies. We revisited this assumption by looking
-at large collaborative projects in psychology, such as ManyLabs, the
-Registered Replication Reports, and the Psychological Science
-Accelerator. We found that the expected reduction in variation does not
-generally occur. In fact, when measurement precision is already quite
-high - as it usually is in psychology, where researchers carefully
-select reliable measures - but samples differ widely in who
-participates, such corrections can actually increase differences in
-reported effect sizes. In simpler terms, differences in how diverse the
-samples of participants are across studies (which comes about from
-convenience sampling) matters more for explaining variation in results
-than small differences in how precisely a measure captures a construct.
-We introduce a simple rule that identifies when correcting for
-measurement differences is likely to increase rather than reduce
-heterogeneity. We conclude by discussing why random measurement error
-plays a smaller role in explaining effect size differences than the use
-of diverse, convenience-based samples.
+##### What is already known?
+
+-   Heterogeneity in standardised effect sizes is prevalent across most
+    phenomena in the social sciences.
+
+-   Score reliability tends to differ, if the same instrument is
+    administered across different contexts, populations or timepoints.
+
+-   Since score reliability affects standardised effect sizes, it seems
+    sensible, that differences in score reliability introduce
+    heterogeneity that can be corrected for.
+
+##### What is new?
+
+-   We demonstrate that, contrary to expectations, differences in score
+    reliability do not serve as moderators for unexplained
+    heterogeneity.
+
+-   Instead, we show that correcting for score reliability routinely
+    increases effect size heterogeneity.
+
+-   Understanding standardised effect sizes as ratio variables, we show
+    under which circumstances a meta-analyst can expect that correcting
+    for score reliability can only increase effect size heterogeneity.
+
+##### Potential impact for RSM readers
+
+-   We highlight the importance of considering differences in underlying
+    construct distribution as explanations for heterogeneity in both
+    score reliability and standardised effect sizes, instead of
+    differences in random measurement error.
+
+-   The discussion clears popular misconceptions for how score
+    reliability affects effect size heterogeneity and what meta-analysts
+    can expect, if they use an attenuation correction to correct for
+    differences in random measurement error.
+
+## Introduction
 
 Large-scale collaborative replication efforts have sparked discussions
 surrounding the replicability of psychological phenomena. For attempts
@@ -113,7 +136,7 @@ more strongly for unexplained reasons, the probability of observing an
 effect size around zero or even in the negative space grows larger as
 well [@kenny2019]. If we know the mean size and heterogeneity of a
 phenomenon’s effect, we would theoretically be able to establish an
-expected replication rate [e.g. @vu2024].
+expected replication rate [@vu2024].
 
 Similarly, it has been argued that heterogeneity in effect sizes is an
 indicator of the theory’s “completeness” surrounding the phenomenon. For
@@ -124,21 +147,21 @@ and Schuetze [-@vonHippel2023] argue that heterogeneity in effects is an
 indicator of a vague, poorly specified theory.
 
 Large-scale attempts of direct replications, using identical protocols,
-such as the Many Labs studies or Registered Replication Reports
-[@ManyLabs1; e.g. @RRRHart], for the first time allow researchers to
-estimate heterogeneity undistorted by selection processes like
-publication bias. In re-analyses of these studies, Olsson-Collentine et
-al. [-@olsson2020] identify a positive correlation between a
-phenomenon’s effect size and its heterogeneity. Both van Erp et al.
-[-@vanErp2017] and Stanley et al. [-@stanley2018] estimate strong
-degrees of heterogeneity across conceptual replications in Psychology.
-In a separate re-analysis of large scale direct replications, Renkewitz
-et al. (in preparation) identify substantial heterogeneity in almost all
-projects where a non-zero effect could be identified. This aligns with
-the correlation found by Olsson-Collentine et al. [-@olsson2020].
+such as the Many Labs studies or Registered Replication Reports (e.g.
+[@ManyLabs1; @RRRHart]) for the first time allow researchers to estimate
+heterogeneity undistorted by selection processes like publication bias.
+In re-analyses of these studies, Olsson-Collentine et al. [-@olsson2020]
+identify a positive correlation between a phenomenon’s effect size and
+its heterogeneity. Both van Erp et al. [-@vanErp2017] and Stanley et al.
+[-@stanley2018] estimate strong degrees of heterogeneity across
+conceptual replications in Psychology. In a separate re-analysis of
+large scale direct replications, Renkewitz et al. (in preparation)
+identify substantial heterogeneity in almost all projects where a
+non-zero effect could be identified. This aligns with the correlation
+found by Olsson-Collentine et al. [-@olsson2020].
 
 The search for moderators that might explain said heterogeneity across
-several phenomena has not been particularly successful [e.g. @ManyLabs3,
+several phenomena has not been particularly successful [@ManyLabs3,
 @ManyLabs2]. Another source for this heterogeneity, which is not a
 typical moderator tied to a specific theory, might be impairments in
 score reliability which vary in their extent across replications
@@ -176,7 +199,7 @@ $$d = \frac{MD}{\sigma_X}$$ {#eq-d}
 
 Here, MD refers to the mean difference between two groups of interest,
 while $\sigma_X$ is the pooled standard deviation. As is widely known,
-score reliability affects ES [e.g. @hunter2004; @wiernik2020]. In the
+score reliability affects ES (e.g. [@hunter2004; @wiernik2020]). In the
 context of classical test theory (CTT) score reliability $\rho_{XX’}$ is
 defined as the ratio of true to total score variance [@lord2008], as
 defined in @eq-rel.
@@ -209,11 +232,11 @@ discussion, Wiernik and Dahlke claim that „*Measurement error variance
 will impact the results of meta-analyses in three ways: by (a) biasing
 the mean effect size toward zero, (b) inflating effect-size
 heterogeneity and confounding moderator effects, and (c) confounding
-publication-bias and sensitivity analyses*” [p. 3, -@wiernik2020].
+publication-bias and sensitivity analyses*” [-@wiernik2020, p. 3].
 Additionally, more clearly, they state that “*If the studies included in
 a meta-analysis differ in their measures’ reliabilities, heterogeneity
 estimates will be artifactually inflated, erroneously suggesting larger
-potential moderator effects*” [p. 4, -@wiernik2020]. They base their
+potential moderator effects*” [-@wiernik2020, p. 4]. They base their
 claims largely on work done by Hunter and Schmidt [-@hunter2004], who
 claim that “*Variation in reliability across studies causes variation in
 the observed effect sizes above and beyond that produced by sampling
@@ -278,9 +301,9 @@ replications on psychological phenomena [@dripht2024]. The data-sets of
 about 55 phenomena, largely stemming from the efforts of the Many Labs
 studies, Registered Replication Reports or the Psychological Science
 Accelerator, are made openly available in a standardised format at
-\[<https://osf.io/7p8rk/>\], the DRIPHT repository. A documentation of
-the standardised format, including a web-application to easily explore
-the public data-sets, can be found in Fünderich et al.
+[osf.io/7p8rk/](https://osf.io/7p8rk/){.uri}, the DRIPHT repository. A
+documentation of the standardised format, including a web-application to
+easily explore the public data-sets, can be found in Fünderich et al.
 [-@fuenderich_metapipex2024].
 
 ### Data
@@ -413,8 +436,8 @@ hypothesis test, as all other hypothesis tests in this manuscript, we
 employ a one-tailed significance level of .05.
 
 Additionally, estimates of score reliability are derived. While not
-without criticism [e.g. @sijtsma2009], Cronbach’s Alpha is used to
-estimate score reliability. It is often noted that tau-equivalence is an
+without criticism [@sijtsma2009], Cronbach’s Alpha is used to estimate
+score reliability. It is often noted that tau-equivalence is an
 unrealistic assumption to hold against real-world data, implying that
 other estimates of score reliability, such as McDonald’s Omega
 [@mcdonald1999], Guttman’s Lambda 2 or 4 [@guttman1945], or the Greatest
@@ -552,7 +575,7 @@ gt::gt(read.csv(here("Tables/Mean_ES.csv")) %>%
 ```
 
 *Note:* In this table $\hat{\mu}_{d}$ represents the meta-analytic
-estimate of uncorrected $d$ and $\hat{\mu}_{d_c}$ represents the the
+estimate of uncorrected $d$ and $\hat{\mu}_{d_c}$ represents the
 meta-analytic estimate of corrected $d_c$.
 
 #### Estimates of heterogeneity
@@ -754,9 +777,9 @@ generate estimates of mean and variance of the ratio variable
 [@vanKempen1999]. Taylor approximations typically require no specific
 assumptions regarding the distribution form, but that the variable (here
 a ratio) is a) differentiable, b) has existing moments and that c) its
-higher-order moments are negligible [e.g. @vandervaart2000]. Here we use
-the Taylor-estimator of the ratio’s variance to demonstrate how
-differences in score reliability may affect heterogeneity in ES.
+higher-order moments are negligible [@vandervaart2000]. Here we use the
+Taylor-estimator of the ratio’s variance to demonstrate how differences
+in score reliability may affect heterogeneity in ES.
 
 $$\tau^2[Z] \approx \frac{\tau^2[X]}{\mu[Y]^2} - \frac{2\mu[X]}{\mu[Y]^3} cov[X,Y] + \frac{\mu[X]^2}{\mu[Y]^4} \tau^2[Y]$$ {#eq-XYZ_cov}
 
@@ -1047,7 +1070,7 @@ gt::gt(read.csv(here("Tables/Variances_analysis.csv")) %>%
 estimate of score variance; $\hat{\mu}_{\sigma^2_T}$ is the
 back-transformed meta-analytic estimate of score variance;
 $\hat{\tau}_{\mu_{\sigma^2_X}}$ is the back-transformed estimate of
-heterogeneity in score variance; $\hat{\tau}_{{\sigma^2_X}}$ represents
+heterogeneity in score variance; $\hat{\tau}_{{\sigma^2_T}}$ represents
 the estimate of heterogeneity in true score variance.
 
 ## Discussion
@@ -1263,6 +1286,12 @@ imprecise measurements, expecting correction procedures to explain
 unwarranted heterogeneity. In the current state of Psychology,
 meta-analysts should not expect that correcting ES for score reliability
 will actually explain heterogeneity identified.
+
+### Data Availability
+
+The scripts to automatically access the data and reproduce the analyses
+underlying the findings of this paper are openly available on the OSF at
+[osf.io/yuas9](https://osf.io/yuas9/), 10.17605/OSF.IO/YUAS9.
 
 ## References
 

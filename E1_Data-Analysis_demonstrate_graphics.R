@@ -217,6 +217,29 @@ res_tab <- data.frame(MASC = ES_rma_df$MASC[which(ES_rma_df$corr == 0)],
          ) %>% 
   mutate_if(is.numeric, round, digits = 3)
 
+res_tab$MASC <- c("ML5 - Albarracin",
+                 "ML1 - Carter",
+                 "ML1 - Caruso",
+                 "RRR8",
+                 "RRR5 (Exit)",
+                 "RRR5 (Neglect)",
+                 "ML2 - Giessner",
+                 "RRR3 (Criminal)",
+                 "RRR3 (Processing)",
+                 "RRR3 (Attribution)",
+                 "ML1 - Husnu",
+                 "ML1 - Nosek (Art)",
+                 "ML1 - Nosek ( Math)",
+                 "PSACR001 (Anxiety)",
+                 "PSACR001 (Behaviour)",
+                 "PSACR001 (Photo)",
+                 "ML5 - Shnabel (Rev.)",
+                 "ML5 - Schnabel (RPP)",
+                 "RRR9 (Behaviour)",
+                 "RRR9 (Ronald)",
+                 "Strack",
+                 "ML2 - Zhong")
+
 write.csv(res_tab[nn_eff_idx,] %>% 
             select(MASC, tau_raw, QE_raw_str, QEp_raw, tau_cor, QE_cor_str, QEp_cor), 
           here("Tables/Heterogeneity_ES.csv"),
@@ -242,17 +265,54 @@ mean_es_res_tab <- data.frame(
          pval_cor = ifelse(pval_cor < .001, yes = "<.001", no = sub("^(-?)0.", "\\1.", sprintf("%.3f", .$pval_cor)))) %>% 
   select(MASC, mu_str_raw, pval_raw, mu_str_cor, pval_cor)
 
-write.csv(mean_es_res_tab,
+mean_es_res_tab$MASC <- c("ML5 - Albarracin",
+                          "ML1 - Carter",
+                          "ML1 - Caruso",
+                          "RRR8",
+                          "RRR5 (Exit)",
+                          "RRR5 (Neglect)",
+                          "ML2 - Giessner",
+                          "RRR3 (Criminal)",
+                          "RRR3 (Processing)",
+                          "RRR3 (Attribution)",
+                          "ML1 - Husnu",
+                          "ML1 - Nosek (Art)",
+                          "ML1 - Nosek ( Math)",
+                          "PSACR001 (Anxiety)",
+                          "PSACR001 (Behaviour)",
+                          "PSACR001 (Photo)",
+                          "ML5 - Shnabel (Rev.)",
+                          "ML5 - Schnabel (RPP)",
+                          "RRR9 (Behaviour)",
+                          "RRR9 (Ronald)",
+                          "Strack",
+                          "ML2 - Zhong")
+
+write.csv(mean_es_res_tab[-21,],
           file = here("Tables/Mean_ES.csv"),
           row.names = FALSE)
 
 
 alpha_res_tab <- B_alpha_rma_df[nn_eff_idx,] %>% 
   mutate_if(is.numeric, round, digits = 3) %>% 
-  mutate(mu_alpha_str = paste0(round(mu_alpha, 3), " [", round(mu_alpha_ll, 3), ":", round(mu_alpha_ul, 3), "]"),
+  mutate(#mu_alpha_str = paste0(round(mu_alpha, 3), " [", round(mu_alpha_ll, 3), ":", round(mu_alpha_ul, 3), "]"),
+         mu_alpha_str = round(mu_alpha, 3),
          QE_str = paste0(round(QE, 3), " (", k-1, ")"),
          QEp = ifelse(B_alpha_rma_df[nn_eff_idx,]$QEp < .001, yes = "<.001", no = sub("^(-?)0.", "\\1.", sprintf("%.3f", B_alpha_rma_df[nn_eff_idx,]$QEp)))) %>% 
   select(MASC, mu_alpha_str, tau_alpha, QE_str, QEp) 
+
+alpha_res_tab$MASC <- c("ML5 - Albarracin",
+                          "RRR3 (Criminal)",
+                          "ML1 - Husnu",
+                          "ML1 - Nosek (Art)",
+                          "ML1 - Nosek ( Math)",
+                          "PSACR001 (Anxiety)",
+                          "PSACR001 (Behaviour)",
+                          "PSACR001 (Photo)",
+                          "ML5 - Shnabel (Rev.)",
+                          "ML5 - Schnabel (RPP)",
+                          "RRR9 (Behaviour)",
+                          "RRR9 (Ronald)")
 
 write.csv(alpha_res_tab,
           here("Tables/Results_RMA_alpha.csv"),
