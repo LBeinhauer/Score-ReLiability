@@ -1,6 +1,6 @@
-## Score ReLiability
+### Differences in score reliability do not explain meta-analytic heterogeneity in standardised effect sizes ###
 
-# E1.5
+# E3 - Boot-Err analysis
 
 # Clean & extract data
 
@@ -28,26 +28,22 @@ apply(as.matrix(packages), MARGIN = 1, FUN = function(x) {
 source(here("ReLiability_Function-library.R"))
 
 
+# load processed data-files
 B_alpha_rma_df <- read.csv(here("Data/Processed/Reliability_analysis.csv"))
-
 ES_rma_df <- read.csv(here("Data/Processed/Aggregates_ES_analysis.csv"))
-
 agg_L <- readRDS(here("Data/Processed/Aggregates_simple.csv"))
 
+# extract phenomena names
 MASC_names <- substr(list.files(here("Data/Extracted (Project) Data")), 1, nchar(list.files(here("Data/Extracted (Project) Data")))-4) 
 
-
-
-
+# load all data-files
 data_files <- list.files(here("Data/Extracted (Project) Data"), full.names = TRUE)
-
-
 data.list <- lapply(data_files, read.csv)
 
-
+# adjust phenomenon title with error
 data.list[[4]]$source <- substr(data.list[[4]]$source, start = nchar(data.list[[4]]$source) - 2, stop = nchar(data.list[[4]]$source))
 
-
+# identify subset of relevant phenomena
 effect_index <- MASC_names %in% c("Albarracin_Priming_SAT", 
                                   "Carter_Flag_Priming", "Caruso_Currency_Priming",
                                   "Dijksterhuis_trivia", "Finkel_Exit_Forgiveness", 
@@ -64,8 +60,8 @@ effect_index <- MASC_names %in% c("Albarracin_Priming_SAT",
 )
 
 
+# test for criterion 3
 nn_eff_idx <- which(ES_rma_df$pval[ES_rma_df$corr == 0] <= .05)
-
 
 
 # generate estimates of ln-error score variance and its associated standard error using bootstrapping
@@ -146,7 +142,7 @@ varX_rma.list <- lapply(seq_along(varX_est.L), FUN = function(x){
 })
 
 
-
+# extract estimates from list
 vars_rma_L <- lapply(1:length(varE_rma.list), FUN = function(x){
   
   data.frame(mu_E = bt_var_m(varE_rma.list[[x]]),
@@ -156,6 +152,7 @@ vars_rma_L <- lapply(1:length(varE_rma.list), FUN = function(x){
   
 })
 
+# generate coefficients for table 4
 vars_rma_df <- do.call(rbind, vars_rma_L) %>% 
   mutate(mu_T = mu_X - mu_E,
          tau2_T = tau2_X - tau2_E) %>% 
@@ -169,10 +166,20 @@ vars_rma_df <- do.call(rbind, vars_rma_L) %>%
   mutate(MASC = ES_rma_df$MASC[ES_rma_df$corr == 0][nn_eff_idx]) %>% 
   mutate_if(is.numeric, round, 3) 
 
+vars_rma_df$MASC <- c("ML5 - Albarracin",
+                      "RRR3 (Criminal)",
+                      "ML1 - Husnu",
+                      "ML1 - Nosek (Art)",
+                      "ML1 - Nosek ( Math)",
+                      "PSACR001 (Anxiety)",
+                      "PSACR001 (Behaviour)",
+                      "PSACR001 (Photo)",
+                      "ML5 - Shnabel (Rev.)",
+                      "ML5 - Schnabel (RPP)",
+                      "RRR9 (Behaviour)",
+                      "RRR9 (Ronald)")
 
-
-
-
+# store table 3
 write.csv(vars_rma_df %>% 
             select(MASC, mu_X, mu_T, tau_X, tau_T, R1, R2), here("Tables/Variances_analysis.csv"), row.names = FALSE)
 

@@ -1,6 +1,8 @@
 ## Score ReLiability
 
-# E2
+# E Bonus
+
+# additional graphics for presentation at DGPS / ÖGP. Not relevant to preprint / publication
 
 # Graphics
 
