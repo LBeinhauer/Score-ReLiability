@@ -1,6 +1,6 @@
-### Score ReLiability ###
+### Differences in score reliability do not explain meta-analytic heterogeneity in standardised effect sizes ###
 
-
+# E0 - Data-Download from OSF
 
 ###################################################################################################
 # This script is used purely for downloading the data from the respective OSF-repositories.       #

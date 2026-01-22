@@ -1,9 +1,6 @@
-## Score ReLiability
+### Differences in score reliability do not explain meta-analytic heterogeneity in standardised effect sizes ###
 
-# E1
-
-# Clean & extract data
-
+# E1 - Generating coefficients and processing data
 
 # library loading and installing as necessary
 
@@ -26,19 +23,19 @@ apply(as.matrix(packages), MARGIN = 1, FUN = function(x) {
 })
 
 
+# load function library
 source(here("ReLiability_Function-library.R"))
 
+# load extracted data-files for all phenomena
 data_files <- list.files(here("Data/Extracted (Project) Data"), full.names = TRUE)
-
-
 data.list <- lapply(data_files, read.csv)
 
 
+# rename phenomenon with issue in title/name
 data.list[[4]]$source <- substr(data.list[[4]]$source, start = nchar(data.list[[4]]$source) - 2, stop = nchar(data.list[[4]]$source))
-
 MASC_names <- substr(list.files(here("Data/Extracted (Project) Data")), 1, nchar(list.files(here("Data/Extracted (Project) Data")))-4) 
 
-
+# index to identify relevant phenomena from total list
 effect_index <- MASC_names %in% c("Albarracin_Priming_SAT", 
                                   "Carter_Flag_Priming", "Caruso_Currency_Priming",
                                   "Dijksterhuis_trivia", "Finkel_Exit_Forgiveness", 
@@ -162,11 +159,10 @@ agg_L <- lapply(which(effect_index), FUN = function(idx){
 })
 
 
-
-
-
+# store aggregates
 saveRDS(agg_L, file = here("Data/Processed/Aggregates_simple.csv"))
 
+# select relevant subset
 MASC_names[effect_index]
 
 # perform meta-analyses of transformed score reliability
@@ -246,6 +242,7 @@ d_rma_full_L <- lapply(agg_L, FUN = function(x){
 names(d_rma_full_L) <- MASC_names[effect_index]
 
 
+# combine estimates to single table, used in subsequent analyses and manuscript preparation
 ES_rma_df <- data.frame(mu = unlist(lapply(d_rma_full_L, FUN = function(x){c(x$rma_raw$b[1], x$rma_cor$b[1])})),
                         se = unlist(lapply(d_rma_full_L, FUN = function(x){c(x$rma_raw$se, x$rma_cor$se)})),
                         pval = unlist(lapply(d_rma_full_L, FUN = function(x){c(
@@ -263,7 +260,7 @@ ES_rma_df <- data.frame(mu = unlist(lapply(d_rma_full_L, FUN = function(x){c(x$r
                         MASC = rep(MASC_names[effect_index], each = 2)) %>% 
   mutate(CV = tau/mu)
 
-
+# store processed data for subequent analyses & in manuscript preparation
 write.csv(ES_rma_df, here("Data/Processed/Aggregates_ES_analysis.csv"), row.names = FALSE)
 
 

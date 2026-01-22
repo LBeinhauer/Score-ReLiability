@@ -27,9 +27,8 @@ apply(as.matrix(packages), MARGIN = 1, FUN = function(x) {
 
 source(here("ReLiability_Function-library.R"))
 
-
+# load prepocessed data-files
 B_alpha_rma_df <- read.csv(here("Data/Processed/Reliability_analysis.csv"))
-
 ES_rma_df <- read.csv(here("Data/Processed/Aggregates_ES_analysis.csv"))
 
 ES_rma_df$MASC <- c("ML5 - Albarracin",
@@ -57,20 +56,17 @@ ES_rma_df$MASC <- c("ML5 - Albarracin",
 
 agg_L <- readRDS(here("Data/Processed/Aggregates_simple.csv"))
 
+# extract project names
 MASC_names <- substr(list.files(here("Data/Extracted (Project) Data")), 1, nchar(list.files(here("Data/Extracted (Project) Data")))-4) 
 
-
-
-
+# load data files
 data_files <- list.files(here("Data/Extracted (Project) Data"), full.names = TRUE)
-
-
 data.list <- lapply(data_files, read.csv)
 
-
+# rename erroneous phenomenon title
 data.list[[4]]$source <- substr(data.list[[4]]$source, start = nchar(data.list[[4]]$source) - 2, stop = nchar(data.list[[4]]$source))
 
-
+# select relevant phenomena
 effect_index <- MASC_names %in% c("Albarracin_Priming_SAT", 
                                   "Carter_Flag_Priming", "Caruso_Currency_Priming",
                                   "Dijksterhuis_trivia", "Finkel_Exit_Forgiveness", 
@@ -87,10 +83,8 @@ effect_index <- MASC_names %in% c("Albarracin_Priming_SAT",
 )
 
 
+# test for criterion 3
 nn_eff_idx <- which(ES_rma_df$pval[ES_rma_df$corr == 0] <= .05)
-
-
-
 
 
 # generate estimates of ln-observed score variance for each sample & projects
@@ -169,6 +163,7 @@ varE_rma.list <- lapply(seq_along(varE_est.L), FUN = function(x){
 })
 
 
+# extract estimates from list, back-transform
 vars_rma_L <- lapply(1:length(varE_rma.list), FUN = function(x){
   
   data.frame(mu_X = bt_var_m(varX_rma.list[[x]]),
@@ -177,13 +172,7 @@ vars_rma_L <- lapply(1:length(varE_rma.list), FUN = function(x){
 })
 
 
-
-
-
-
-
-
-
+# define function to perform Boot-Err process
 apply_Bootstrap_SE_Project.specific2 <- function(data, R = 3000, component = "E"){
   
   if(component == "E"){
@@ -314,7 +303,7 @@ sdX_rma.list <- lapply(seq_along(sdX_est.L), FUN = function(x){
   
 })
 
-
+# extact estimates and back-transform
 sds_rma_L <- lapply(1:length(varE_rma.list), FUN = function(x){
   
   data.frame(mu_X = bt_var_m(sdX_rma.list[[x]]),
@@ -323,17 +312,19 @@ sds_rma_L <- lapply(1:length(varE_rma.list), FUN = function(x){
 })
 
 
+# combine to matrices
 sds <- do.call(rbind, sds_rma_L)
 vars <- do.call(rbind, vars_rma_L)
 
+# exploratory graphics
 plot(cbind(sqrt(vars$mu_X), sds$mu_X))
 abline(a = 0, b = 1)
-
 
 plot(cbind(.5*(sqrt(vars$tau2_X) / vars$mu_X), (sqrt(sds$tau2_X) / sds$mu_X)))
 abline(a = 0, b = 1)
 
 
+# generate and store table, testing for differences introduced by delta method
 test_df <- data.frame(unique(ES_rma_df$MASC)[nn_eff_idx],
                       vars$mu_X,
                       vars$tau2_X,
@@ -342,70 +333,6 @@ test_df <- data.frame(unique(ES_rma_df$MASC)[nn_eff_idx],
   mutate_if(is.numeric, round, 5)
 
 test_df
-
 write.csv(test_df, here("Tables/delta_test.csv"), row.names = FALSE)
 
 round(test_df, 5)
-
-
-
-
-liability_inequality <- function(tau_MD, mu_MD, mu_sigma2x, mu_sigma2t, tau_sigma2x, tau_sigma2t){
-  
-  R1 <- mu_sigma2t/mu_sigma2x
-  R2 <- (tau_sigma2t^2)/(tau_sigma2x^2)
-  
-  ineq <- ((tau_MD^2 )* ((1/R1) - 1)) + (.25 * (mu_MD^2) * ((tau_sigma2x/mu_sigma2x)^2) * ((R2 / (R1^3)) - 1))
-  
-  return(data.frame(R1 = R1,
-                    R2 = R2,
-                    inequality = ineq,
-                    tau_MD = tau_MD,
-                    mu_MD = mu_MD,
-                    mu_sigma2x = mu_sigma2x,
-                    mu_sigma2t = mu_sigma2t,
-                    tau_sigma2x = tau_sigma2x, 
-                    tau_sigma2t = tau_sigma2t,
-                    CV_sigma2x = tau_sigma2x/mu_sigma2x))
-  
-}
-
-
-
-input_df <- data.frame(tau_MD = .1, 
-                       mu_MD = 1, 
-                       mu_sigma2x = 1, 
-                       mu_sigma2t = c(.5, .5, .5, .7, .7, .7, .9, .9, .9), 
-                       tau_sigma2x = .3, 
-                       tau_sigma2t = c(.3, .2, .1, .3, .2, .1, .3, .2, .1))
-
-test <- liability_inequality(input_df$tau_MD, input_df$mu_MD, input_df$mu_sigma2x, input_df$mu_sigma2t,
-                     input_df$tau_sigma2x, input_df$tau_sigma2t)
-
-test
-
-
-R1 <- seq(from = .01, to = 1, length.out = 50)
-R2 <- seq(from = .01, to = 1, length.out = 50)
-
-R_grid <- expand.grid(R1, R2)
-names(R_grid) <- c("R1", "R2")
-
-tau_MD <- .1
-mu_MD <- 1
-mu_sigma2x <- 1
-tau_sigma2x <- .1
-
-ineq_func <- function(R_grid, tau_MD, mu_MD, mu_sigma2x, tau_sigma2x){
-  
-  val <- ((tau_MD^2 )* ((1/R_grid$R1) - 1)) + (.25 * (mu_MD^2) * ((tau_sigma2x/mu_sigma2x)^2) * ((R_grid$R2 / (R_grid$R1^3)) - 1))
-  
-  data.frame(R1 = R_grid$R1,
-             R2 = R_grid$R2,
-             val = val)
-}
-
-input_df <- ineq_func(R_grid, tau_MD, mu_MD, mu_sigma2x, tau_sigma2x)
-
-ggplot(input_df) +
-  geom_raster(aes(x = R1, y = R2, fill = val))

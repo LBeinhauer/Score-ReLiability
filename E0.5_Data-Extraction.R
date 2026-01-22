@@ -1,5 +1,6 @@
-### DGPs / ÖGP 2024 Wien ###
+### Differences in score reliability do not explain meta-analytic heterogeneity in standardised effect sizes ###
 
+# E0.5 - Extracting Downloaded Data
 
 ###################################################################################################
 # This script is used purely for data cleaning, initial manipulation and extraction to single     #
@@ -9,9 +10,6 @@
 
 
 # library loading and installing as necessary
-
-
-
 packages <- c("tidyverse", "here", "data.table", "haven", "readxl")
 
 # check, whether library already installed or not - install and load as needed:

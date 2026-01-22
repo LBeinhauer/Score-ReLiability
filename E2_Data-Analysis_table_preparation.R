@@ -1,9 +1,7 @@
-## Score ReLiability
+### Differences in score reliability do not explain meta-analytic heterogeneity in standardised effect sizes ###
 
-# E1.5
-
-# Clean & extract data
-
+# E1 - Data-Analysis
+# test for criterion 3, estimates for table 
 
 # library loading and installing as necessary
 
@@ -25,19 +23,22 @@ apply(as.matrix(packages), MARGIN = 1, FUN = function(x) {
   }
 })
 
+# load function library
 source(here("ReLiability_Function-library.R"))
 
 
+# load processed data-files
 B_alpha_rma_df <- read.csv(here("Data/Processed/Reliability_analysis.csv"))
 
+# load aggregates for subset of phenomena
 ES_rma_df <- read.csv(here("Data/Processed/Aggregates_ES_analysis.csv"))
-
 agg_L <- readRDS(here("Data/Processed/Aggregates_simple.csv"))
 
+# identify phenomena titles
 MASC_names <- unique(ES_rma_df$MASC)
 
 
-# generate plots for meta-analyses of corrected AND uncorrected Cohen's d (slide 7)
+# generate plots for meta-analyses of corrected AND uncorrected Cohen's d (slide 7, DGPS/ÖGP presentation)
 plots2 <- lapply((1:length(agg_L)), FUN = function(idx){
   
   # name of MASC
@@ -115,10 +116,10 @@ ggsave(filename = here("Graphics/densities_twentytwo.png"),
 
 ## Criterion 3: non-null effects
 
-
+# identify phenomena where effect size is statistically signficant different from zero
 nn_eff_idx <- which(ES_rma_df$pval[ES_rma_df$corr == 0] <= .05)
 
-# generate plots for meta-analyses of corrected AND uncorrected Cohen's d (slide 7)
+# generate plots for meta-analyses of corrected AND uncorrected Cohen's d (slide 7, DGPS/ÖGP presentation)
 plots3 <- lapply((1:length(agg_L))[nn_eff_idx], FUN = function(idx){
   
   # name of MASC
@@ -178,25 +179,7 @@ combined_plot3
 
 
 
-# res_tab <- ES_rma_df[ES_rma_df$corr == 0,][nn_eff_idx,] %>% 
-#   select(MASC, mu, se, pval, tau, QE, k, QEp) %>% 
-#   mutate(mu_str = paste0(round(mu, 3), " (", round(se, 3), ")"),
-#          QE_str = paste0(round(QE, 3), " (", k-1, ")"))
-# 
-# MD_tab <- knitr::kable(res_tab %>% 
-#                select(MASC, mu_str, pval, tau, QE_str, QEp), 
-#              digits = 3, 
-#              col.names = c("MASC", "$\\mu_{ES}$ (SE)", "p", "$\\tau$", "$Q_E$ (df)", "p"))
-# 
-# writeLines(MD_tab, "C:/Users/Lukas/Downloads/markdown_table.txt")
-# write.csv(res_tab %>% 
-#             mutate_if(is.numeric, round, 3) %>% 
-#             mutate(pval = ifelse(pval < .001, yes = "<.001", no = pval),
-#                    QEp = ifelse(pval < .001, yes = "<.001", no = QEp)) %>% 
-#             select(MASC, mu_str, pval, tau, QE_str, QEp), 
-#           "C:/Users/Lukas/Downloads/markdown_table.csv",
-#           row.names = F)
-
+# combine results in a single table, used in manuscript generation
 res_tab <- data.frame(MASC = ES_rma_df$MASC[which(ES_rma_df$corr == 0)],
                       k = ES_rma_df$k[which(ES_rma_df$corr == 0)],
                       mu_raw = ES_rma_df$mu[which(ES_rma_df$corr == 0)],
@@ -217,6 +200,7 @@ res_tab <- data.frame(MASC = ES_rma_df$MASC[which(ES_rma_df$corr == 0)],
          ) %>% 
   mutate_if(is.numeric, round, digits = 3)
 
+# make phenomenon titles shorter
 res_tab$MASC <- c("ML5 - Albarracin",
                  "ML1 - Carter",
                  "ML1 - Caruso",
@@ -240,12 +224,14 @@ res_tab$MASC <- c("ML5 - Albarracin",
                  "Strack",
                  "ML2 - Zhong")
 
+# store in csv for subsequent use in manuscript preparation, table 3 part 1
 write.csv(res_tab[nn_eff_idx,] %>% 
             select(MASC, tau_raw, QE_raw_str, QEp_raw, tau_cor, QE_cor_str, QEp_cor), 
           here("Tables/Heterogeneity_ES.csv"),
           row.names = F)
 
 
+# subset of results, table 1
 mean_es_res_tab <- data.frame(
   mu_raw = ES_rma_df$mu[which(ES_rma_df$corr == 0)],
   mu_cor = ES_rma_df$mu[which(ES_rma_df$corr == 1)],
@@ -293,6 +279,7 @@ write.csv(mean_es_res_tab[-21,],
           row.names = FALSE)
 
 
+# store results on alpha meta-analysis in single table, for table 3 (part 2)
 alpha_res_tab <- B_alpha_rma_df[nn_eff_idx,] %>% 
   mutate_if(is.numeric, round, digits = 3) %>% 
   mutate(#mu_alpha_str = paste0(round(mu_alpha, 3), " [", round(mu_alpha_ll, 3), ":", round(mu_alpha_ul, 3), "]"),
@@ -318,12 +305,15 @@ write.csv(alpha_res_tab,
           here("Tables/Results_RMA_alpha.csv"),
           row.names = FALSE)
 
+# prepare exemplary forest plot (figure 1)
 forest_plot_rel(ES_rma_df[which(ES_rma_df$MASC == "Nosek_Explicit_Art"),], agg_L[[which(MASC_names == "Nosek_Explicit_Art")]])
 
 ggsave(filename = here("Graphics/forest_Nosek.png"),
        plot = last_plot(),
        width = 6, height = 4)
 
+
+# prep forest plots for all phenomena - not used in manuscript, overview
 plots3 <- lapply((1:length(agg_L)), FUN = function(idx){
   
   # name of MASC
